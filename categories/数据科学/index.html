@@ -3,23 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>基于朴素贝叶斯算法的推特数据新闻检测 | Shawnzhu&#39;s Personal Blog</title>
+  <title>category: 数据科学 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
   
-  <meta name="description" content="寒假的时候做了一个项目：利用朴素贝叶斯算法对推特数据进行分类。个人感觉很有趣，可以算作是数据科学的一个入门练手项目。">
-<meta name="keywords">
-<meta property="og:type" content="article">
-<meta property="og:title" content="基于朴素贝叶斯算法的推特数据新闻检测">
-<meta property="og:url" content="http://zhuchenshawn.com/2017/04/24/基于朴素贝叶斯算法的推特数据新闻检测/index.html">
+  <meta name="description" content="不忘初心 方得始终">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shawnzhu's Personal Blog">
+<meta property="og:url" content="http://zhuchenshawn.com/categories/数据科学/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="寒假的时候做了一个项目：利用朴素贝叶斯算法对推特数据进行分类。个人感觉很有趣，可以算作是数据科学的一个入门练手项目。">
-<meta property="og:updated_time" content="2017-04-24T16:55:19.000Z">
+<meta property="og:description" content="不忘初心 方得始终">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于朴素贝叶斯算法的推特数据新闻检测">
-<meta name="twitter:description" content="寒假的时候做了一个项目：利用朴素贝叶斯算法对推特数据进行分类。个人感觉很有趣，可以算作是数据科学的一个入门练手项目。">
+<meta name="twitter:title" content="Shawnzhu's Personal Blog">
+<meta name="twitter:description" content="不忘初心 方得始终">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -52,12 +50,14 @@
   
 
   
+    <link rel="stylesheet" href="/css/archive.css" >
+  
 
 </head>
 
 
 
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
+  <body>
 
 
   
@@ -147,145 +147,44 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-基于朴素贝叶斯算法的推特数据新闻检测" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
+          <section id="main" style="float:none;">
   
-    <h1 class="thumb" class="article-title" itemprop="name">
-      基于朴素贝叶斯算法的推特数据新闻检测
-    </h1>
   
-
-      </header>
+  
     
-    <div class="article-meta">
+    
       
-	<a href="/2017/04/24/基于朴素贝叶斯算法的推特数据新闻检测/" class="article-date">
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <h1><a href="/archives/2017" class="archive-year">2017</a></h1>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      
+	<a href="/2017/04/24/基于朴素贝叶斯算法的推特数据新闻检测/" class="archive-article-date">
 	  <time datetime="2017-04-24T01:03:25.000Z" itemprop="datePublished">2017-04-24</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/数据科学/">数据科学</a>
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="archive-article-title" href="/2017/04/24/基于朴素贝叶斯算法的推特数据新闻检测/">基于朴素贝叶斯算法的推特数据新闻检测</a>
+    </h1>
+  
 
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>寒假的时候做了一个项目：利用朴素贝叶斯算法对推特数据进行分类。个人感觉很有趣，可以算作是数据科学的一个入门练手项目。</p>
-<a id="more"></a>
-<p>基本的条件和要求如下：</p>
-<p>需要将推特数据分为新闻和非新闻两类<br>训练样本是已经给定的从网络上爬取的推特数据，并且已经标记好了属性，如下</p>
-<blockquote>
-<p>[u’Thu Jan 14 01:54:14 +0000 2016’, u’Officials say a Ukrainian man has died along with a 14-year-old French girl in Alps avalanche <a href="https://t.co/le0iN4dgzu" target="_blank" rel="external">https://t.co/le0iN4dgzu</a>‘, []]</p>
-<p>[u’Thu Jan 14 01:54:59 +0000 2016’, u’French Alps Avalanche Hits Secondary School Party In Isere, Three Dead.. <a href="https://t.co/93PnskM2Al" target="_blank" rel="external">https://t.co/93PnskM2Al</a> <a href="https://t.co/EQl55NUJuB" target="_blank" rel="external">https://t.co/EQl55NUJuB</a>‘, []]</p>
-</blockquote>
-<p>格式相同的测试样本给出，并已经标记好了属性，以便测试查准率（Recall）<br>需要使用训练样本构建一个朴素贝叶斯的分类器，使其能够对输入的测试样本进行分类<br>基本流程如下：</p>
-<p>首先对两个输入的训练样本进行清洗，将每条推特的的text部分提取到list里，然后按照空格对list里的每一项item进行划分，得到每一个分词。之后再统一大小写，去除text后的网址，@信息，#（话题）后的词语要作为普通的分词加入text，接下来去掉分词组中的语义无关词（比如字母长度小于2的词，are and will the this that等）</p>
-<pre><code>for line in List:
-    raw = line
-    raw_text = raw.split(&apos;,&apos;)[1]
-    text = raw_text[3:-1]
-    text = text.lower()
-</code></pre><h3 id="根据空格来分割每个句子"><a href="#根据空格来分割每个句子" class="headerlink" title="根据空格来分割每个句子"></a>根据空格来分割每个句子</h3><pre><code>space = text.split(&apos; &apos;)
-result = []
-temp = []
-for item in space:
-    item = item.translate(None,string.punctuation)
-    if re.match(r&apos;#&apos;,item):
-        item = item[1:]
-    if not(re.search(&apos;^http&apos;,item) or re.search(&apos;^@&apos;,item)):
-        temp.append(item)
-for item in temp:
-    if not(len(item) &lt; 3 or len(item) &gt; 15 or item in uesless_word) and str.isalpha(item):
-        result.append(item)
-Result.append(result)
-return Result
-</code></pre><p>引用python中的Counter库，将清洗好的数据进行统计，得到每一个词在总词库中出现的频率，并将其频率作为该词出现的概率。再将所有词按照出现概率大小排列成dict输出</p>
-<pre><code>i = 0
-table = []
-for line in list:
-    for word in line:
-        table.append(word)
-        i = i + 1
-        counter = Counter(table)
-        times = counter.most_common(i)
-return times
-</code></pre><p>使用统计好的结果对贝叶斯模型进行计算。即将每个在样本中出现过的词作为样本的一个属性，计算其条件概率。这一个过程即称为训练，因为在这两个不同的样本中，存在着不相同的特征，如果按照普通的贝叶斯算法的话，概率将变为0，因此需要加入平滑系数，此处采用的是拉普拉斯平滑。</p>
-<h3 id="对两个频次表中的相同项-获取其频率作为先验概率-对于不相同的项目-加入拉普拉斯平滑系数"><a href="#对两个频次表中的相同项-获取其频率作为先验概率-对于不相同的项目-加入拉普拉斯平滑系数" class="headerlink" title="对两个频次表中的相同项,获取其频率作为先验概率,对于不相同的项目,加入拉普拉斯平滑系数"></a>对两个频次表中的相同项,获取其频率作为先验概率,对于不相同的项目,加入拉普拉斯平滑系数</h3><pre><code>for (key1,value1) in table1:
-    for (key2,value2) in table2:
-        if key1 == key2:
-            Conditional_probability[key1] = value2 + 1/news_number + 2
-            flag = 1
-        if flag == 1:
-            flag = 0
-        else:
-            Conditional_probability[key1] = 1/(news_number+2)
-return Conditional_probability
-</code></pre><p>将测试样本清洗后输入模型，对测试样本里的每一条推特，在训练器中查找其对应的条件概率，若该属性缺失则将概率记为1，最后将算出来的所有条件概率之积进行比较。值得注意的是，因为所有条件概率之积算出来极小（大约为10e-324），计算机无法进行除法来比较大小，所以每计算一个条件概率就进行一次分类，比较该条推特是新闻的概率和是非新闻的概率哪个大，并进行记录和统计。</p>
-<pre><code>logs = 0
-J = 0
-N = 0
-total_TP = 0
-correct_number = 0
-for line in target_list:
-</code></pre><h3 id="计算总数"><a href="#计算总数" class="headerlink" title="计算总数"></a>计算总数</h3><pre><code>total_TP = total_TP + 1
-</code></pre><h3 id="贝叶斯公式"><a href="#贝叶斯公式" class="headerlink" title="贝叶斯公式"></a>贝叶斯公式</h3><pre><code>for word in line:
-    if word in pwiJ:
-        J = pwiJ[word]
-    else:
-        J = 1
-    if word in pwiN:
-        N = pwiN[word]
-    else:
-        N = 1
-        logs = logs + math.log(J/N)
-    D = math.log(PJ/PN) + logs
-    if D &lt; 0:
-        correct_number = correct_number + 1
-        logs = 0
-</code></pre><h3 id="正确的个数-总数-可以理解为是查全率"><a href="#正确的个数-总数-可以理解为是查全率" class="headerlink" title="正确的个数/总数,可以理解为是查全率"></a>正确的个数/总数,可以理解为是查全率</h3><pre><code>rate = correct_number/total_TP
-return rate
-</code></pre><p>最后的结果还是不错的，可能是因为这些数据都是被助教选择过的吧。查全率能达到97.263678%</p>
-<p>想获取更多详细的代码请访问我的GitHub：<a href="https://github.com/Shawnzhu2051/Naive_Bayes_Classifier" target="_blank" rel="external">https://github.com/Shawnzhu2051/Naive_Bayes_Classifier</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/04/24/使用wordpress搭建博客后台/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          使用wordpress搭建博客后台
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
-<!-- Table of Contents -->
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据空格来分割每个句子"><span class="nav-number">1.</span> <span class="nav-text">根据空格来分割每个句子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对两个频次表中的相同项-获取其频率作为先验概率-对于不相同的项目-加入拉普拉斯平滑系数"><span class="nav-number">2.</span> <span class="nav-text">对两个频次表中的相同项,获取其频率作为先验概率,对于不相同的项目,加入拉普拉斯平滑系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算总数"><span class="nav-number">3.</span> <span class="nav-text">计算总数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯公式"><span class="nav-number">4.</span> <span class="nav-text">贝叶斯公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确的个数-总数-可以理解为是查全率"><span class="nav-number">5.</span> <span class="nav-text">正确的个数/总数,可以理解为是查全率</span></a></li></ol>
-    
-    </div>
-  </aside>
 </section>
         
       </div>
@@ -390,8 +289,6 @@ return rate
 
 
 
-
-  <script src="/js/dialog.js"></script>
 
 
 

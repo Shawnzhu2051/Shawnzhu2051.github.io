@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://zhuchenshawn.com/2017/04/24/使用wordpress搭建博客后台/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
 <meta property="og:description" content="自从把个人博客搭起来时，就发现了一个很麻烦的事情。 如果你想为你的博客添加一篇文章的话，你需要先把你这篇文章按html格式来写好，图片的链接放进去，再将主页的跳转，文章的跳转写成超链接，上传到服务器上，然后还要修改你的主页，让它显示新增了一篇文章。不能再麻烦了！ 而且因为之前的博客没有后台程序，非常不稳定，导致经常会莫名其妙地崩掉。然后就需要ssh连接上去重启。 所以我们还是需要一个可以统一，自动">
-<meta property="og:updated_time" content="2017-04-24T00:56:00.000Z">
+<meta property="og:updated_time" content="2017-04-24T17:28:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用wordpress搭建博客后台">
 <meta name="twitter:description" content="自从把个人博客搭起来时，就发现了一个很麻烦的事情。 如果你想为你的博客添加一篇文章的话，你需要先把你这篇文章按html格式来写好，图片的链接放进去，再将主页的跳转，文章的跳转写成超链接，上传到服务器上，然后还要修改你的主页，让它显示新增了一篇文章。不能再麻烦了！ 而且因为之前的博客没有后台程序，非常不稳定，导致经常会莫名其妙地崩掉。然后就需要ssh连接上去重启。 所以我们还是需要一个可以统一，自动">
@@ -78,10 +78,8 @@
             </button>
 
             
-              <a class="brand" style="
-                 margin-top: 0px;"  
-                href="#" data-toggle="modal" data-target="#myModal" >
-                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              <a class="brand" style="border-width: 0;">
+                <p>Shawnzhu&#39;s Personal Blog</p>
               </a>
             
             
@@ -96,7 +94,7 @@
                 
                   <li> <a class="main-nav-link" href="/tags">标签</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
                 
                   <li><div id="search-form-wrap">
 
@@ -170,6 +168,8 @@
 	</a>
 
       
+    <a class="article-category-link" href="/categories/Web开发/">Web开发</a>
+
     </div>
     <div class="article-entry" itemprop="articleBody">
       
@@ -178,6 +178,7 @@
 <p>而且因为之前的博客没有后台程序，非常不稳定，导致经常会莫名其妙地崩掉。然后就需要ssh连接上去重启。</p>
 <p>所以我们还是需要一个可以统一，自动处理我们的网页内容的程序，第一可以让我们省去对网页前端代码复杂繁琐的编辑，把精力和重心放在博客的内容上，第二可以增加稳定性，不至于那么容易掉线。</p>
 <p>所以我使用了wordpress来搭建博客。</p>
+<a id="more"></a>
 <p>严格地来说wordpress不能算做是完整的后台程序，它只是一个用php写成的博客平台，自由度还是相对较小的，不过简单易用，功能也算是很强大。</p>
 <p>虽然说是号称5分钟安装，但是实际花了我一个晚上+一个上午才完全安装成功。网上讲wordpress的博客教程都很多，但往往面对的对象基础不一，手里的服务器也存在各种各样没有配置或者没有安装的东西。所以最后还是按照一个写得非常详细而具体的英文教程来完整走了一遍。</p>
 <p>假定你和当初的我一样，手里只有一条啥子都没装的Linux（默认Ubuntu14.04系统）服务器。</p>
@@ -198,30 +199,6 @@
       
     </div>
     <footer class="article-footer">
-      
-        
-	<div id="comment">
-	
-	<!-- 多说评论框 start -->
-	 <div class="ds-thread" data-thread-key="/2017/04/24/使用wordpress搭建博客后台/" data-title="使用wordpress搭建博客后台" data-url="http://zhuchenshawn.com/2017/04/24/使用wordpress搭建博客后台/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"iTimeTraveler"};
-	  (function() {
-	    var ds = document.createElement('script');
-	    ds.type = 'text/javascript';ds.async = true;
-	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-	    ds.charset = 'UTF-8';
-	    (document.getElementsByTagName('head')[0] 
-	     || document.getElementsByTagName('body')[0]).appendChild(ds);
-	  })();
-	  </script>
-	<!-- 多说公共JS代码 end -->
-	
-	</div>
-
-
       
       
     </footer>
@@ -310,7 +287,7 @@
   
     <a href="/tags" class="mobile-nav-link">Tags</a>
   
-    <a href="/about" class="mobile-nav-link">About</a>
+    <a href="/aboutme" class="mobile-nav-link">About</a>
   
 </nav> -->
     
