@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://zhuchenshawn.com/2017/04/25/使用HEXO搭建个人博客/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
 <meta property="og:description" content="说在前面：wordpress真的是大坑，掉进去了都走不出来的大坑，安装花了两天，前前后后配置也花了好几天，最后还是有几个影响极大却迟迟修复不了的bug，遂弃疗。 正好这周考完了半期考试，不是特别忙，总算找到一个时间来好好管理一下个人博客了。这一次我选择了一个可能是最简单的博客框架–HEXO，来重新搭建博客。 HEXO是基于Github的一个 fast, simple &amp;amp; powerful">
-<meta property="og:updated_time" content="2017-04-25T07:14:26.000Z">
+<meta property="og:updated_time" content="2017-05-18T09:13:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用HEXO搭建个人博客">
 <meta name="twitter:description" content="说在前面：wordpress真的是大坑，掉进去了都走不出来的大坑，安装花了两天，前前后后配置也花了好几天，最后还是有几个影响极大却迟迟修复不了的bug，遂弃疗。 正好这周考完了半期考试，不是特别忙，总算找到一个时间来好好管理一下个人博客了。这一次我选择了一个可能是最简单的博客框架–HEXO，来重新搭建博客。 HEXO是基于Github的一个 fast, simple &amp;amp; powerful">
@@ -252,6 +252,30 @@ hexo deploy
 <p>  如果想要关联到自己购买的域名的话也可以，具体的请百度。</p>
 </li>
 </ul>
+<h2 id="补充操作"><a href="#补充操作" class="headerlink" title="补充操作"></a>补充操作</h2><ul>
+<li><p>hexo中插入图片</p>
+<p>  目前来说有两种办法。在早期版本的hexo（hexo2及以前）中，图片的管理相当麻烦，一般需要使用插件，或者使用第三方网站：比如<a href="https://www.qiniu.com/" target="_blank" rel="external">七牛</a>之类的云储存管理器，将你的图片上传到该网站之后，会给你生成一个链接，在hexo的md文章中加上链接就可以了。这个方法不需要花钱，但在遇到含有大量图片需要处理时会显得非常繁琐。所以推荐另一种方法：<a href="CodeFalling/hexo-asset-image">CodeFalling/hexo-asset-image</a>（好像还是使用插件orz不过这个插件操作蛮简单的）</p>
+<p>  首先对你的 _config.yml 配置文件进行修改：</p>
+<blockquote>
+<p>post_ asset_folder:true</p>
+</blockquote>
+<p>  然后再在hexo根目录中执行</p>
+<blockquote>
+<p>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">https://github.com/CodeFalling/hexo-asset-image</a> –save</p>
+</blockquote>
+<p>  来下载安装插件</p>
+<p>  然后当我们再执行</p>
+<blockquote>
+<p>hexo new ‘artical_name’</p>
+</blockquote>
+<p>  Hexo会自动建立一个与文章同名的文件夹，我们可以把与该文章相关的所有资源都放到那个文件夹中。<br>  在文章写作的过程中，只用在markdown中使用正常的语法</p>
+<blockquote>
+<p> ! [ ] ( )</p>
+</blockquote>
+<p>  就可以顺利插入图片了。</p>
+<p>  在网上有些博客中写到说这种方法可能会在图片显示在首页或显示在文中不成功，但笔者并没有发现有这个问题，如果存在这个问题的话，bug应该是出现在markdown的语法上，改成使用标签来引入图片就可以了。</p>
+</li>
+</ul>
 
       
     </div>
@@ -290,7 +314,7 @@ hexo deploy
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github上的准备工作"><span class="nav-number">1.</span> <span class="nav-text">Github上的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地的准备工作"><span class="nav-number">2.</span> <span class="nav-text">本地的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO安装与配置"><span class="nav-number">3.</span> <span class="nav-text">HEXO安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO的基本操作"><span class="nav-number">4.</span> <span class="nav-text">HEXO的基本操作</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github上的准备工作"><span class="nav-number">1.</span> <span class="nav-text">Github上的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地的准备工作"><span class="nav-number">2.</span> <span class="nav-text">本地的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO安装与配置"><span class="nav-number">3.</span> <span class="nav-text">HEXO安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO的基本操作"><span class="nav-number">4.</span> <span class="nav-text">HEXO的基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充操作"><span class="nav-number">5.</span> <span class="nav-text">补充操作</span></a></li></ol>
     
     </div>
   </aside>
