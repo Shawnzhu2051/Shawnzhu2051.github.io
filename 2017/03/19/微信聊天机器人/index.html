@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档: 2017/4 | Shawnzhu&#39;s Personal Blog</title>
+  <title>微信聊天机器人 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
   
-  <meta name="description" content="不忘初心 方得始终">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shawnzhu's Personal Blog">
-<meta property="og:url" content="http://zhuchenshawn.com/archives/2017/04/index.html">
+  <meta name="description" content="之前看到过有用几行python代码实现微信聊天机器人的帖子，但是发现过于简陋，并且bug还很多（比如无法区分个人消息和群消息）。于是就自己研究了一下，利用网上开源的wxbot微信聊天机器人再自己加上图灵机器人的api，做成了一个实用的微信图灵聊天机器人。目前可以实现自动回复好友发送的文本消息（默认收到一条回复一条），修改之后可以自动回复群消息，识别图片表情等。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信聊天机器人">
+<meta property="og:url" content="http://zhuchenshawn.com/2017/03/19/微信聊天机器人/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="不忘初心 方得始终">
+<meta property="og:description" content="之前看到过有用几行python代码实现微信聊天机器人的帖子，但是发现过于简陋，并且bug还很多（比如无法区分个人消息和群消息）。于是就自己研究了一下，利用网上开源的wxbot微信聊天机器人再自己加上图灵机器人的api，做成了一个实用的微信图灵聊天机器人。目前可以实现自动回复好友发送的文本消息（默认收到一条回复一条），修改之后可以自动回复群消息，识别图片表情等。">
+<meta property="og:image" content="http://i4.buimg.com/4851/04a968d62f8214df.jpg">
+<meta property="og:updated_time" content="2017-05-18T06:42:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shawnzhu's Personal Blog">
-<meta name="twitter:description" content="不忘初心 方得始终">
+<meta name="twitter:title" content="微信聊天机器人">
+<meta name="twitter:description" content="之前看到过有用几行python代码实现微信聊天机器人的帖子，但是发现过于简陋，并且bug还很多（比如无法区分个人消息和群消息）。于是就自己研究了一下，利用网上开源的wxbot微信聊天机器人再自己加上图灵机器人的api，做成了一个实用的微信图灵聊天机器人。目前可以实现自动回复好友发送的文本消息（默认收到一条回复一条），修改之后可以自动回复群消息，识别图片表情等。">
+<meta name="twitter:image" content="http://i4.buimg.com/4851/04a968d62f8214df.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -50,14 +54,12 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
 
 </head>
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -147,114 +149,147 @@
             
       <div id="content" class="outer">
         
-          <section id="main">
-  <div class="archives-tags-wrap"><blockquote><span>嗯，目前共计7篇文章</span></blockquote>
-
-
-<!-- 分页显示 -->
-
-	
-	
-		
-		
-		  
-		  
-		  <section class="archives-wrap">
-		    <div class="archive-year-wrap">
-		      <h1><a href="/archives/2017" class="archive-year">2017</a></h1>
-		    </div>
-		    <div class="archives">
-		
-		<article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2017/04/25/使用HEXO搭建个人博客/" class="archive-article-date">
-	  <time datetime="2017-04-25T07:10:59.000Z" itemprop="datePublished">2017-04-25</time>
-	</a>
-
-      
+          <section id="main" style="float:none;"><article id="post-微信聊天机器人" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2017/04/25/使用HEXO搭建个人博客/">使用HEXO搭建个人博客</a>
+    <h1 class="thumb" class="article-title" itemprop="name">
+      微信聊天机器人
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/19/微信聊天机器人/" class="article-date">
+	  <time datetime="2017-03-19T06:18:32.000Z" itemprop="datePublished">2017-03-19</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/Web开发/">Web开发</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前看到过有用几行python代码实现微信聊天机器人的帖子，但是发现过于简陋，并且bug还很多（比如无法区分个人消息和群消息）。于是就自己研究了一下，利用网上开源的wxbot微信聊天机器人再自己加上图灵机器人的api，做成了一个实用的微信图灵聊天机器人。目前可以实现自动回复好友发送的文本消息（默认收到一条回复一条），修改之后可以自动回复群消息，识别图片表情等。</p>
+<a id="more"></a>
+<p>效果如下：</p>
+<p><img src="http://i4.buimg.com/4851/04a968d62f8214df.jpg" alt="img"></p>
+<h2 id="需要准备的："><a href="#需要准备的：" class="headerlink" title="需要准备的："></a>需要准备的：</h2><ul>
+<li>urllib2库</li>
+<li>json库</li>
+</ul>
+<p>(以上两个库如果没有的话可以直接通过命令行安装，还是很简单的)</p>
+<ul>
+<li>图灵机器人接口api</li>
+</ul>
+<p>这个可以去<a href="www.truing123.com">www.truing123.com</a>注册，然后可以获得一个api接口地址和key，凭借这两个东西可以访问图灵机器人的服务器并获得返回数据</p>
+<ul>
+<li>wxbot</li>
+</ul>
+<p>是一个开源的Python包装Web微信协议实现的微信机器人框架，可以去GitHub：<a href="https://github.com/liuwons/wxBot" target="_blank" rel="external">https://github.com/liuwons/wxBot</a>上下载</p>
+<h2 id="实现原理："><a href="#实现原理：" class="headerlink" title="实现原理："></a>实现原理：</h2><p>首先开启wxbot，扫码登录微信，通过urllib2库的request命令将微信收到的特定的信息，发送至图灵机器人的api接口（需要配合key），然后使用response命令得到图灵机器人服务器返回的json形式的数据，取出其中有用的部分，放入回复的字段中。即可实现自动聊天。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code>#!/usr/bin/env python
+# coding: utf-8
+import urllib2
+import json
+import sys
+from wxbot import *
+
+class MyWXBot(WXBot):
+
+    def getHtml(url):
+        page = urllib2.urlopen(url)
+        html = page.read()
+        return html
+
+    def handle_msg_all(self, msg):
+        key = &apos;**********************&apos;
+        api = &apos;http://www.tuling123.com/openapi/api?key=&apos; + key + &apos;&amp;info=&apos;
+        if msg[&apos;msg_type_id&apos;] == 4 and msg[&apos;content&apos;][&apos;type&apos;] == 0:
+            info = msg[&apos;content&apos;][&apos;data&apos;]
+            request = api + info
+            page = urllib2.urlopen(request)
+            response = page.read()
+            dic_json = json.loads(response)
+            reply_text = dic_json[&apos;text&apos;]
+            self.send_msg_by_uid(reply_text, msg[&apos;user&apos;][&apos;id&apos;])
+
+def main():
+       reload(sys)
+       sys.setdefaultencoding(&apos;utf8&apos;)
+       bot = MyWXBot()
+       bot.DEBUG = True
+    bot.conf[&apos;qr&apos;] = &apos;png&apos;
+    bot.is_big_contact = False
+    bot.run()
+
+if __name__ == &apos;__main__&apos;:
+       main()
+</code></pre><p>以上是整个实现的代码。下面来分析最关键的函数：</p>
+<pre><code>def handle_msg_all(self, msg):
+        key = &apos;**********************&apos;
+        api = &apos;http://www.tuling123.com/openapi/api?key=&apos; + key + &apos;&amp;info=&apos;
+        if msg[&apos;msg_type_id&apos;] == 4 and msg[&apos;content&apos;][&apos;type&apos;] == 0:
+            info = msg[&apos;content&apos;][&apos;data&apos;]
+            request = api + info
+            page = urllib2.urlopen(request)
+            response = page.read()
+            dic_json = json.loads(response)
+            reply_text = dic_json[&apos;text&apos;]
+            self.send_msg_by_uid(reply_text, msg[&apos;user&apos;][&apos;id&apos;])
+</code></pre><p>key是你在注册图灵机器人之后会获得的一个身份认证之类的东西，只有靠key才能够与服务器进行通信。</p>
+<p>api是你访问图灵机器人服务器的地址。</p>
+<p>if条件语句是用来确定收到的msg类型是私人消息且为文本消息，其他的类型请参考Github里wxbot的说明。</p>
+<p>剩下的语句就是把收到的msg提取出来，使用request发送到服务器上。</p>
+<p>使用response收到服务器返回给你的，包含图灵机器人给的回复的json语句，想办法把json语句中有用的信息提取出来，再通过send_msg_bu_uid()函数发送给微信好友。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/基于朴素贝叶斯算法的推特数据新闻检测/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          基于朴素贝叶斯算法的推特数据新闻检测
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/25/使用HEXO搭建个人博客/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">使用HEXO搭建个人博客</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-	
-	
-		</div></section>
-	
 
-	<!-- 页数指示器 -->
-	
+<!-- Table of Contents -->
 
-
-
-
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需要准备的："><span class="nav-number">1.</span> <span class="nav-text">需要准备的：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现原理："><span class="nav-number">2.</span> <span class="nav-text">实现原理：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol>
+    
+    </div>
+  </aside>
 </section>
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web开发/">Web开发</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/05/18/使用WordPress搭建企业级网站/">使用WordPress搭建企业级网站</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/08/利用卷积神经网络搭建猫狗分类器/">利用卷积神经网络搭建猫狗分类器</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/25/使用HEXO搭建个人博客/">使用HEXO搭建个人博客</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/19/微信聊天机器人/">微信聊天机器人</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/08/基于朴素贝叶斯算法的推特数据新闻检测/">基于朴素贝叶斯算法的推特数据新闻检测</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
       
@@ -358,6 +393,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
