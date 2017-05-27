@@ -3,22 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档: 2016/11 | Shawnzhu&#39;s Personal Blog</title>
+  <title>自己动手写基于mips的16位单周期cpu | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="s8Pe1TBqyy" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
   
-  <meta name="description" content="不忘初心 方得始终">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shawnzhu's Personal Blog">
-<meta property="og:url" content="http://zhuchenshawn.com/archives/2016/11/index.html">
+  <meta name="description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己动手写基于MIPS的16位单周期CPU">
+<meta property="og:url" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="不忘初心 方得始终">
+<meta property="og:description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main%20design.png">
+<meta property="og:updated_time" content="2017-05-27T08:51:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shawnzhu's Personal Blog">
-<meta name="twitter:description" content="不忘初心 方得始终">
+<meta name="twitter:title" content="自己动手写基于MIPS的16位单周期CPU">
+<meta name="twitter:description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
+<meta name="twitter:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main%20design.png">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -51,14 +55,12 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
 
 </head>
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -148,127 +150,76 @@
             
       <div id="content" class="outer">
         
-          <section id="main">
-  <div class="archives-tags-wrap"><blockquote><span>嗯，目前共计8篇文章</span></blockquote>
-
-
-<!-- 分页显示 -->
-
-	
-	
-		
-		
-		  
-		  
-		  <section class="archives-wrap">
-		    <div class="archive-year-wrap">
-		      <h1><a href="/archives/2016" class="archive-year">2016</a></h1>
-		    </div>
-		    <div class="archives">
-		
-		<article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2016/11/20/使用wordpress搭建博客后台/" class="archive-article-date">
-	  <time datetime="2016-11-20T00:51:24.000Z" itemprop="datePublished">2016-11-20</time>
-	</a>
-
-      
+          <section id="main" style="float:none;"><article id="post-自己动手写基于MIPS的16位单周期CPU" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2016/11/20/使用wordpress搭建博客后台/">使用wordpress搭建博客后台</a>
+    <h1 class="thumb" class="article-title" itemprop="name">
+      自己动手写基于MIPS的16位单周期CPU
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/" class="article-date">
+	  <time datetime="2017-05-27T08:34:25.000Z" itemprop="datePublished">2017-05-27</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/其他开发/">其他开发</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。</p>
+<p>该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。</p>
+<a id="more"></a>
+<p>其实这个东西代码并不是很复杂，主要是需要撰写完整而详细的设计报告和测试报告，最后还需要上板子跑出来，所以需要你把这个CPU的架构吃得很透才行。</p>
+<p>先po一张总设计图。<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main design.png" alt=""></p>
+<p>然后这是第二个给自己挖好的坑，等我做完之后再来慢慢填。。。。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/18/使用WordPress搭建企业级网站/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          使用WordPress搭建企业级网站
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
 </article>
-	
-	
-		</div></section>
-	
 
-	<!-- 页数指示器 -->
-	
+<!-- Table of Contents -->
 
-
-
-
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="artnav">无</ol>
+    
+    </div>
+  </aside>
 </section>
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web开发/">Web开发</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他开发/">其他开发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">2</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/">自己动手写基于MIPS的16位单周期CPU</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/18/使用WordPress搭建企业级网站/">使用WordPress搭建企业级网站</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/08/利用卷积神经网络搭建猫狗分类器/">利用卷积神经网络搭建猫狗分类器</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/25/使用HEXO搭建个人博客/">使用HEXO搭建个人博客</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/19/微信聊天机器人/">微信聊天机器人</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget tag">
-    <h3 class="title">友情链接</h3>
-      <ul class="entry">
-        
-          <li class='link'><a href='http://pengloo53.farbox.com'>Lumia Xu&#39;s Blog</a></li>
-        
-          <li class='link'><a href='https://jackgxc.com'>码农笔记</a></li>
-        
-      </ul>
-  </div>
-
-  
-</aside>
         
       </div>
       
@@ -372,6 +323,8 @@
 
 
 
+
+  <script src="/js/dialog.js"></script>
 
 
 
