@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>netflix推荐系统 | Shawnzhu&#39;s Personal Blog</title>
+  <title>移动端神经网络 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
@@ -14,22 +14,23 @@
     <meta name="baidu-site-verification" content="true" />
   
   
-  <meta name="description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
+  <meta name="description" content="这篇文章是我在新加坡南洋理工大学Data Management and Analysis Lab 做RA期间，为组里的微信公众号写的文章。直接搬运过来： 卷积神经网络是当前计算机视觉和人工智能系统的核心部件，也是当前主流的神经网络。目前卷积神经网络的发展方向有二：其一是利用GPU和服务器集群的计算能力，向着更深的层数，更高的计算复杂度进发，以求得到更高的精度和准确率。像Deep Residual">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Netflix推荐系统">
-<meta property="og:url" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/index.html">
+<meta property="og:title" content="移动端神经网络">
+<meta property="og:url" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
-<meta property="og:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure1.png">
-<meta property="og:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure2.png">
-<meta property="og:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure3.png">
-<meta property="og:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure4.png">
-<meta property="og:updated_time" content="2017-10-07T04:49:36.000Z">
+<meta property="og:description" content="这篇文章是我在新加坡南洋理工大学Data Management and Analysis Lab 做RA期间，为组里的微信公众号写的文章。直接搬运过来： 卷积神经网络是当前计算机视觉和人工智能系统的核心部件，也是当前主流的神经网络。目前卷积神经网络的发展方向有二：其一是利用GPU和服务器集群的计算能力，向着更深的层数，更高的计算复杂度进发，以求得到更高的精度和准确率。像Deep Residual">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig1.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig2.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig3.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig4.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig5.png">
+<meta property="og:updated_time" content="2017-10-07T07:20:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Netflix推荐系统">
-<meta name="twitter:description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
-<meta name="twitter:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure1.png">
+<meta name="twitter:title" content="移动端神经网络">
+<meta name="twitter:description" content="这篇文章是我在新加坡南洋理工大学Data Management and Analysis Lab 做RA期间，为组里的微信公众号写的文章。直接搬运过来： 卷积神经网络是当前计算机视觉和人工智能系统的核心部件，也是当前主流的神经网络。目前卷积神经网络的发展方向有二：其一是利用GPU和服务器集群的计算能力，向着更深的层数，更高的计算复杂度进发，以求得到更高的精度和准确率。像Deep Residual">
+<meta name="twitter:image" content="http://zhuchenshawn.com/2017/10/07/移动端神经网络/fig1.png">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -157,7 +158,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Netflix推荐系统" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-移动端神经网络" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -165,7 +166,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Netflix推荐系统
+      移动端神经网络
     </h1>
   
 
@@ -173,27 +174,37 @@
     
     <div class="article-meta">
       
-	<a href="/2017/07/12/Netflix推荐系统/" class="article-date">
-	  <time datetime="2017-07-12T11:32:27.000Z" itemprop="datePublished">2017-07-12</time>
+	<a href="/2017/10/07/移动端神经网络/" class="article-date">
+	  <time datetime="2017-10-07T07:10:59.000Z" itemprop="datePublished">2017-10-07</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/数据科学/">数据科学</a>
+    <a class="article-category-link" href="/categories/“数据科学”/">“数据科学”</a>
 
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我们实现这样一个算法。</p>
+        <p>这篇文章是我在新加坡南洋理工大学Data Management and Analysis Lab 做RA期间，为组里的微信公众号写的文章。直接搬运过来：</p>
+<p>卷积神经网络是当前计算机视觉和人工智能系统的核心部件，也是当前主流的神经网络。目前卷积神经网络的发展方向有二：其一是利用GPU和服务器集群的计算能力，向着更深的层数，更高的计算复杂度进发，以求得到更高的精度和准确率。像Deep Residual Learning for Image Recognition中提出的ResNet，其网络的层数可达上千层。其二是在保持精度的情况下，试图将网络的规模缩小，减少对计算量和存储空间的依赖，从而将神经网络移植到移动端，使神经网络可以适应更多的场景，构建更多的应用。本文将简要介绍近半年来新提出的实现移动端神经网络的方案。</p>
 <a id="more"></a>
-<p><img src="/2017/07/12/Netflix推荐系统/figure1.png" alt=""></p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>这个推荐系统为什么这么难，以至于值得起100万美金？我个人认为主要的原因还是在于数据集是特别巨大而且稀疏的。<br>从训练数据可以看到，Netflix提供了17700部电影，以及480000个用户，这两者组成了一个非常巨大的矩阵，普通的电脑的计算能力和存储能力都是远远不足以计算这么庞大的数据。矩阵中的每一个元素代表着一位用户对于一部电影的评分。很明显，一位用户怎么可能看过17700部电影，顶多10^2数量级部吧。而一部电影也不可能被所有的用户都看过，根据Netflix给出的数据，这个矩阵大约只有10^7个非零元素，所以这个矩阵是极度稀疏的，99%的数据都是0。<br><img src="/2017/07/12/Netflix推荐系统/figure2.png" alt=""></p>
-<p>紧接着分析具体数据。每一个数据文件代表了训练样本矩阵中的一列，即多个用户对一部电影的评分。数据构成如下：</p>
-<pre><code>[User_id, Rating, Time_stamp]
-</code></pre><p>其中Rating是一个1-5的正整数。</p>
-<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>这么大的矩阵，计算机肯定是无法直接处理的，所以论文中先引入了线性代数中的SVD（奇异值分解）方法。当年学习线性代数时完全不知道这些奇奇怪怪没事儿找事儿的特征值啊各种分解啊有什么用，结果在这里就派上了用场。SVD分解的具体操作步骤请自行百度或谷歌。</p>
-<p>但是SVD并不能真正解决我们的问题。因为对这个巨型矩阵进行传统的SVD分解，也是一个极其巨大的工程，我之前试过在python中进行SVD分解，电脑都快跑炸了都没有结果。所以文章在这里对SVD分解进行了一个改动。<br><img src="/2017/07/12/Netflix推荐系统/figure3.png" alt=""></p>
-<p>这样，大矩阵就被分解为了两个大小可以接受的小矩阵。在具体的实验过程中，f可取20-100.<br><img src="/2017/07/12/Netflix推荐系统/figure4.png" alt=""></p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>未完待续。。。</p>
+<h2 id="基础支持"><a href="#基础支持" class="headerlink" title="基础支持"></a>基础支持</h2><p>机器学习最常用的框架Tensorflow已实现对于Android、 iOS和树莓派的支持。值得关注的是，2017年6月5日WWDC 2017苹果开发者大会上，苹果公司正式推出了面向iOS开发者的深度学习框架CoreML，集成了诸如人脸识别API、自然语言处理API等多个接口、以及对DNN、CNN、RNN、SVM等模型的支持。CoreML的到来为苹果的Siri和AR应用铺设好了道路，未来技术成熟以后，在无网络条件下也有可能使用Siri。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig1.png" alt=""><br>图1：CoreML的结构</p>
+<p>CoreML允许开发者将已训练好的机器学习模型导入其中，然后将其集成到自己的应用中，完成模型的Test或Estimate阶段。不过CoreML暂不支持模型再训练或联合学习，只能使用已经训练好的数据。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig2.png" alt=""><br>图2：CoreML的应用实现</p>
+<h2 id="移动端神经网络架构"><a href="#移动端神经网络架构" class="headerlink" title="移动端神经网络架构"></a>移动端神经网络架构</h2><p>目前学界有两种主要移动端神经网络架构方法：一种提出以更为轻量级的网络结构设计来减少运算量和网络大小。其中比较有代表性的结构为Facebook提出的ResNeXt，Google提出的Xception，Mobile Net以及Face++提出的Shuffle Net。第二种是从工程的角度入手，在将现有的神经网络架构移植到移动端的过程中，去掉无关的、低权重的神经元，从而在保证精度的同时，尽可能地压缩网络的大小。</p>
+<h3 id="轻量级的网络结构设计"><a href="#轻量级的网络结构设计" class="headerlink" title="轻量级的网络结构设计"></a>轻量级的网络结构设计</h3><p>Xception 和Mobile Net引入了“深度分离可卷积”(deepthwise separable convolution) 的概念。深度可分离卷积，将普通的卷积运算分成了逐通道卷积(depthwise convolution)和逐点卷积(pointwise convolution)两个部分，其中逐通道卷积负责对输入进行卷积滤波，逐点卷积负责合并结果，形成新的特征（图3）。通过它，Mobile Net打散了输出通道和卷积和之间的连接关系，有效地减少了计算量和参数量。目前，谷歌已将基于Tensorflow的Mobile Net开源。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig3.png" alt=""></p>
+<p>ResNeXt则使用了逐点卷积和分组卷积( grouped convolution)。它先使用逐点卷积，减少输入的特征数，之后使用分组卷积，将输入的特征分成多个组之后再进行卷积操作，相对于传统的卷积运算，也能有效减少计算的复杂度。ResNeXt引入了一个新的维度cardinality，意思是变换集的规模(The size of the set of transformation)。要提高网络的精确度，增加cardinality比增加网络的深度和宽度更有效。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig4.png" alt=""></p>
+<p>而目前效果最好的Shuffle Net则在Mobile Net和ResNeXt的基础上进行改进，提出了类似于ResNeXt 分组卷积的 “分组逐点卷积”(group pointwise convolution) 来将Mobile Net中计算量最大的逐点卷积替换掉。将卷积运算的输入限制在每一个分组内部，进一步减少了运算量。不过由于分组将图像的特征分割到各个组内，精度会受到影响，于是又引入了“通道重排”(channel shuffle) 交换各分组之间的信息。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig5.png" alt=""></p>
+<h3 id="工程角度实现移动端神经网络"><a href="#工程角度实现移动端神经网络" class="headerlink" title="工程角度实现移动端神经网络"></a>工程角度实现移动端神经网络</h3><p>荷兰工程师Matthijs Hollemans在他的一篇博客中介绍了通过减少连接的方式来缩小Mobile Net规模的方法。作者认为，单纯按照权重大小删除节点，并不能够有效地提高网络的速度。因为这种方式在面对已经高度简洁的Mobile Net时，系数矩阵变稀疏，从而减慢了GPU的运行速度。他提出通过减去卷积滤波器的L1范数，来删除卷积滤波器和通道；每一次删除之后，再通过使用一个极小的学习率来重新训练网络，确保被删除掉的节点的信息能够被其他节点所学习到。最后的实验结果为，网络的规模小了25%，而准确率大约损失了约20%。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>移动端的神经网络正逐渐成为各大厂商和各研究机构追逐的热点。按照这个趋势，如果即将到来的5G技术确能解决移动端与服务器之间的大量数据传输瓶颈，那可以预见下一代的人工智能一定会在移动端上有所突破！</p>
+<p>参考资料：</p>
+<p>新智元，机器之心专栏</p>
+<p>MobileNets: Efficienct Convolutional Neural Network for Mobile Vision Application</p>
+<p>Deep Residual Learning for Image Recognition<br>Aggregated Residual Transformation for Deep Neural Networks</p>
+<p>ShuffleNet: An Extremely Efficient Convolutional Neural Networks for Mobile Device</p>
 
       
     </div>
@@ -206,20 +217,15 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/11/AppleScript小试牛刀/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          自己动手写基于MIPS的16位单周期CPU
+          AppleScript小试牛刀
         
       </div>
     </a>
   
-  
-    <a href="/2017/08/11/AppleScript小试牛刀/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">AppleScript小试牛刀</div>
-    </a>
   
 </nav>
 
@@ -232,7 +238,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础支持"><span class="nav-number">1.</span> <span class="nav-text">基础支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端神经网络架构"><span class="nav-number">2.</span> <span class="nav-text">移动端神经网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轻量级的网络结构设计"><span class="nav-number">2.1.</span> <span class="nav-text">轻量级的网络结构设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工程角度实现移动端神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">工程角度实现移动端神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol>
     
     </div>
   </aside>
