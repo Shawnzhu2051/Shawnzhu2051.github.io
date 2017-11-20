@@ -14,19 +14,22 @@
     <meta name="baidu-site-verification" content="true" />
   
   
-  <meta name="description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
+  <meta name="description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己动手写基于MIPS的16位单周期CPU">
 <meta property="og:url" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
+<meta property="og:description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PC.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/IM.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/DM.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main%20design.png">
-<meta property="og:updated_time" content="2017-05-27T08:51:28.000Z">
+<meta property="og:updated_time" content="2017-11-20T12:03:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己动手写基于MIPS的16位单周期CPU">
-<meta name="twitter:description" content="这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。">
-<meta name="twitter:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main%20design.png">
+<meta name="twitter:description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
+<meta name="twitter:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PC.png">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -180,11 +183,48 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。</p>
-<p>该CPU是基于MIPS精简指令集，具有16位数据通路，单周期。使用的语言为Verilog，编译器为Xilinx vivado。</p>
+        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。</p>
+<p>该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。</p>
+<h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><p>使用的语言为Verilog</p>
+<p>编译器为ALTERA Quartus</p>
+<p>开发使用的电路板为 ALTERA DE1-SoC</p>
 <a id="more"></a>
-<p>其实这个东西代码并不是很复杂，主要是需要撰写完整而详细的设计报告和测试报告，最后还需要上板子跑出来，所以需要你把这个CPU的架构吃得很透才行。</p>
-<p>先po一张总设计图。<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main design.png" alt=""></p>
+<h3 id="模块设计"><a href="#模块设计" class="headerlink" title="模块设计"></a>模块设计</h3><ul>
+<li>程序计数器PC</li>
+</ul>
+<p>PC 寄存器是一个存储指令地址的32位寄存器，在每个时钟上升沿时，地址⾃增4 获取下⼀条指令的地址。同时PC 寄存器也要能够进⾏跳转与分⽀语句的执⾏，使得程序能够正常运⾏。</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PC.png" alt="">    </p>
+<ul>
+<li>指令存储器IM</li>
+</ul>
+<p>IM是一个有读端口的ROM    </p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/IM.png" alt=""></p>
+<ul>
+<li>数据存储器DM</li>
+</ul>
+<p>DM是一个有读和写端口的RAM，如果写使能WE=0，则从地址A将数据读到输出端RD；如果写使能WE=1，在CLK上升沿将输入WD写入地址A。</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/DM.png" alt=""></p>
+<ul>
+<li>寄存器文件RF</li>
+</ul>
+<p>RF具有1个写端口，2个读端口，输入3个地址，写入内容和写入信号，输出两个地址对应的内容。 由于单周期内不能一边读一边写，故有一个时钟信号，通过一级缓存，在下一个时钟信号来临时立即写入内存。</p>
+<ul>
+<li>算数逻辑单元ALU</li>
+</ul>
+<p>输入运算数和指令，输出运算结果以及标志位。由于单周期内，标志位并不在当前周期而在下一周期使用，故增加时钟信号，通过一级缓存，在下一个周期时判断使用。</p>
+<ul>
+<li>控制单元CU</li>
+</ul>
+<p>输入16位的指令，根据真值表，输出对应结果</p>
+<ul>
+<li>PCPlus</li>
+</ul>
+<p>使PC指向下一个指令地址</p>
+<ul>
+<li>符号扩展SignImm</li>
+</ul>
+<p>将16位扩展为32位</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main design.png" alt=""></p>
 <p>然后这是第二个给自己挖好的坑，等我做完之后再来慢慢填。。。。</p>
 
       
@@ -224,7 +264,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="artnav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块设计"><span class="nav-number">3.</span> <span class="nav-text">模块设计</span></a></li></ol>
     
     </div>
   </aside>
