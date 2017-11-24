@@ -24,8 +24,17 @@
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PC.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/IM.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/DM.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/RF.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALU.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/CU.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PCPlus.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/SignImm.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main%20design.png">
-<meta property="og:updated_time" content="2017-11-20T12:03:45.000Z">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/set1.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/set2.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/true.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALUtrue.png">
+<meta property="og:updated_time" content="2017-11-24T11:11:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己动手写基于MIPS的16位单周期CPU">
 <meta name="twitter:description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
@@ -208,23 +217,35 @@
 <li>寄存器文件RF</li>
 </ul>
 <p>RF具有1个写端口，2个读端口，输入3个地址，写入内容和写入信号，输出两个地址对应的内容。 由于单周期内不能一边读一边写，故有一个时钟信号，通过一级缓存，在下一个时钟信号来临时立即写入内存。</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/RF.png" alt=""></p>
 <ul>
 <li>算数逻辑单元ALU</li>
 </ul>
 <p>输入运算数和指令，输出运算结果以及标志位。由于单周期内，标志位并不在当前周期而在下一周期使用，故增加时钟信号，通过一级缓存，在下一个周期时判断使用。</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALU.png" alt=""></p>
 <ul>
 <li>控制单元CU</li>
 </ul>
 <p>输入16位的指令，根据真值表，输出对应结果</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/CU.png" alt=""></p>
 <ul>
 <li>PCPlus</li>
 </ul>
 <p>使PC指向下一个指令地址</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PCPlus.png" alt=""></p>
 <ul>
 <li>符号扩展SignImm</li>
 </ul>
 <p>将16位扩展为32位</p>
-<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main design.png" alt=""></p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/SignImm.png" alt=""></p>
+<h3 id="设计结构图"><a href="#设计结构图" class="headerlink" title="设计结构图"></a>设计结构图</h3><p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/main design.png" alt=""></p>
+<h3 id="指令集设计"><a href="#指令集设计" class="headerlink" title="指令集设计"></a>指令集设计</h3><p>该 CPU CPU的指令集设计中，参考了MIPS32的指令集架构，设计了一个精简，共有指令10条。其中算术指令6条，分⽀跳转指令2条，装载存储内控制指2条。</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/set1.png" alt=""><br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/set2.png" alt=""></p>
+<p>主译码器真值表：</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/true.png" alt=""></p>
+<p>ALU译码器真值表</p>
+<p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALUtrue.png" alt=""></p>
+<h3 id="数据通路设计"><a href="#数据通路设计" class="headerlink" title="数据通路设计"></a>数据通路设计</h3><p>R-type指令的数据通路：</p>
 <p>然后这是第二个给自己挖好的坑，等我做完之后再来慢慢填。。。。</p>
 
       
@@ -264,7 +285,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块设计"><span class="nav-number">3.</span> <span class="nav-text">模块设计</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块设计"><span class="nav-number">3.</span> <span class="nav-text">模块设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计结构图"><span class="nav-number">4.</span> <span class="nav-text">设计结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令集设计"><span class="nav-number">5.</span> <span class="nav-text">指令集设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据通路设计"><span class="nav-number">6.</span> <span class="nav-text">数据通路设计</span></a></li></ol>
     
     </div>
   </aside>
