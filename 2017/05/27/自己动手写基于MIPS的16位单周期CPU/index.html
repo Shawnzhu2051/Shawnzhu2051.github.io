@@ -34,7 +34,13 @@
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/set2.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/true.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALUtrue.png">
-<meta property="og:updated_time" content="2017-11-24T11:11:57.000Z">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/R-type.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/LW.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/SW.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ADDI.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/BEQ.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/JUMP.png">
+<meta property="og:updated_time" content="2017-11-25T07:26:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己动手写基于MIPS的16位单周期CPU">
 <meta name="twitter:description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
@@ -245,8 +251,31 @@
 <p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/true.png" alt=""></p>
 <p>ALU译码器真值表</p>
 <p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ALUtrue.png" alt=""></p>
-<h3 id="数据通路设计"><a href="#数据通路设计" class="headerlink" title="数据通路设计"></a>数据通路设计</h3><p>R-type指令的数据通路：</p>
-<p>然后这是第二个给自己挖好的坑，等我做完之后再来慢慢填。。。。</p>
+<h3 id="数据通路设计"><a href="#数据通路设计" class="headerlink" title="数据通路设计"></a>数据通路设计</h3><p>R-type指令的数据通路：<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/R-type.png" alt=""></p>
+<p>LW指令的数据通路:<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/LW.png" alt=""></p>
+<p>SW指令的数据通路:<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/SW.png" alt=""></p>
+<p>ADDI指令的数据通路:<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ADDI.png" alt=""></p>
+<p>BEQ指令的数据通路:<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/BEQ.png" alt=""></p>
+<p>JUMP指令的数据通路:<br><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/JUMP.png" alt=""></p>
+<h3 id="模块测试"><a href="#模块测试" class="headerlink" title="模块测试"></a>模块测试</h3><p>测试指令预先写在了IM之中，测试指令编写如下：</p>
+<p>IMmem[0] = {ADDI, gr1, 4’b0001, 4’b0010};<br>指令0：gr1初始化时为0，给gr1加上一个立即数18    </p>
+<p>IMmem[1] = {ADDI, gr2, 4’b0010, 4’b0101};<br>指令1：gr2初始化时为0，给gr1加上一个立即数37</p>
+<p>IMmem[2] = {ADD, gr3, 1’b0, gr1, 1’b0, gr2};<br>指令2：从gr1和gr2中取值相加，结果保存在gr3中，gr3应为55</p>
+<p>IMmem[3] = {SW, gr3, 1’b0,gr0, 4’b0000};<br>指令3：把gr3的值保存到DM中的dm0中，dm0的值应为55</p>
+<p>IMmem[4] ={SUB, gr3, 1’b0, gr2 1’b0, `gr1};<br>指令4：把gr2的值，减去gr1的值，保存在gr3中，gr3为19</p>
+<p>IMmem[5] = {LW, gr1, 1’b0, gr0, 4’b0000};<br>指令5：从dm0中取值到gr1中，gr1为55</p>
+<p>IMmem[6] = {AND, gr3, 1’b0, gr1, 1’b0, gr2};<br>指令6：从gr1和gr2中取值进行与操作，结果存在gr3中，gr3为37</p>
+<p>IMmem[7] = {SLT, gr3, 1’b0, gr2, 1’b0, gr1};<br>指令7：比较gr2和gr1的大小，并将结果存在gr3中，gr3为1</p>
+<p>IMmem[8] = {ADDI, gr3, 4’b0000, 4’b1010};<br>指令8：给gr1加上一个立即数10，gr3为11</p>
+<p>IMmem[9] = {OR, gr1, 1’b0, gr3, 1’b0, gr2};<br>指令9：从gr3和gr2中取值进行与操作，结果存在gr1中，gr1为47</p>
+<p>IMmem[10] = {JUMP, 3’b000, 4’b0000, 4’b1100};<br>指令10：跳转指令，PC跳转到第12条指令</p>
+<p>IMmem[11] = {ADDI, gr1, 4’b0000, 4’b0001};<br>指令11：该指令不被执行，如果gr1中值为56则出错</p>
+<p>IMmem[12] = {LW, gr2, 1’b0, gr0, 4’b0000};<br>指令12：从dm0中取值到gr2中，gr2为55</p>
+<p>IMmem[13] = {BEQ, gr1, 1’b0, gr2, 4’b1111};<br>指令13：比较gr1和gr2的值，若相等则跳到指令15</p>
+<p>IMmem[14] = {ADDI, gr3, 4’b0000, 4’b0001};<br>指令11：该指令不被执行，如果gr3中值为22则出错</p>
+<p>IMmem[15] = {ADD, gr3, 1’b0, gr1, 1’b0, gr2};<br>指令15：从gr1和gr2中取值相加，结果保存在gr3中，gr3应为110</p>
+<p>以上指令将作为测试指令输入，最后来和结果作比较，看程序是否正确运行。</p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p>单周期CPU指的是一条指令的执行在一个时钟周期内完成，然后开始下一条指令的执行，即一条指令用一个时钟周期完成。电平从低到高变化的瞬间称为时钟上升沿，两个相邻时钟上升沿之间的时间间隔称为一个时钟周期。单周期CPU，是指在一个时钟周期内完成取指令（IF），指令译码（ID），指令执行（EXE），存储器访问（MEM）和结果回写（WB）的处理。</p>
 
       
     </div>
@@ -285,7 +314,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块设计"><span class="nav-number">3.</span> <span class="nav-text">模块设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计结构图"><span class="nav-number">4.</span> <span class="nav-text">设计结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令集设计"><span class="nav-number">5.</span> <span class="nav-text">指令集设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据通路设计"><span class="nav-number">6.</span> <span class="nav-text">数据通路设计</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境"><span class="nav-number">2.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块设计"><span class="nav-number">3.</span> <span class="nav-text">模块设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计结构图"><span class="nav-number">4.</span> <span class="nav-text">设计结构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令集设计"><span class="nav-number">5.</span> <span class="nav-text">指令集设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据通路设计"><span class="nav-number">6.</span> <span class="nav-text">数据通路设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块测试"><span class="nav-number">7.</span> <span class="nav-text">模块测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时序图"><span class="nav-number">8.</span> <span class="nav-text">时序图</span></a></li></ol>
     
     </div>
   </aside>
