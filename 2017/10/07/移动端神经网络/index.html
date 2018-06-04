@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>移动端神经网络 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
@@ -59,7 +59,7 @@
   
 
   
-    <link rel="stylesheet" href="/css/header-post.css" >
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
   
@@ -72,7 +72,7 @@
 
 
   
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div id="wrap">
       
         <header>
@@ -187,23 +187,31 @@
         <p>这篇文章是我在新加坡南洋理工大学Data Management and Analysis Lab 做RA期间，为组里的微信公众号写的文章。直接搬运过来：</p>
 <p>卷积神经网络是当前计算机视觉和人工智能系统的核心部件，也是当前主流的神经网络。目前卷积神经网络的发展方向有二：其一是利用GPU和服务器集群的计算能力，向着更深的层数，更高的计算复杂度进发，以求得到更高的精度和准确率。像Deep Residual Learning for Image Recognition中提出的ResNet，其网络的层数可达上千层。其二是在保持精度的情况下，试图将网络的规模缩小，减少对计算量和存储空间的依赖，从而将神经网络移植到移动端，使神经网络可以适应更多的场景，构建更多的应用。本文将简要介绍近半年来新提出的实现移动端神经网络的方案。</p>
 <a id="more"></a>
-<h2 id="基础支持"><a href="#基础支持" class="headerlink" title="基础支持"></a>基础支持</h2><p>机器学习最常用的框架Tensorflow已实现对于Android、 iOS和树莓派的支持。值得关注的是，2017年6月5日WWDC 2017苹果开发者大会上，苹果公司正式推出了面向iOS开发者的深度学习框架CoreML，集成了诸如人脸识别API、自然语言处理API等多个接口、以及对DNN、CNN、RNN、SVM等模型的支持。CoreML的到来为苹果的Siri和AR应用铺设好了道路，未来技术成熟以后，在无网络条件下也有可能使用Siri。</p>
-<p><img src="/2017/10/07/移动端神经网络/fig1.png" alt=""><br>图1：CoreML的结构</p>
+<h2 id="基础支持"><a class="markdownIt-Anchor" href="#基础支持"></a> 基础支持</h2>
+<p>机器学习最常用的框架Tensorflow已实现对于Android、 iOS和树莓派的支持。值得关注的是，2017年6月5日WWDC 2017苹果开发者大会上，苹果公司正式推出了面向iOS开发者的深度学习框架CoreML，集成了诸如人脸识别API、自然语言处理API等多个接口、以及对DNN、CNN、RNN、SVM等模型的支持。CoreML的到来为苹果的Siri和AR应用铺设好了道路，未来技术成熟以后，在无网络条件下也有可能使用Siri。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig1.png" alt=""><br>
+图1：CoreML的结构</p>
 <p>CoreML允许开发者将已训练好的机器学习模型导入其中，然后将其集成到自己的应用中，完成模型的Test或Estimate阶段。不过CoreML暂不支持模型再训练或联合学习，只能使用已经训练好的数据。</p>
-<p><img src="/2017/10/07/移动端神经网络/fig2.png" alt=""><br>图2：CoreML的应用实现</p>
-<h2 id="移动端神经网络架构"><a href="#移动端神经网络架构" class="headerlink" title="移动端神经网络架构"></a>移动端神经网络架构</h2><p>目前学界有两种主要移动端神经网络架构方法：一种提出以更为轻量级的网络结构设计来减少运算量和网络大小。其中比较有代表性的结构为Facebook提出的ResNeXt，Google提出的Xception，Mobile Net以及Face++提出的Shuffle Net。第二种是从工程的角度入手，在将现有的神经网络架构移植到移动端的过程中，去掉无关的、低权重的神经元，从而在保证精度的同时，尽可能地压缩网络的大小。</p>
-<h3 id="轻量级的网络结构设计"><a href="#轻量级的网络结构设计" class="headerlink" title="轻量级的网络结构设计"></a>轻量级的网络结构设计</h3><p>Xception 和Mobile Net引入了“深度分离可卷积”(deepthwise separable convolution) 的概念。深度可分离卷积，将普通的卷积运算分成了逐通道卷积(depthwise convolution)和逐点卷积(pointwise convolution)两个部分，其中逐通道卷积负责对输入进行卷积滤波，逐点卷积负责合并结果，形成新的特征（图3）。通过它，Mobile Net打散了输出通道和卷积和之间的连接关系，有效地减少了计算量和参数量。目前，谷歌已将基于Tensorflow的Mobile Net开源。</p>
+<p><img src="/2017/10/07/移动端神经网络/fig2.png" alt=""><br>
+图2：CoreML的应用实现</p>
+<h2 id="移动端神经网络架构"><a class="markdownIt-Anchor" href="#移动端神经网络架构"></a> 移动端神经网络架构</h2>
+<p>目前学界有两种主要移动端神经网络架构方法：一种提出以更为轻量级的网络结构设计来减少运算量和网络大小。其中比较有代表性的结构为Facebook提出的ResNeXt，Google提出的Xception，Mobile Net以及Face++提出的Shuffle Net。第二种是从工程的角度入手，在将现有的神经网络架构移植到移动端的过程中，去掉无关的、低权重的神经元，从而在保证精度的同时，尽可能地压缩网络的大小。</p>
+<h3 id="轻量级的网络结构设计"><a class="markdownIt-Anchor" href="#轻量级的网络结构设计"></a> 轻量级的网络结构设计</h3>
+<p>Xception 和Mobile Net引入了“深度分离可卷积”(deepthwise separable convolution) 的概念。深度可分离卷积，将普通的卷积运算分成了逐通道卷积(depthwise convolution)和逐点卷积(pointwise convolution)两个部分，其中逐通道卷积负责对输入进行卷积滤波，逐点卷积负责合并结果，形成新的特征（图3）。通过它，Mobile Net打散了输出通道和卷积和之间的连接关系，有效地减少了计算量和参数量。目前，谷歌已将基于Tensorflow的Mobile Net开源。</p>
 <p><img src="/2017/10/07/移动端神经网络/fig3.png" alt=""></p>
 <p>ResNeXt则使用了逐点卷积和分组卷积( grouped convolution)。它先使用逐点卷积，减少输入的特征数，之后使用分组卷积，将输入的特征分成多个组之后再进行卷积操作，相对于传统的卷积运算，也能有效减少计算的复杂度。ResNeXt引入了一个新的维度cardinality，意思是变换集的规模(The size of the set of transformation)。要提高网络的精确度，增加cardinality比增加网络的深度和宽度更有效。</p>
 <p><img src="/2017/10/07/移动端神经网络/fig4.png" alt=""></p>
 <p>而目前效果最好的Shuffle Net则在Mobile Net和ResNeXt的基础上进行改进，提出了类似于ResNeXt 分组卷积的 “分组逐点卷积”(group pointwise convolution) 来将Mobile Net中计算量最大的逐点卷积替换掉。将卷积运算的输入限制在每一个分组内部，进一步减少了运算量。不过由于分组将图像的特征分割到各个组内，精度会受到影响，于是又引入了“通道重排”(channel shuffle) 交换各分组之间的信息。</p>
 <p><img src="/2017/10/07/移动端神经网络/fig5.png" alt=""></p>
-<h3 id="工程角度实现移动端神经网络"><a href="#工程角度实现移动端神经网络" class="headerlink" title="工程角度实现移动端神经网络"></a>工程角度实现移动端神经网络</h3><p>荷兰工程师Matthijs Hollemans在他的一篇博客中介绍了通过减少连接的方式来缩小Mobile Net规模的方法。作者认为，单纯按照权重大小删除节点，并不能够有效地提高网络的速度。因为这种方式在面对已经高度简洁的Mobile Net时，系数矩阵变稀疏，从而减慢了GPU的运行速度。他提出通过减去卷积滤波器的L1范数，来删除卷积滤波器和通道；每一次删除之后，再通过使用一个极小的学习率来重新训练网络，确保被删除掉的节点的信息能够被其他节点所学习到。最后的实验结果为，网络的规模小了25%，而准确率大约损失了约20%。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>移动端的神经网络正逐渐成为各大厂商和各研究机构追逐的热点。按照这个趋势，如果即将到来的5G技术确能解决移动端与服务器之间的大量数据传输瓶颈，那可以预见下一代的人工智能一定会在移动端上有所突破！</p>
+<h3 id="工程角度实现移动端神经网络"><a class="markdownIt-Anchor" href="#工程角度实现移动端神经网络"></a> 工程角度实现移动端神经网络</h3>
+<p>荷兰工程师Matthijs Hollemans在他的一篇博客中介绍了通过减少连接的方式来缩小Mobile Net规模的方法。作者认为，单纯按照权重大小删除节点，并不能够有效地提高网络的速度。因为这种方式在面对已经高度简洁的Mobile Net时，系数矩阵变稀疏，从而减慢了GPU的运行速度。他提出通过减去卷积滤波器的L1范数，来删除卷积滤波器和通道；每一次删除之后，再通过使用一个极小的学习率来重新训练网络，确保被删除掉的节点的信息能够被其他节点所学习到。最后的实验结果为，网络的规模小了25%，而准确率大约损失了约20%。</p>
+<h2 id="结语"><a class="markdownIt-Anchor" href="#结语"></a> 结语</h2>
+<p>移动端的神经网络正逐渐成为各大厂商和各研究机构追逐的热点。按照这个趋势，如果即将到来的5G技术确能解决移动端与服务器之间的大量数据传输瓶颈，那可以预见下一代的人工智能一定会在移动端上有所突破！</p>
 <p>参考资料：</p>
 <p>新智元，机器之心专栏</p>
 <p>MobileNets: Efficienct Convolutional Neural Network for Mobile Vision Application</p>
-<p>Deep Residual Learning for Image Recognition<br>Aggregated Residual Transformation for Deep Neural Networks</p>
+<p>Deep Residual Learning for Image Recognition<br>
+Aggregated Residual Transformation for Deep Neural Networks</p>
 <p>ShuffleNet: An Extremely Efficient Convolutional Neural Networks for Mobile Device</p>
 
       
@@ -243,7 +251,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础支持"><span class="nav-number">1.</span> <span class="nav-text">基础支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端神经网络架构"><span class="nav-number">2.</span> <span class="nav-text">移动端神经网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轻量级的网络结构设计"><span class="nav-number">2.1.</span> <span class="nav-text">轻量级的网络结构设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工程角度实现移动端神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">工程角度实现移动端神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础支持"><span class="nav-number">1.</span> <span class="nav-text"> 基础支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端神经网络架构"><span class="nav-number">2.</span> <span class="nav-text"> 移动端神经网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轻量级的网络结构设计"><span class="nav-number">2.1.</span> <span class="nav-text"> 轻量级的网络结构设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工程角度实现移动端神经网络"><span class="nav-number">2.2.</span> <span class="nav-text"> 工程角度实现移动端神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text"> 结语</span></a></li></ol>
     
     </div>
   </aside>
@@ -424,7 +432,24 @@
 
 	<div style="display: none;">
     <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>

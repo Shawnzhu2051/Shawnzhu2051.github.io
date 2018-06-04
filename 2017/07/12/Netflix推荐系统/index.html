@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>netflix推荐系统 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
@@ -58,7 +58,7 @@
   
 
   
-    <link rel="stylesheet" href="/css/header-post.css" >
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
   
@@ -71,7 +71,7 @@
 
 
   
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div id="wrap">
       
         <header>
@@ -186,14 +186,22 @@
         <p>2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我们实现这样一个算法。</p>
 <a id="more"></a>
 <p><img src="/2017/07/12/Netflix推荐系统/figure1.png" alt=""></p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>这个推荐系统为什么这么难，以至于值得起100万美金？我个人认为主要的原因还是在于数据集是特别巨大而且稀疏的。<br>从训练数据可以看到，Netflix提供了17700部电影，以及480000个用户，这两者组成了一个非常巨大的矩阵，普通的电脑的计算能力和存储能力都是远远不足以计算这么庞大的数据。矩阵中的每一个元素代表着一位用户对于一部电影的评分。很明显，一位用户怎么可能看过17700部电影，顶多10^2数量级部吧。而一部电影也不可能被所有的用户都看过，根据Netflix给出的数据，这个矩阵大约只有10^7个非零元素，所以这个矩阵是极度稀疏的，99%的数据都是0。<br><img src="/2017/07/12/Netflix推荐系统/figure2.png" alt=""></p>
+<h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
+<p>这个推荐系统为什么这么难，以至于值得起100万美金？我个人认为主要的原因还是在于数据集是特别巨大而且稀疏的。<br>
+从训练数据可以看到，Netflix提供了17700部电影，以及480000个用户，这两者组成了一个非常巨大的矩阵，普通的电脑的计算能力和存储能力都是远远不足以计算这么庞大的数据。矩阵中的每一个元素代表着一位用户对于一部电影的评分。很明显，一位用户怎么可能看过17700部电影，顶多10<sup>2数量级部吧。而一部电影也不可能被所有的用户都看过，根据Netflix给出的数据，这个矩阵大约只有10</sup>7个非零元素，所以这个矩阵是极度稀疏的，99%的数据都是0。<br>
+<img src="/2017/07/12/Netflix推荐系统/figure2.png" alt=""></p>
 <p>紧接着分析具体数据。每一个数据文件代表了训练样本矩阵中的一列，即多个用户对一部电影的评分。数据构成如下：</p>
 <pre><code>[User_id, Rating, Time_stamp]
-</code></pre><p>其中Rating是一个1-5的正整数。</p>
-<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>这么大的矩阵，计算机肯定是无法直接处理的，所以论文中先引入了线性代数中的SVD（奇异值分解）方法。当年学习线性代数时完全不知道这些奇奇怪怪没事儿找事儿的特征值啊各种分解啊有什么用，结果在这里就派上了用场。SVD分解的具体操作步骤请自行百度或谷歌。</p>
-<p>但是SVD并不能真正解决我们的问题。因为对这个巨型矩阵进行传统的SVD分解，也是一个极其巨大的工程，我之前试过在python中进行SVD分解，电脑都快跑炸了都没有结果。所以文章在这里对SVD分解进行了一个改动。<br><img src="/2017/07/12/Netflix推荐系统/figure3.png" alt=""></p>
-<p>这样，大矩阵就被分解为了两个大小可以接受的小矩阵。在具体的实验过程中，f可取20-100.<br><img src="/2017/07/12/Netflix推荐系统/figure4.png" alt=""></p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>未完待续。。。</p>
+</code></pre>
+<p>其中Rating是一个1-5的正整数。</p>
+<h2 id="算法分析"><a class="markdownIt-Anchor" href="#算法分析"></a> 算法分析</h2>
+<p>这么大的矩阵，计算机肯定是无法直接处理的，所以论文中先引入了线性代数中的SVD（奇异值分解）方法。当年学习线性代数时完全不知道这些奇奇怪怪没事儿找事儿的特征值啊各种分解啊有什么用，结果在这里就派上了用场。SVD分解的具体操作步骤请自行百度或谷歌。</p>
+<p>但是SVD并不能真正解决我们的问题。因为对这个巨型矩阵进行传统的SVD分解，也是一个极其巨大的工程，我之前试过在python中进行SVD分解，电脑都快跑炸了都没有结果。所以文章在这里对SVD分解进行了一个改动。<br>
+<img src="/2017/07/12/Netflix推荐系统/figure3.png" alt=""></p>
+<p>这样，大矩阵就被分解为了两个大小可以接受的小矩阵。在具体的实验过程中，f可取20-100.<br>
+<img src="/2017/07/12/Netflix推荐系统/figure4.png" alt=""></p>
+<h2 id="具体实现"><a class="markdownIt-Anchor" href="#具体实现"></a> 具体实现</h2>
+<p>未完待续。。。</p>
 
       
     </div>
@@ -232,7 +240,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.</span> <span class="nav-text"> 问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text"> 算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text"> 具体实现</span></a></li></ol>
     
     </div>
   </aside>
@@ -413,7 +421,24 @@
 
 	<div style="display: none;">
     <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>利用卷积神经网络搭建猫狗分类器 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
@@ -55,7 +55,7 @@
   
 
   
-    <link rel="stylesheet" href="/css/header-post.css" >
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
   
@@ -68,7 +68,7 @@
 
 
   
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div id="wrap">
       
         <header>
@@ -182,12 +182,15 @@
       
         <p>在加入Syslab工作室之后，多木君说想测试一下我们的编程能力，于是就做了一个Kaggle上非常著名的题目：Cat Vs. Dog（猫狗大战）</p>
 <a id="more"></a>
-<p><img src="/2017/05/08/利用卷积神经网络搭建猫狗分类器/figure1.jpg" alt=""><br>题目是这样的：训练集给了你猫和狗的图片各12500张，制作出一个分类器区分图片中是猫还是狗。测试集是10000张图片，将这么多的图片做了分类之后，输出成特定的格式，然后可以放到网站上去测试结果的正确性。</p>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>数据集是在kaggle上有提供，自己下载好之后，处理成适合的格式，然后输入进网络就行了。在这里主要想谈一谈神经网络的框架。现在主流的框架包括大名鼎鼎的Tensorflow，超难安装但使用方便的caffe以及Facebook主导开发的Pytorch，还有简单但使用不多的matlab DeepLearning toolbox。</p>
+<p><img src="/2017/05/08/利用卷积神经网络搭建猫狗分类器/figure1.jpg" alt=""><br>
+题目是这样的：训练集给了你猫和狗的图片各12500张，制作出一个分类器区分图片中是猫还是狗。测试集是10000张图片，将这么多的图片做了分类之后，输出成特定的格式，然后可以放到网站上去测试结果的正确性。</p>
+<h2 id="前期准备"><a class="markdownIt-Anchor" href="#前期准备"></a> 前期准备</h2>
+<p>数据集是在kaggle上有提供，自己下载好之后，处理成适合的格式，然后输入进网络就行了。在这里主要想谈一谈神经网络的框架。现在主流的框架包括大名鼎鼎的Tensorflow，超难安装但使用方便的caffe以及Facebook主导开发的Pytorch，还有简单但使用不多的matlab DeepLearning toolbox。</p>
 <p>我最早是学习了tensorflow的使用，但其中几个关键难点，比如输入数据集的格式（虽然可以使用np数组，但还是建议最好使用TFRecord）以及只能对静态图的处理，让我着实费了一番功夫。正好17年1月Facebook新推出了Pytorch，号称远比TensorFlow简单，于是就转投Pytorch了。</p>
 <p>Pytorch是继承了曾经的Torch框架，也是在学界被广泛应用的一个框架，不过Torch有一个最大的缺点是，它使用的是一门叫做Lua的小众语言，导致了如果你想使用Torch，必须得花时间去额外学习Lua。Pytorch就将Torch封装进了Python，这样就更加便于学习。除此之外Pytorch还有两个重要的特点，第一是支持动态建图，这一点将tensorflow秒成了渣渣。第二是具有一个autograd函数，可以自动的计算梯度下降。这一点也是对于初学者非常地友好。</p>
 <p>总结起来，这么多框架中，工业界最常用的还是TensorFlow，毕竟Google站在背后，而且这么多年已经形成了一个庞大的社区，有什么坑都能得到很快的交流和解决。学术界最常用的已经从其他各类框架几乎被统一整合为了Pytorch，因为其简单，易用，轻量。</p>
-<h2 id="实际代码"><a href="#实际代码" class="headerlink" title="实际代码"></a>实际代码</h2><p>以下代码基本是仿照了Pytorch官网上的60min教程来写的，并没有太多的去修改网络结构，调整参数，追求精度。</p>
+<h2 id="实际代码"><a class="markdownIt-Anchor" href="#实际代码"></a> 实际代码</h2>
+<p>以下代码基本是仿照了Pytorch官网上的60min教程来写的，并没有太多的去修改网络结构，调整参数，追求精度。</p>
 <p>导入依赖库：</p>
 <pre><code>import torch
 import torchvision
@@ -197,101 +200,108 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from PIL import Image
-</code></pre><p>进行数据预处理，包括归一化，中心化等操作。</p>
+</code></pre>
+<p>进行数据预处理，包括归一化，中心化等操作。</p>
 <pre><code>transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+	[transforms.ToTensor(),
+	 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
 def pre_process(flag,set):
-    for i in enumerate(range(12500),0):
-       index,_ = i
-        if flag == 0:
-             im = Image.open(&apos;./train/&apos; + &apos;cat.&apos; + str(index) + &apos;.jpg&apos; )
-        elif flag == 1:
-            im = Image.open(&apos;./train/&apos; + &apos;dog.&apos; + str(index) + &apos;.jpg&apos; )
-        else:
-            im = Image.open(&apos;./test/&apos; + str(index + 1) + &apos;.jpg&apos; )
-        trans = torchvision.transforms.ToTensor()
-        scale = torchvision.transforms.Scale(32)
-        center = torchvision.transforms.CenterCrop((32,32))
-        im = center(im)
-        im = scale(im)
-        tensor = trans(im)
-        tensor = (tensor,flag)
-        set.append(tensor)
-        if index % 2500 == 2499:
-            print(str(index + 1) + &apos; processed&apos;)
+	for i in enumerate(range(12500),0):
+   	index,_ = i
+    	if flag == 0:
+     		im = Image.open('./train/' + 'cat.' + str(index) + '.jpg' )
+    	elif flag == 1:
+        	im = Image.open('./train/' + 'dog.' + str(index) + '.jpg' )
+    	else:
+        	im = Image.open('./test/' + str(index + 1) + '.jpg' )
+    	trans = torchvision.transforms.ToTensor()
+    	scale = torchvision.transforms.Scale(32)
+    	center = torchvision.transforms.CenterCrop((32,32))
+    	im = center(im)
+    	im = scale(im)
+    	tensor = trans(im)
+    	tensor = (tensor,flag)
+    	set.append(tensor)
+    	if index % 2500 == 2499:
+        	print(str(index + 1) + ' processed')
 
 trainset = []
 testset = []
 pre_process(0,trainset)
 pre_process(1,trainset)
 pre_process(2,testset) # flag means test data
-</code></pre><p>将存放在list中的数据加载进trainloader中，这个函数非常的方便，使得你不需要对数据进行过多的处理就能很好地输入进神经网络。batch_size表示这个trainloader一次输出的batch的内容个数（一般网络都是批处理，不会处理单张图片），shuffle表示是否将输入的顺序打乱，强化训练的效果。</p>
+</code></pre>
+<p>将存放在list中的数据加载进trainloader中，这个函数非常的方便，使得你不需要对数据进行过多的处理就能很好地输入进神经网络。batch_size表示这个trainloader一次输出的batch的内容个数（一般网络都是批处理，不会处理单张图片），shuffle表示是否将输入的顺序打乱，强化训练的效果。</p>
 <pre><code>trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,shuffle=True, num_workers=2)
 testloader = torch.utils.data.DataLoader(testset, batch_size=4,shuffle=False, num_workers=2)
-classes = (&apos;cat&apos;, &apos;dog&apos;)
-</code></pre><p>以下就是神经网路的主要架构部分：包括了两个卷积层，一个pooling层，三个全连接层。</p>
+classes = ('cat', 'dog')
+</code></pre>
+<p>以下就是神经网路的主要架构部分：包括了两个卷积层，一个pooling层，三个全连接层。</p>
 <pre><code>class Net(nn.Module):
-    def __init__(self):
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
-        self.pool  = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1   = nn.Linear(16 * 5 * 5, 120)
-        self.fc2   = nn.Linear(120, 84)
-        self.fc3   = nn.Linear(84, 10)
+	def __init__(self):
+    	super(Net, self).__init__()
+    	self.conv1 = nn.Conv2d(3, 6, 5)
+    	self.pool  = nn.MaxPool2d(2, 2)
+    	self.conv2 = nn.Conv2d(6, 16, 5)
+    	self.fc1   = nn.Linear(16 * 5 * 5, 120)
+    	self.fc2   = nn.Linear(120, 84)
+    	self.fc3   = nn.Linear(84, 10)
 
-    def forward(self, x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 16 * 5 * 5)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+	def forward(self, x):
+    	x = self.pool(F.relu(self.conv1(x)))
+    	x = self.pool(F.relu(self.conv2(x)))
+    	x = x.view(-1, 16 * 5 * 5)
+    	x = F.relu(self.fc1(x))
+    	x = F.relu(self.fc2(x))
+    	x = self.fc3(x)
+    	return x
 
 net = Net()
-</code></pre><p>设置loss函数为交叉熵，优化算法为随机梯度下降算法（SGD），学习率为0.001。    </p>
+</code></pre>
+<p>设置loss函数为交叉熵，优化算法为随机梯度下降算法（SGD），学习率为0.001。</p>
 <pre><code>criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
-</code></pre><p>开始训练：</p>
+</code></pre>
+<p>开始训练：</p>
 <pre><code>for epoch in range(5): 
 # loop over the dataset multiple times
-    running_loss = 0.0
-    for i, data in enumerate(trainloader, 0): # 0 means the start of index
-        # get the inputs
-        inputs, labels = data
-        # wrap them in Variable
-        inputs, labels = Variable(inputs), Variable(labels)
-        # zero the parameter gradients
-        optimizer.zero_grad()
-        # forward + backward + optimize
-        outputs = net(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
+	running_loss = 0.0
+	for i, data in enumerate(trainloader, 0): # 0 means the start of index
+    	# get the inputs
+    	inputs, labels = data
+    	# wrap them in Variable
+    	inputs, labels = Variable(inputs), Variable(labels)
+    	# zero the parameter gradients
+    	optimizer.zero_grad()
+    	# forward + backward + optimize
+    	outputs = net(inputs)
+    	loss = criterion(outputs, labels)
+    	loss.backward()
+    	optimizer.step()
 
-          # print statistics
-        running_loss += loss.data[0]
-        if i % 2000 == 1999:    # print every 2000 mini-batches
-            print(&apos;[%d, %5d] loss: %.3f&apos; % (epoch+1, i+1, running_loss / 2000))
-            running_loss = 0.0
+  		# print statistics
+    	running_loss += loss.data[0]
+    	if i % 2000 == 1999:    # print every 2000 mini-batches
+        	print('[%d, %5d] loss: %.3f' % (epoch+1, i+1, running_loss / 2000))
+        	running_loss = 0.0
 
-print(&apos;Finished Training&apos;)
-</code></pre><p>训练完成后，输入testset进行结果的验证。</p>
+print('Finished Training')
+</code></pre>
+<p>训练完成后，输入testset进行结果的验证。</p>
 <pre><code>count = 1
-with open(&apos;result.txt&apos;, &apos;w&apos;) as f:
-    f.writelines(&apos;id,label \n&apos;)
-    for data in testloader:
-        images, labels = data
-        outputs = net(Variable(images))
-        _, predicted = torch.max(outputs.data, 1)
-        for j in range(4):
-            f.writelines(str(count) + &apos;,&apos; + str(predicted[j][0]) + &apos;\n&apos;)
-            count += 1
-print(&apos;Finished Testing&apos;)
-</code></pre><p>至此所有代码结束。额外的一个问题是这个网络似乎没有很好地完成kaggle的任务，因为任务要求的是给出一张图是猫或者是狗的概率（越靠近1则为狗，越靠近0则为猫），而我的网络直接输出了对于一张图片是否为猫或狗的判断（即直接输出了0或1）。导致了kaggle的测试结果并不是特别理想。因此这些代码仅供参考。</p>
+with open('result.txt', 'w') as f:
+	f.writelines('id,label \n')
+	for data in testloader:
+    	images, labels = data
+    	outputs = net(Variable(images))
+    	_, predicted = torch.max(outputs.data, 1)
+    	for j in range(4):
+        	f.writelines(str(count) + ',' + str(predicted[j][0]) + '\n')
+        	count += 1
+print('Finished Testing')
+</code></pre>
+<p>至此所有代码结束。额外的一个问题是这个网络似乎没有很好地完成kaggle的任务，因为任务要求的是给出一张图是猫或者是狗的概率（越靠近1则为狗，越靠近0则为猫），而我的网络直接输出了对于一张图片是否为猫或狗的判断（即直接输出了0或1）。导致了kaggle的测试结果并不是特别理想。因此这些代码仅供参考。</p>
 
       
     </div>
@@ -330,7 +340,7 @@ print(&apos;Finished Testing&apos;)
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际代码"><span class="nav-number">2.</span> <span class="nav-text">实际代码</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text"> 前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际代码"><span class="nav-number">2.</span> <span class="nav-text"> 实际代码</span></a></li></ol>
     
     </div>
   </aside>
@@ -511,7 +521,24 @@ print(&apos;Finished Testing&apos;)
 
 	<div style="display: none;">
     <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>

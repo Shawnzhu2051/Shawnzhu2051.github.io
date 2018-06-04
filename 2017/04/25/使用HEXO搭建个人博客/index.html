@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>使用hexo搭建个人博客 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
@@ -53,7 +53,7 @@
   
 
   
-    <link rel="stylesheet" href="/css/header-post.css" >
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
   
@@ -66,7 +66,7 @@
 
 
   
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div id="wrap">
       
         <header>
@@ -180,35 +180,46 @@
       
         <p>说在前面：wordpress真的是大坑，掉进去了都走不出来的大坑，安装花了两天，前前后后配置也花了好几天，最后还是有几个影响极大却迟迟修复不了的bug，遂弃疗。</p>
 <p>正好这周考完了半期考试，不是特别忙，总算找到一个时间来好好管理一下个人博客了。这一次我选择了一个可能是最简单的博客框架–HEXO，来重新搭建博客。</p>
-<p>HEXO是基于Github的一个 fast, simple &amp; powerful blog framework (官网原话)，它最大的好处就是不需要你自己去准备服务器（运营个人博客最大的花销就是服务器了），甚至域名也不需要，只需要你有一个Github账号，以及一台能ssh连上Github的电脑就行了。<br><a id="more"></a></p>
+<p>HEXO是基于Github的一个 fast, simple &amp; powerful blog framework (官网原话)，它最大的好处就是不需要你自己去准备服务器（运营个人博客最大的花销就是服务器了），甚至域名也不需要，只需要你有一个Github账号，以及一台能ssh连上Github的电脑就行了。</p>
+<a id="more"></a>
 <p>PS：以下所有的本地操作适用于MacOS系统，Linux系统操作基本相同，Windows系统在命令行的一些操作与另外两种系统不同，请自行百度。</p>
-<h2 id="Github上的准备工作"><a href="#Github上的准备工作" class="headerlink" title="Github上的准备工作"></a>Github上的准备工作</h2><p>如果没有Github账号的话先注册，<a href="www.github.com">Github</a>自己注册就行。</p>
+<h2 id="github上的准备工作"><a class="markdownIt-Anchor" href="#github上的准备工作"></a> Github上的准备工作</h2>
+<p>如果没有Github账号的话先注册，<a href="www.github.com">Github</a>自己注册就行。</p>
 <p>然后新建仓库(New repository)，仓库的名称输入：</p>
 <pre><code>Your_Github_Name.github.io
-</code></pre><p>下一步是添加密钥，这个ssh密钥的作用是通过ssh远程连接，使你可以从命令行里把文件push进你的GitHub仓库，从而实现博客的配置，更新和修改。</p>
+</code></pre>
+<p>下一步是添加密钥，这个ssh密钥的作用是通过ssh远程连接，使你可以从命令行里把文件push进你的GitHub仓库，从而实现博客的配置，更新和修改。</p>
 <p>需要注意的一点是，Github密钥一台电脑最好只连接一个，如果相同一台电脑通过ssh密钥连接多个Github账号的话，非常麻烦，不要问我为什么知道这个：）</p>
 <p>在命令行中输入</p>
 <pre><code>ssh-keygen -t rsa -C &quot;你的Github注册邮箱地址&quot;
-</code></pre><p>一路enter就行，生成的密钥存放在~/.ssh里，这是一个隐藏的文件夹，可以在命令行中使用</p>
+</code></pre>
+<p>一路enter就行，生成的密钥存放在~/.ssh里，这是一个隐藏的文件夹，可以在命令行中使用</p>
 <pre><code>ls -a
-</code></pre><p>来显示隐藏的文件夹。</p>
+</code></pre>
+<p>来显示隐藏的文件夹。</p>
 <p>打开.ssh文件夹中的id-rsa.pub文件，用记事本、vi、gedit、sublime、atom什么都可以，然后复制该.pub文件里的内容，进入<a href="https://github.com/settings/ssh" target="_blank" rel="external">https://github.com/settings/ssh</a>，然后新建ssh key，Title可以随便填，把你复制的内容粘贴到Key，然后add SSH key即可。</p>
-<h2 id="本地的准备工作"><a href="#本地的准备工作" class="headerlink" title="本地的准备工作"></a>本地的准备工作</h2><p>首先是安装node.js，可以通过命令行安装（pip 或 apt-get），但是可能版本有些问题，建议直接进去<a href="https://nodejs.org/en/" target="_blank" rel="external">node.js官网</a>下载源码安装。推荐使用LTS版本。</p>
+<h2 id="本地的准备工作"><a class="markdownIt-Anchor" href="#本地的准备工作"></a> 本地的准备工作</h2>
+<p>首先是安装node.js，可以通过命令行安装（pip 或 apt-get），但是可能版本有些问题，建议直接进去<a href="https://nodejs.org/en/" target="_blank" rel="external">node.js官网</a>下载源码安装。推荐使用LTS版本。</p>
 <p>然后需要安装git。如果你不确定你的电脑里有没有git可以在命令行输入</p>
 <pre><code>git --version
-</code></pre><p>来查看是否有安装。如果没有的话，也是可以通过命令行安装，或者去<a href="https://git-scm.com/downloads" target="_blank" rel="external">git官网</a>下载源码安装。</p>
-<h2 id="HEXO安装与配置"><a href="#HEXO安装与配置" class="headerlink" title="HEXO安装与配置"></a>HEXO安装与配置</h2><p>在hexo的安装配置中可能有一些操作需要用到root，我没有去仔细深究，所以遇到报错可以试试加上sudo看看行不行，也可以直接在root下安装。</p>
+</code></pre>
+<p>来查看是否有安装。如果没有的话，也是可以通过命令行安装，或者去<a href="https://git-scm.com/downloads" target="_blank" rel="external">git官网</a>下载源码安装。</p>
+<h2 id="hexo安装与配置"><a class="markdownIt-Anchor" href="#hexo安装与配置"></a> HEXO安装与配置</h2>
+<p>在hexo的安装配置中可能有一些操作需要用到root，我没有去仔细深究，所以遇到报错可以试试加上sudo看看行不行，也可以直接在root下安装。</p>
 <p>先在本地新建一个文件夹，用来安装放置hexo。</p>
 <pre><code>mkdir 文件夹名
 cd 文件夹名
-</code></pre><p>然后下载安装hexo</p>
+</code></pre>
+<p>然后下载安装hexo</p>
 <pre><code>npm install -g hexo-cli
-</code></pre><p>速度可能会比较慢，耐心等候，掉线了就重新来一次。</p>
+</code></pre>
+<p>速度可能会比较慢，耐心等候，掉线了就重新来一次。</p>
 <p>安装好之后，我们需要初始化hexo</p>
 <pre><code>hexo init 文件夹名
 cd 文件夹名
 npm install
-</code></pre><p>完成后，在文件夹里找到_config.yml文件，这是我们博客的站点配置文件，里面存放着博客的一些基本信息，打开并修改如下参数：</p>
+</code></pre>
+<p>完成后，在文件夹里找到_config.yml文件，这是我们博客的站点配置文件，里面存放着博客的一些基本信息，打开并修改如下参数：</p>
 <pre><code># Site
 title: Your_Blog_Name 
 subtitle: Your_Blog_Subname
@@ -216,69 +227,91 @@ description: #可填可不填
 author: Your_Name
 language: zh-CN #在某些主题里可能会要求你填写zh-Hans
 timezone: Asia/Shanghai
-</code></pre><p>然后拉到最下面：</p>
+</code></pre>
+<p>然后拉到最下面：</p>
 <pre><code># Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-      type: git
-      repo: https://github.com/你的github仓库地址.git 
-      # 在Github上你新建的仓库处可以找到
-      # 比如https://github.com/shawnzhu2051/shawnzhu2051.github.io.git
-      branch: master
-</code></pre><p>需要注意的是，yml文件对格式要求很严格，注意在冒号后都是有且仅有一个空格的。</p>
+	type: git
+	repo: https://github.com/你的github仓库地址.git 
+	# 在Github上你新建的仓库处可以找到
+	# 比如https://github.com/shawnzhu2051/shawnzhu2051.github.io.git
+	branch: master
+</code></pre>
+<p>需要注意的是，yml文件对格式要求很严格，注意在冒号后都是有且仅有一个空格的。</p>
 <p>至此hexo的基本配置就搭建好了。</p>
-<h2 id="HEXO的基本操作"><a href="#HEXO的基本操作" class="headerlink" title="HEXO的基本操作"></a>HEXO的基本操作</h2><ul>
-<li><p>新建文章：</p>
-<pre><code>hexo new &apos;文章题目&apos;
-</code></pre><p>  在本地文件夹的/source/_post里可以找到一个新建的markdown文件，只需要在里面写，保存即可。</p>
+<h2 id="hexo的基本操作"><a class="markdownIt-Anchor" href="#hexo的基本操作"></a> HEXO的基本操作</h2>
+<ul>
+<li>
+<p>新建文章：</p>
+<pre><code>  hexo new '文章题目'
+</code></pre>
+<p>在本地文件夹的/source/_post里可以找到一个新建的markdown文件，只需要在里面写，保存即可。</p>
 </li>
-<li><p>新建页面：</p>
-<pre><code>hexo new page &apos;页面名&apos;
-</code></pre><p>然后同样可以找到一个同名的文件夹，里面有一个index.md文件。<br>需要注意的是，hexo默认是只有Home 和 Achieve两个页面的，所以诸如分类(categories)，标签(tags)，关于（about）等页面都是没有的，请在上述的index.md文件中，title后面添加上</p>
-<pre><code>layout: &quot;categories&quot;/&quot;tags&quot;/&quot;about&quot;
-</code></pre></li>
-<li><p>本地预览</p>
-<pre><code>hexo server
-</code></pre><p>  然后再你自己的浏览器中输入</p>
-<pre><code>localhost:4000
-</code></pre><p>  或者</p>
-<pre><code>127.0.0.1:4000
-</code></pre><p>  就能看到你的博客了。</p>
-</li>
-<li><p>博客发布</p>
-<p>  先执行一次命令，解决掉deploy的bug</p>
-<pre><code>npm install hexo-deployer-git --save
-</code></pre><p>  之后每次发布就只用执行：</p>
-<pre><code>hexo generate
-hexo deploy
-</code></pre><p>  这个时候就可以在网络上看到你的博客了，域名默认是</p>
-<pre><code>Your_Github_Name.github.io
-</code></pre><p>  也就是你之前创建的那个仓库的名字</p>
-<p>  如果想要关联到自己购买的域名的话也可以，具体的请百度。</p>
+<li>
+<p>新建页面：</p>
+<pre><code>  hexo new page '页面名'
+</code></pre>
 </li>
 </ul>
-<h2 id="补充操作"><a href="#补充操作" class="headerlink" title="补充操作"></a>补充操作</h2><ul>
-<li><p>hexo中插入图片</p>
-<p>  目前来说有两种办法。在早期版本的hexo（hexo2及以前）中，图片的管理相当麻烦，一般需要使用插件，或者使用第三方网站：比如<a href="https://www.qiniu.com/" target="_blank" rel="external">七牛</a>之类的云储存管理器，将你的图片上传到该网站之后，会给你生成一个链接，在hexo的md文章中加上链接就可以了。这个方法不需要花钱，但在遇到含有大量图片需要处理时会显得非常繁琐。所以推荐另一种方法：<a href="CodeFalling/hexo-asset-image">CodeFalling/hexo-asset-image</a>（好像还是使用插件orz不过这个插件操作蛮简单的）</p>
-<p>  首先对你的 _config.yml 配置文件进行修改：</p>
+<p>然后同样可以找到一个同名的文件夹，里面有一个index.md文件。<br>
+需要注意的是，hexo默认是只有Home 和 Achieve两个页面的，所以诸如分类(categories)，标签(tags)，关于（about）等页面都是没有的，请在上述的index.md文件中，title后面添加上</p>
+<pre><code>	layout: &quot;categories&quot;/&quot;tags&quot;/&quot;about&quot;
+</code></pre>
+<ul>
+<li>
+<p>本地预览</p>
+<pre><code>  hexo server
+</code></pre>
+<p>然后再你自己的浏览器中输入</p>
+<pre><code>  localhost:4000
+</code></pre>
+<p>或者</p>
+<pre><code>  127.0.0.1:4000
+</code></pre>
+<p>就能看到你的博客了。</p>
+</li>
+<li>
+<p>博客发布</p>
+<p>先执行一次命令，解决掉deploy的bug</p>
+<pre><code>  npm install hexo-deployer-git --save
+</code></pre>
+<p>之后每次发布就只用执行：</p>
+<pre><code>  hexo generate
+  hexo deploy
+</code></pre>
+<p>这个时候就可以在网络上看到你的博客了，域名默认是</p>
+<pre><code>  Your_Github_Name.github.io
+</code></pre>
+<p>也就是你之前创建的那个仓库的名字</p>
+<p>如果想要关联到自己购买的域名的话也可以，具体的请百度。</p>
+</li>
+</ul>
+<h2 id="补充操作"><a class="markdownIt-Anchor" href="#补充操作"></a> 补充操作</h2>
+<ul>
+<li>
+<p>hexo中插入图片</p>
+<p>目前来说有两种办法。在早期版本的hexo（hexo2及以前）中，图片的管理相当麻烦，一般需要使用插件，或者使用第三方网站：比如<a href="https://www.qiniu.com/" target="_blank" rel="external">七牛</a>之类的云储存管理器，将你的图片上传到该网站之后，会给你生成一个链接，在hexo的md文章中加上链接就可以了。这个方法不需要花钱，但在遇到含有大量图片需要处理时会显得非常繁琐。所以推荐另一种方法：<a href="CodeFalling/hexo-asset-image">CodeFalling/hexo-asset-image</a>（好像还是使用插件orz不过这个插件操作蛮简单的）</p>
+<p>首先对你的 _config.yml 配置文件进行修改：</p>
 <blockquote>
 <p>post_ asset_folder:true</p>
 </blockquote>
-<p>  然后再在hexo根目录中执行</p>
+<p>然后再在hexo根目录中执行</p>
 <blockquote>
-<p>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">https://github.com/CodeFalling/hexo-asset-image</a> –save</p>
+<p>npm install <a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">https://github.com/CodeFalling/hexo-asset-image</a> --save</p>
 </blockquote>
-<p>  来下载安装插件</p>
-<p>  然后当我们再执行</p>
+<p>来下载安装插件</p>
+<p>然后当我们再执行</p>
 <blockquote>
 <p>hexo new ‘artical_name’</p>
 </blockquote>
-<p>  Hexo会自动建立一个与文章同名的文件夹，我们可以把与该文章相关的所有资源都放到那个文件夹中。<br>  在文章写作的过程中，只用在markdown中使用正常的语法</p>
+<p>Hexo会自动建立一个与文章同名的文件夹，我们可以把与该文章相关的所有资源都放到那个文件夹中。<br>
+在文章写作的过程中，只用在markdown中使用正常的语法</p>
 <blockquote>
-<p> ! [ ] ( )</p>
+<p>! [ ] ( )</p>
 </blockquote>
-<p>  就可以顺利插入图片了。</p>
-<p>  在网上有些博客中写到说这种方法可能会在图片显示在首页或显示在文中不成功，但笔者并没有发现有这个问题，如果存在这个问题的话，bug应该是出现在markdown的语法上，改成使用标签来引入图片就可以了。</p>
+<p>就可以顺利插入图片了。</p>
+<p>在网上有些博客中写到说这种方法可能会在图片显示在首页或显示在文中不成功，但笔者并没有发现有这个问题，如果存在这个问题的话，bug应该是出现在markdown的语法上，改成使用标签来引入图片就可以了。</p>
 </li>
 </ul>
 
@@ -319,7 +352,7 @@ hexo deploy
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github上的准备工作"><span class="nav-number">1.</span> <span class="nav-text">Github上的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地的准备工作"><span class="nav-number">2.</span> <span class="nav-text">本地的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO安装与配置"><span class="nav-number">3.</span> <span class="nav-text">HEXO安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO的基本操作"><span class="nav-number">4.</span> <span class="nav-text">HEXO的基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充操作"><span class="nav-number">5.</span> <span class="nav-text">补充操作</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#github上的准备工作"><span class="nav-number">1.</span> <span class="nav-text"> Github上的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地的准备工作"><span class="nav-number">2.</span> <span class="nav-text"> 本地的准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo安装与配置"><span class="nav-number">3.</span> <span class="nav-text"> HEXO安装与配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo的基本操作"><span class="nav-number">4.</span> <span class="nav-text"> HEXO的基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充操作"><span class="nav-number">5.</span> <span class="nav-text"> 补充操作</span></a></li></ol>
     
     </div>
   </aside>
@@ -500,7 +533,24 @@ hexo deploy
 
 	<div style="display: none;">
     <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>applescript小试牛刀 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
@@ -57,7 +57,7 @@
   
 
   
-    <link rel="stylesheet" href="/css/header-post.css" >
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
   
@@ -70,7 +70,7 @@
 
 
   
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div id="wrap">
       
         <header>
@@ -184,36 +184,53 @@
       
         <p>这篇文章的想法最初是在知乎上看到一个很有趣的帖子，讲述了一个程序员男友用Apple脚本语言给异地的女朋友写的一个可以类似文本对话游戏的小程序，于是大受启发：“哇原来程序员还可以这样撩妹！”。二话不说，马上开工。</p>
 <a id="more"></a>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>AppleScript是MacOS系统原生的脚本语言（其实就是bash，AppleScript只是一个装逼的名字），最初开发它的目的是为了将Mac上的一些繁琐的操作自动化。比如一键搜索电脑上某些文件并将其移入回收站然后清空，或者是创建一些表单之类的。整个AppleScript的语法非常的简单，几乎就只需要初级的一些编程知识，包括if语句，for语句和接口的调用就基本足够了。当然如果想要更强大的功能，还是得花更多的时间和精力在这儿上面。</p>
-<p>AppleScript使用的编辑器是MacOS自带的脚本编辑器。<br><img src="/2017/08/11/AppleScript小试牛刀/fig1.png" alt=""></p>
-<p>打开之后的页面是这个样子的：<br><img src="/2017/08/11/AppleScript小试牛刀/fig2.png" alt=""></p>
-<p>写好程序后直接保存，编译，运行就可以了。<br>源代码会被保存成.scpt文件，这个文件只能使用脚本编辑器打开，如果想要保存成可以直接运行的.app文件，就选择导出，格式修改成应用程序就可以了。</p>
-<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><p>以下使用几段代码来说明AppleScript的语法是怎么样的。</p>
-<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><pre><code>display dialog &quot;这是两位爸爸送给儿子的生日礼物&quot; buttons {&quot;OK&quot;, &quot;取消&quot;} default button 1
-    if button returned of result is &quot;OK&quot; then
-        display dialog &quot;桌面太乱了，帮你清理一下吧&quot; buttons {&quot;哦？？？&quot;} default button 1
-        ...
-        ...
-    end if
-</code></pre><p>上述代码表示新建一个对话框，对话框的内容为“这是两位爸爸送给儿子的生日礼物”并显示，这个对话框具有两个按钮，分别是“OK”和“取消”，其中系统默认选择“OK”按钮，效果如下：<br><img src="/2017/08/11/AppleScript小试牛刀/fig3.png" alt=""></p>
-<p>然后利用if语句，就可以实现在选择不同按钮时返回不同的结果。除此之外，和可以给对话框加上标题，icon等组件，实现更多的效果。这些<br>东西就请自行百度，在这里就暂不赘述了。</p>
-<h3 id="发声"><a href="#发声" class="headerlink" title="发声"></a>发声</h3><pre><code>beep
+<h2 id="基础知识"><a class="markdownIt-Anchor" href="#基础知识"></a> 基础知识</h2>
+<p>AppleScript是MacOS系统原生的脚本语言（其实就是bash，AppleScript只是一个装逼的名字），最初开发它的目的是为了将Mac上的一些繁琐的操作自动化。比如一键搜索电脑上某些文件并将其移入回收站然后清空，或者是创建一些表单之类的。整个AppleScript的语法非常的简单，几乎就只需要初级的一些编程知识，包括if语句，for语句和接口的调用就基本足够了。当然如果想要更强大的功能，还是得花更多的时间和精力在这儿上面。</p>
+<p>AppleScript使用的编辑器是MacOS自带的脚本编辑器。<br>
+<img src="/2017/08/11/AppleScript小试牛刀/fig1.png" alt=""></p>
+<p>打开之后的页面是这个样子的：<br>
+<img src="/2017/08/11/AppleScript小试牛刀/fig2.png" alt=""></p>
+<p>写好程序后直接保存，编译，运行就可以了。<br>
+源代码会被保存成.scpt文件，这个文件只能使用脚本编辑器打开，如果想要保存成可以直接运行的.app文件，就选择导出，格式修改成应用程序就可以了。</p>
+<h2 id="基本语法"><a class="markdownIt-Anchor" href="#基本语法"></a> 基本语法</h2>
+<p>以下使用几段代码来说明AppleScript的语法是怎么样的。</p>
+<h3 id="对话框"><a class="markdownIt-Anchor" href="#对话框"></a> 对话框</h3>
+<pre><code>display dialog &quot;这是两位爸爸送给儿子的生日礼物&quot; buttons {&quot;OK&quot;, &quot;取消&quot;} default button 1
+	if button returned of result is &quot;OK&quot; then
+		display dialog &quot;桌面太乱了，帮你清理一下吧&quot; buttons {&quot;哦？？？&quot;} default button 1
+		...
+		...
+	end if
+</code></pre>
+<p>上述代码表示新建一个对话框，对话框的内容为“这是两位爸爸送给儿子的生日礼物”并显示，这个对话框具有两个按钮，分别是“OK”和“取消”，其中系统默认选择“OK”按钮，效果如下：<br>
+<img src="/2017/08/11/AppleScript小试牛刀/fig3.png" alt=""></p>
+<p>然后利用if语句，就可以实现在选择不同按钮时返回不同的结果。除此之外，和可以给对话框加上标题，icon等组件，实现更多的效果。这些<br>
+东西就请自行百度，在这里就暂不赘述了。</p>
+<h3 id="发声"><a class="markdownIt-Anchor" href="#发声"></a> 发声</h3>
+<pre><code>beep
 say &quot;Happy Birthday to you&quot; using &quot;Victoria&quot;
-</code></pre><p>上述代码中，beep表示让系统发出警报音，也就是“嘟”的一声。而say语句会调用系统自带的语音系统，让系统使用Victoria的声音说出“Happy Birthday to you”这句话。Victoria是系统的默认语音，如果想使用其他语音的话，在设置-辅助功能-语音一栏中，可以自行下载更多的系统语音。</p>
+</code></pre>
+<p>上述代码中，beep表示让系统发出警报音，也就是“嘟”的一声。而say语句会调用系统自带的语音系统，让系统使用Victoria的声音说出“Happy Birthday to you”这句话。Victoria是系统的默认语音，如果想使用其他语音的话，在设置-辅助功能-语音一栏中，可以自行下载更多的系统语音。</p>
 <p>我在网上还看到一个更加高级的语音设置：</p>
 <p><a href="https://lucifr.com/2012/02/11/make-your-mac-sing-happy-birthday-with-applescript/" target="_blank" rel="external">AppleScript 脚本让 Mac 唱生日快乐歌</a></p>
 <p>通过设置音调让系统真正实现“唱”出来，而不是“念”出来。</p>
-<h3 id="bash操作"><a href="#bash操作" class="headerlink" title="bash操作"></a>bash操作</h3><p>在这里只列举两个简单的操作。</p>
+<h3 id="bash操作"><a class="markdownIt-Anchor" href="#bash操作"></a> bash操作</h3>
+<p>在这里只列举两个简单的操作。</p>
 <pre><code>do shell script &quot;defaults write com.apple.finder CreateDesktop -bool FALSE;killall Finder&quot;
-</code></pre><p>上述语句的作用是，将桌面所有文件的可见性设置为隐藏。效果等同于直接在命令行中输入</p>
+</code></pre>
+<p>上述语句的作用是，将桌面所有文件的可见性设置为隐藏。效果等同于直接在命令行中输入</p>
 <pre><code>defaults write com.apple.finder CreateDesktop -bool FALSE;killall Finder
-</code></pre><p>如果想要设置成将其他文件夹中文件隐藏的话，修改语句的作用范围就行了。下面这条语句是重新将所有桌面文件设置为可见。</p>
+</code></pre>
+<p>如果想要设置成将其他文件夹中文件隐藏的话，修改语句的作用范围就行了。下面这条语句是重新将所有桌面文件设置为可见。</p>
 <pre><code>do shell script &quot;defaults delete com.apple.finder CreateDesktop;killall Finder&quot;
-</code></pre><p>另一个简单的操作是清空回收站：</p>
+</code></pre>
+<p>另一个简单的操作是清空回收站：</p>
 <pre><code>do shell script &quot;cd ~/.Trash;rm -rf *&quot;
 do shell script &quot;killall Finder&quot;
-</code></pre><p>没有什么可以多说的，熟悉bash的人都可以看出来，只是使用了一个脚本来运行shell语句而已。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这里面的例子是我跟老耿一起写的，拿来作为邬儿子的生日礼物。真正用来撩妹的程序才不会放出来呢，请自行琢磨。根据我写这个的经验，如果单纯是用作娱乐的话，文字语言上的创意远比coding重要。整个程序的构思可能会占到总时间的80%左右。祝各位程序员都能靠这个小玩意撩到自己喜欢的妹子</p>
+</code></pre>
+<p>没有什么可以多说的，熟悉bash的人都可以看出来，只是使用了一个脚本来运行shell语句而已。</p>
+<h2 id="写在最后"><a class="markdownIt-Anchor" href="#写在最后"></a> 写在最后</h2>
+<p>这里面的例子是我跟老耿一起写的，拿来作为邬儿子的生日礼物。真正用来撩妹的程序才不会放出来呢，请自行琢磨。根据我写这个的经验，如果单纯是用作娱乐的话，文字语言上的创意远比coding重要。整个程序的构思可能会占到总时间的80%左右。祝各位程序员都能靠这个小玩意撩到自己喜欢的妹子</p>
 <p>（啊喂话说妹子也必须是用Mac的啊难不成就只能是程序媛了。。。）</p>
 
       
@@ -253,7 +270,7 @@ do shell script &quot;killall Finder&quot;
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对话框"><span class="nav-number">2.1.</span> <span class="nav-text">对话框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发声"><span class="nav-number">2.2.</span> <span class="nav-text">发声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash操作"><span class="nav-number">2.3.</span> <span class="nav-text">bash操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text">写在最后</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text"> 基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text"> 基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对话框"><span class="nav-number">2.1.</span> <span class="nav-text"> 对话框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发声"><span class="nav-number">2.2.</span> <span class="nav-text"> 发声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash操作"><span class="nav-number">2.3.</span> <span class="nav-text"> bash操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text"> 写在最后</span></a></li></ol>
     
     </div>
   </aside>
@@ -434,7 +451,24 @@ do shell script &quot;killall Finder&quot;
 
 	<div style="display: none;">
     <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>
