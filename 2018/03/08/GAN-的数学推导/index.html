@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
 <meta property="og:description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
 <meta property="og:image" content="http://zhuchenshawn.com/2018/03/08/GAN-的数学推导/GANalg.png">
-<meta property="og:updated_time" content="2018-06-04T07:19:02.000Z">
+<meta property="og:updated_time" content="2018-06-04T07:19:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GAN 的数学推导">
 <meta name="twitter:description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
@@ -185,7 +185,7 @@
 <a id="more"></a>
 <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>首先给出GAN的目标函数：</p>
 <p>$\min<em>{G}\max</em>{D} V(D,G) = \mathbb{E}<em>{x \sim p</em>{data}(x)}[\log{D(x)}] + \mathbb{E}<em>{z \sim p</em>{z}(z)}[\log(1-D(G(z)))]$</p>
-<p>其中，$p<em>{data}(x)$是真实数据的数据分布，$p</em>{z}(z)$是先验的噪音数据分布，$p<em>{g}(x)$是生成数据的数据分布，$D(\cdot)$表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布$p</em>{g}(x)$和真实数据的数据分布$p_{data}(x)$相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器$G$和判别器$D$，即：</p>
+<p>其中，$p<em>{data}(x)$ 是真实数据的数据分布，$p</em>{z}(z)$是先验的噪音数据分布，$p<em>{g}(x)$是生成数据的数据分布，$D(\cdot)$表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布$p</em>{g}(x)$和真实数据的数据分布$p_{data}(x)$相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器$G$和判别器$D$，即：</p>
 <p>$D^{<em>}<em>{G} = \text{arg}\max</em>{D}V(G,D)$和$G^{</em>} = \text{arg}\min<em>{G}V(G,D^{*}</em>{G})$</p>
 <p>更新算法如下：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/GANalg.png" alt="GANalg"></p>
