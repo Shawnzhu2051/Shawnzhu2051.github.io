@@ -1,20 +1,96 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <title>applescript小试牛刀 | Shawnzhu&#39;s Personal Blog</title>
-  <meta name="baidu-site-verification" content="mD5o6wEFU2" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
   
   
-    <meta name="google-site-verification" content="true" />
   
   
-    <meta name="baidu-site-verification" content="true" />
+
   
+    
+    
   
-  <meta name="description" content="这篇文章的想法最初是在知乎上看到一个很有趣的帖子，讲述了一个程序员男友用Apple脚本语言给异地的女朋友写的一个可以类似文本对话游戏的小程序，于是大受启发：“哇原来程序员还可以这样撩妹！”。二话不说，马上开工。">
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章的想法最初是在知乎上看到一个很有趣的帖子，讲述了一个程序员男友用Apple脚本语言给异地的女朋友写的一个可以类似文本对话游戏的小程序，于是大受启发：“哇原来程序员还可以这样撩妹！”。二话不说，马上开工。">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AppleScript小试牛刀">
@@ -29,429 +105,609 @@
 <meta name="twitter:title" content="AppleScript小试牛刀">
 <meta name="twitter:description" content="这篇文章的想法最初是在知乎上看到一个很有趣的帖子，讲述了一个程序员男友用Apple脚本语言给异地的女朋友写的一个可以类似文本对话游戏的小程序，于是大受启发：“哇原来程序员还可以这样撩妹！”。二话不说，马上开工。">
 <meta name="twitter:image" content="http://zhuchenshawn.com/2017/08/11/AppleScript小试牛刀/fig1.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
-  
-  <link rel="icon" href="/css/images/mylogo.jpg">
-  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
 
-  <script src="/js/jquery-3.1.1.min.js"></script>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
 
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
-  
-    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-  
 
-  
 
+  <link rel="canonical" href="http://zhuchenshawn.com/2017/08/11/AppleScript小试牛刀/"/>
+
+
+
+
+
+  <title>AppleScript小试牛刀 | Shawnzhu's Personal Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
 
 
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+
+
+
+
+
+
+
+
 
 
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
-    <div id="wrap">
-      
-        <header>
+  
+    
+  
 
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
 
-            
-              <a class="brand" style="border-width: 0;">
-                <p>Shawnzhu&#39;s Personal Blog</p>
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">首页</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
-                
-                  <li><div id="search-form-wrap">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawnzhu's Personal Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+      
+        <p class="site-subtitle">不忘初心 方得始终</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(无标题)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
 
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
+<nav class="site-nav">
+  
 
-</header>
-
-
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
 
       
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;"><article id="post-AppleScript小试牛刀" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      AppleScript小试牛刀
-    </h1>
+    </ul>
   
 
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zhuchenshawn.com/2017/08/11/AppleScript小试牛刀/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn zhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawnzhu's Personal Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AppleScript小试牛刀
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-11T01:14:10+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他开发/" itemprop="url" rel="index">
+                    <span itemprop="name">其他开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-meta">
-      
-	<a href="/2017/08/11/AppleScript小试牛刀/" class="article-date">
-	  <time datetime="2017-08-10T17:14:10.000Z" itemprop="datePublished">2017-08-11</time>
-	</a>
+
+    <div class="post-body" itemprop="articleBody">
 
       
-    <a class="article-category-link" href="/categories/其他开发/">其他开发</a>
+      
 
-    </div>
-    <div class="article-entry" itemprop="articleBody">
       
         <p>这篇文章的想法最初是在知乎上看到一个很有趣的帖子，讲述了一个程序员男友用Apple脚本语言给异地的女朋友写的一个可以类似文本对话游戏的小程序，于是大受启发：“哇原来程序员还可以这样撩妹！”。二话不说，马上开工。</p>
 <a id="more"></a>
-<h2 id="基础知识"><a class="markdownIt-Anchor" href="#基础知识"></a> 基础知识</h2>
-<p>AppleScript是MacOS系统原生的脚本语言（其实就是bash，AppleScript只是一个装逼的名字），最初开发它的目的是为了将Mac上的一些繁琐的操作自动化。比如一键搜索电脑上某些文件并将其移入回收站然后清空，或者是创建一些表单之类的。整个AppleScript的语法非常的简单，几乎就只需要初级的一些编程知识，包括if语句，for语句和接口的调用就基本足够了。当然如果想要更强大的功能，还是得花更多的时间和精力在这儿上面。</p>
-<p>AppleScript使用的编辑器是MacOS自带的脚本编辑器。<br>
-<img src="/2017/08/11/AppleScript小试牛刀/fig1.png" alt=""></p>
-<p>打开之后的页面是这个样子的：<br>
-<img src="/2017/08/11/AppleScript小试牛刀/fig2.png" alt=""></p>
-<p>写好程序后直接保存，编译，运行就可以了。<br>
-源代码会被保存成.scpt文件，这个文件只能使用脚本编辑器打开，如果想要保存成可以直接运行的.app文件，就选择导出，格式修改成应用程序就可以了。</p>
-<h2 id="基本语法"><a class="markdownIt-Anchor" href="#基本语法"></a> 基本语法</h2>
-<p>以下使用几段代码来说明AppleScript的语法是怎么样的。</p>
-<h3 id="对话框"><a class="markdownIt-Anchor" href="#对话框"></a> 对话框</h3>
-<pre><code>display dialog &quot;这是两位爸爸送给儿子的生日礼物&quot; buttons {&quot;OK&quot;, &quot;取消&quot;} default button 1
-	if button returned of result is &quot;OK&quot; then
-		display dialog &quot;桌面太乱了，帮你清理一下吧&quot; buttons {&quot;哦？？？&quot;} default button 1
-		...
-		...
-	end if
-</code></pre>
-<p>上述代码表示新建一个对话框，对话框的内容为“这是两位爸爸送给儿子的生日礼物”并显示，这个对话框具有两个按钮，分别是“OK”和“取消”，其中系统默认选择“OK”按钮，效果如下：<br>
-<img src="/2017/08/11/AppleScript小试牛刀/fig3.png" alt=""></p>
-<p>然后利用if语句，就可以实现在选择不同按钮时返回不同的结果。除此之外，和可以给对话框加上标题，icon等组件，实现更多的效果。这些<br>
-东西就请自行百度，在这里就暂不赘述了。</p>
-<h3 id="发声"><a class="markdownIt-Anchor" href="#发声"></a> 发声</h3>
-<pre><code>beep
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>AppleScript是MacOS系统原生的脚本语言（其实就是bash，AppleScript只是一个装逼的名字），最初开发它的目的是为了将Mac上的一些繁琐的操作自动化。比如一键搜索电脑上某些文件并将其移入回收站然后清空，或者是创建一些表单之类的。整个AppleScript的语法非常的简单，几乎就只需要初级的一些编程知识，包括if语句，for语句和接口的调用就基本足够了。当然如果想要更强大的功能，还是得花更多的时间和精力在这儿上面。</p>
+<p>AppleScript使用的编辑器是MacOS自带的脚本编辑器。<br><img src="/2017/08/11/AppleScript小试牛刀/fig1.png" alt=""></p>
+<p>打开之后的页面是这个样子的：<br><img src="/2017/08/11/AppleScript小试牛刀/fig2.png" alt=""></p>
+<p>写好程序后直接保存，编译，运行就可以了。<br>源代码会被保存成.scpt文件，这个文件只能使用脚本编辑器打开，如果想要保存成可以直接运行的.app文件，就选择导出，格式修改成应用程序就可以了。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><p>以下使用几段代码来说明AppleScript的语法是怎么样的。</p>
+<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><pre><code>display dialog &quot;这是两位爸爸送给儿子的生日礼物&quot; buttons {&quot;OK&quot;, &quot;取消&quot;} default button 1
+    if button returned of result is &quot;OK&quot; then
+        display dialog &quot;桌面太乱了，帮你清理一下吧&quot; buttons {&quot;哦？？？&quot;} default button 1
+        ...
+        ...
+    end if
+</code></pre><p>上述代码表示新建一个对话框，对话框的内容为“这是两位爸爸送给儿子的生日礼物”并显示，这个对话框具有两个按钮，分别是“OK”和“取消”，其中系统默认选择“OK”按钮，效果如下：<br><img src="/2017/08/11/AppleScript小试牛刀/fig3.png" alt=""></p>
+<p>然后利用if语句，就可以实现在选择不同按钮时返回不同的结果。除此之外，和可以给对话框加上标题，icon等组件，实现更多的效果。这些<br>东西就请自行百度，在这里就暂不赘述了。</p>
+<h3 id="发声"><a href="#发声" class="headerlink" title="发声"></a>发声</h3><pre><code>beep
 say &quot;Happy Birthday to you&quot; using &quot;Victoria&quot;
-</code></pre>
-<p>上述代码中，beep表示让系统发出警报音，也就是“嘟”的一声。而say语句会调用系统自带的语音系统，让系统使用Victoria的声音说出“Happy Birthday to you”这句话。Victoria是系统的默认语音，如果想使用其他语音的话，在设置-辅助功能-语音一栏中，可以自行下载更多的系统语音。</p>
+</code></pre><p>上述代码中，beep表示让系统发出警报音，也就是“嘟”的一声。而say语句会调用系统自带的语音系统，让系统使用Victoria的声音说出“Happy Birthday to you”这句话。Victoria是系统的默认语音，如果想使用其他语音的话，在设置-辅助功能-语音一栏中，可以自行下载更多的系统语音。</p>
 <p>我在网上还看到一个更加高级的语音设置：</p>
 <p><a href="https://lucifr.com/2012/02/11/make-your-mac-sing-happy-birthday-with-applescript/" target="_blank" rel="external">AppleScript 脚本让 Mac 唱生日快乐歌</a></p>
 <p>通过设置音调让系统真正实现“唱”出来，而不是“念”出来。</p>
-<h3 id="bash操作"><a class="markdownIt-Anchor" href="#bash操作"></a> bash操作</h3>
-<p>在这里只列举两个简单的操作。</p>
+<h3 id="bash操作"><a href="#bash操作" class="headerlink" title="bash操作"></a>bash操作</h3><p>在这里只列举两个简单的操作。</p>
 <pre><code>do shell script &quot;defaults write com.apple.finder CreateDesktop -bool FALSE;killall Finder&quot;
-</code></pre>
-<p>上述语句的作用是，将桌面所有文件的可见性设置为隐藏。效果等同于直接在命令行中输入</p>
+</code></pre><p>上述语句的作用是，将桌面所有文件的可见性设置为隐藏。效果等同于直接在命令行中输入</p>
 <pre><code>defaults write com.apple.finder CreateDesktop -bool FALSE;killall Finder
-</code></pre>
-<p>如果想要设置成将其他文件夹中文件隐藏的话，修改语句的作用范围就行了。下面这条语句是重新将所有桌面文件设置为可见。</p>
+</code></pre><p>如果想要设置成将其他文件夹中文件隐藏的话，修改语句的作用范围就行了。下面这条语句是重新将所有桌面文件设置为可见。</p>
 <pre><code>do shell script &quot;defaults delete com.apple.finder CreateDesktop;killall Finder&quot;
-</code></pre>
-<p>另一个简单的操作是清空回收站：</p>
+</code></pre><p>另一个简单的操作是清空回收站：</p>
 <pre><code>do shell script &quot;cd ~/.Trash;rm -rf *&quot;
 do shell script &quot;killall Finder&quot;
-</code></pre>
-<p>没有什么可以多说的，熟悉bash的人都可以看出来，只是使用了一个脚本来运行shell语句而已。</p>
-<h2 id="写在最后"><a class="markdownIt-Anchor" href="#写在最后"></a> 写在最后</h2>
-<p>这里面的例子是我跟老耿一起写的，拿来作为邬儿子的生日礼物。真正用来撩妹的程序才不会放出来呢，请自行琢磨。根据我写这个的经验，如果单纯是用作娱乐的话，文字语言上的创意远比coding重要。整个程序的构思可能会占到总时间的80%左右。祝各位程序员都能靠这个小玩意撩到自己喜欢的妹子</p>
+</code></pre><p>没有什么可以多说的，熟悉bash的人都可以看出来，只是使用了一个脚本来运行shell语句而已。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这里面的例子是我跟老耿一起写的，拿来作为邬儿子的生日礼物。真正用来撩妹的程序才不会放出来呢，请自行琢磨。根据我写这个的经验，如果单纯是用作娱乐的话，文字语言上的创意远比coding重要。整个程序的构思可能会占到总时间的80%左右。祝各位程序员都能靠这个小玩意撩到自己喜欢的妹子</p>
 <p>（啊喂话说妹子也必须是用Mac的啊难不成就只能是程序媛了。。。）</p>
 
       
     </div>
-    <footer class="article-footer">
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/07/移动端神经网络/" rel="next" title="移动端神经网络">
+                <i class="fa fa-chevron-left"></i> 移动端神经网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/12/Netflix推荐系统/" rel="prev" title="Netflix推荐系统">
+                Netflix推荐系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
     </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
-  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
     
-<nav id="article-nav">
-  
-    <a href="/2017/07/12/Netflix推荐系统/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
+  </div>
+
+
+        </div>
         
-          Netflix推荐系统
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Shawn zhu" />
+          <p class="site-author-name" itemprop="name">Shawn zhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不忘初心 方得始终</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
         
-      </div>
-    </a>
-  
-  
-    <a href="/2017/10/07/移动端神经网络/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">移动端神经网络</div>
-    </a>
-  
-</nav>
 
-  
-</article>
+        <div class="links-of-author motion-element">
+          
+        </div>
 
-<!-- Table of Contents -->
+        
+        
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text"> 基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text"> 基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对话框"><span class="nav-number">2.1.</span> <span class="nav-text"> 对话框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发声"><span class="nav-number">2.2.</span> <span class="nav-text"> 发声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash操作"><span class="nav-number">2.3.</span> <span class="nav-text"> bash操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text"> 写在最后</span></a></li></ol>
-    
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对话框"><span class="nav-number">2.1.</span> <span class="nav-text">对话框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发声"><span class="nav-number">2.2.</span> <span class="nav-text">发声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash操作"><span class="nav-number">2.3.</span> <span class="nav-text">bash操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">3.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
     </div>
   </aside>
-</section>
+
+
         
       </div>
-      
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-
-  <div class="container">
-      	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Shawnzhu&#39;s Personal Blog All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				<span id="busuanzi_container_site_uv"> 访客数 : <span id="busuanzi_value_site_uv"></span></span> |  
-				<span id="busuanzi_container_site_pv"> 访问量 : <span id="busuanzi_value_site_pv"></span></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn zhu</span>
+</div>
 
 
-<!-- min height -->
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
 
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
 
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/aboutme" class="mobile-nav-link">About</a>
-  
-</nav> -->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-<script src="/js/bootstrap.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Shawnzhu&#39;s Personal Blog
-          </div>
-          <div class="panel-body">
-            Copyright © 2018 Shawn zhu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
 
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -470,6 +726,58 @@ do shell script &quot;killall Finder&quot;
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
 
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
 
 </body>
 </html>

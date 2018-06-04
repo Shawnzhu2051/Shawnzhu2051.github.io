@@ -1,22 +1,96 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <title>gan 的数学推导 | Shawnzhu&#39;s Personal Blog</title>
-  <meta name="baidu-site-verification" content="mD5o6wEFU2" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="机器学习" />
-  
-  
-    <meta name="google-site-verification" content="true" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
   
   
-    <meta name="baidu-site-verification" content="true" />
   
   
-  <meta name="description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GAN 的数学推导">
@@ -24,218 +98,305 @@
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
 <meta property="og:description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
 <meta property="og:image" content="http://zhuchenshawn.com/2018/03/08/GAN-的数学推导/GANalg.png">
-<meta property="og:updated_time" content="2018-06-04T07:50:32.000Z">
+<meta property="og:updated_time" content="2018-06-04T08:09:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GAN 的数学推导">
 <meta name="twitter:description" content="最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。 关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。">
 <meta name="twitter:image" content="http://zhuchenshawn.com/2018/03/08/GAN-的数学推导/GANalg.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
-  
-  <link rel="icon" href="/css/images/mylogo.jpg">
-  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
 
-  <script src="/js/jquery-3.1.1.min.js"></script>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
 
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
-  
-    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-  
 
-  
 
+  <link rel="canonical" href="http://zhuchenshawn.com/2018/03/08/GAN-的数学推导/"/>
+
+
+
+
+
+  <title>GAN 的数学推导 | Shawnzhu's Personal Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
 
 
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+
+
+
+
+
+
+
+
 
 
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
-    <div id="wrap">
-      
-        <header>
+  
+    
+  
 
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
 
-            
-              <a class="brand" style="border-width: 0;">
-                <p>Shawnzhu&#39;s Personal Blog</p>
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">首页</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
-                
-                  <li><div id="search-form-wrap">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawnzhu's Personal Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+      
+        <p class="site-subtitle">不忘初心 方得始终</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(无标题)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
 
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
+<nav class="site-nav">
+  
 
-</header>
-
-
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
 
       
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;"><article id="post-GAN-的数学推导" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      GAN 的数学推导
-    </h1>
+    </ul>
   
 
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zhuchenshawn.com/2018/03/08/GAN-的数学推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn zhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawnzhu's Personal Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GAN 的数学推导
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T23:09:41+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-meta">
-      
-	<a href="/2018/03/08/GAN-的数学推导/" class="article-date">
-	  <time datetime="2018-03-08T15:09:41.000Z" itemprop="datePublished">2018-03-08</time>
-	</a>
+
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
-    <div class="article-entry" itemprop="articleBody">
+      
+
       
         <p>最近将研究方向转移到了很火热很有趣的 生成式对抗网络 (Generative Adversarial Nets, GAN)上面来了。GAN是Goodfellow于2014年提出的一项基于博弈论和minimax理论的对抗性生成模型。这篇文章在老板的督促下，翻来覆去起码看了无数遍，所有的公式也手工推导了两到三遍，算得上是小有一些体会。</p>
 <p>关于GAN的原理上的阐述，在网上的各种帖子博客里已经说得很详细了。这篇文章主要针对于GAN中比较关键的几个数学公式，予以证明。</p>
 <a id="more"></a>
-<h3 id="introduction"><a class="markdownIt-Anchor" href="#introduction"></a> Introduction</h3>
-<p>首先给出GAN的目标函数：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>min</mi><mo>⁡</mo><mi>G</mi></msub><msub><mi>max</mi><mo>⁡</mo><mi>D</mi></msub><mi>V</mi><mo>(</mo><mi>D</mi><mo separator="true">,</mo><mi>G</mi><mo>)</mo><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>x</mi><mo>∼</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow></msub><mo>[</mo><mi>log</mi><mo>⁡</mo><mrow><mi>D</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>]</mo><mo>+</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>z</mi><mo>∼</mo><msub><mi>p</mi><mi>z</mi></msub><mo>(</mo><mi>z</mi><mo>)</mo></mrow></msub><mo>[</mo><mi>log</mi><mo>⁡</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>D</mi><mo>(</mo><mi>G</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>)</mo><mo>)</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">\min_{G}\max_{D} V(D,G) = \mathbb{E}_{x \sim p_{data}(x)}[\log{D(x)}] + \mathbb{E}_{z \sim p_{z}(z)}[\log(1-D(G(z)))]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.1052em;vertical-align:-0.3551999999999999em;"></span><span class="base"><span class="mop"><span class="mop">min</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit">G</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">x</span><span class="mrel mtight">∼</span><span class="mord mtight"><span class="mord mathit mtight">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"></span></span></span></span></span><span class="mopen">[</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span><span class="mclose">]</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span><span class="mrel mtight">∼</span><span class="mord mtight"><span class="mord mathit mtight">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285719em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"></span></span></span></span></span><span class="mopen">[</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord">1</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span></p>
-<p>其中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span> 是真实数据的数据分布，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>z</mi></msub><mo>(</mo><mi>z</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{z}(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span>是先验的噪音数据分布，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>是生成数据的数据分布，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">D(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>和真实数据的数据分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>和判别器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span></span>，即：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup><mo>=</mo><mtext>arg</mtext><msub><mi>max</mi><mo>⁡</mo><mi>D</mi></msub><mi>V</mi><mo>(</mo><mi>G</mi><mo separator="true">,</mo><mi>D</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">D^{*}_{G} = \text{arg}\max_{D}V(G,D)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.025331em;vertical-align:-0.275331em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord text"><span class="mord">arg</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.02778em;">D</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>G</mi><mo>∗</mo></msup><mo>=</mo><mtext>arg</mtext><msub><mi>min</mi><mo>⁡</mo><mi>G</mi></msub><mi>V</mi><mo>(</mo><mi>G</mi><mo separator="true">,</mo><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup><mo>)</mo></mrow><annotation encoding="application/x-tex">G^{*} = \text{arg}\min_{G}V(G,D^{*}_{G})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.025331em;vertical-align:-0.275331em;"></span><span class="base"><span class="mord"><span class="mord mathit">G</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord text"><span class="mord">arg</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">min</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>首先给出GAN的目标函数：</p>
+<p>$\min<em>{G}\max</em>{D} V(D,G) = \mathbb{E}<em>{x \sim p</em>{data}(x)}[\log{D(x)}] + \mathbb{E}<em>{z \sim p</em>{z}(z)}[\log(1-D(G(z)))]$</p>
+<p>其中，$p<em>{data}(x)$ 是真实数据的数据分布，$p</em>{z}(z)$是先验的噪音数据分布，$p<em>{g}(x)$是生成数据的数据分布，$D(\cdot)$表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布$p</em>{g}(x)$和真实数据的数据分布$p_{data}(x)$相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器$G$和判别器$D$，即：</p>
+<p>$D^{<em>}<em>{G} = \text{arg}\max</em>{D}V(G,D)$和$G^{</em>} = \text{arg}\min<em>{G}V(G,D^{*}</em>{G})$</p>
 <p>更新算法如下：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/GANalg.png" alt="GANalg"></p>
-<h3 id="q1如何衡量p_gx-和p_datax的相近程度"><a class="markdownIt-Anchor" href="#q1如何衡量p_gx-和p_datax的相近程度"></a> Q1：如何衡量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span> 和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>的相近程度？</h3>
-<p>为了论证<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>，我们需要设置一个衡量两个数据分布相似程度的指标。在文中，Goodfellow引入了KL散度：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>D</mi><mrow><mi>K</mi><mi>L</mi></mrow></msub><mo>(</mo><mi>P</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>Q</mi><mo>)</mo><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>x</mi><mo>∼</mo><mi>p</mi></mrow></msub><mo>[</mo><mi>log</mi><mo>⁡</mo><mrow><mfrac><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><mi>Q</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mfrac></mrow><mo>]</mo><mo>=</mo><msub><mi mathvariant="double-struck">E</mi><mrow><mi>x</mi><mo>∼</mo><mi>p</mi></mrow></msub><mo>[</mo><mi>log</mi><mo>⁡</mo><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>−</mo><mi>log</mi><mo>⁡</mo><mrow><mi>Q</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>]</mo></mrow><annotation encoding="application/x-tex">D_{KL}(P||Q) = \mathbb{E}_{x \sim p}[\log{\frac{P(x)}{Q(x)}}] = \mathbb{E}_{x \sim p}[\log{P(x)}-\log{Q(x)}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.01em;"></span><span class="strut bottom" style="height:1.53em;vertical-align:-0.52em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.07153em;">K</span><span class="mord mathit mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathit">Q</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">x</span><span class="mrel mtight">∼</span><span class="mord mathit mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">[</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">Q</span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mclose">]</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">x</span><span class="mrel mtight">∼</span><span class="mord mathit mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">[</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">Q</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span><span class="mclose">]</span></span></span></span>.</p>
-<p>为什么KL散度可以衡量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span> 和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>的相近程度呢？下面来证明。</p>
-<p>我们从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>中抽取<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">m</span></span></span></span>个样本<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><msup><mi>x</mi><mn>1</mn></msup><mo separator="true">,</mo></mrow><msup><mi>x</mi><mn>2</mn></msup><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msup><mi>x</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">{x^{1},}x^{2},...,x^{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:1.008548em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord"><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">m</span></span></span></span></span></span></span></span></span></span></span></span>,设分布的参数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">θ</span></span></span></span>，则每个样本可以表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo separator="true">;</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x;\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mpunct">;</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>，得到似然函数：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo>=</mo><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></msubsup><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><msup><mi>x</mi><mi>i</mi></msup><mo separator="true">;</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">L = \prod^{m}_{i=1}p_{g}(x^{i};\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.124374em;vertical-align:-0.29971000000000003em;"></span><span class="base"><span class="mord mathit">L</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mpunct">;</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>。</p>
-<p>该似然函数的含义是：在由<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">θ</span></span></span></span>确定的生成分布中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">m</span></span></span></span>个样本全部出现的概率。</p>
-<p>接下来我们将最大化似然函数来得到最优分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>θ</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">\theta^{*}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span>：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>θ</mi><mo>∗</mo></msup><mo>=</mo><mtext>arg</mtext><msub><mi>max</mi><mo>⁡</mo><mi>θ</mi></msub><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></msubsup><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><msup><mi>x</mi><mi>i</mi></msup><mo separator="true">;</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\theta^{*} = \text{arg}\max_{\theta}\prod^{m}_{i=1}p_{g}(x^{i};\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.124374em;vertical-align:-0.29971000000000003em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord text"><span class="mord">arg</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">max</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mpunct">;</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span></p>
-<p>因为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>log</mi><mo>⁡</mo><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\log(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>函数是单调的，所以为去掉连乘，将似然函数化为</p>
-<p>\theta^{*} = \text{arg}\max_{\theta}\log{\prod^{m}_{i=1}p_{g}(x^{i};\theta)}  \\= \text{arg}\max_{\theta}\sum^{m}_{i=1}log{p_{g}(x^{i};\theta)} \\ = \text{arg}\min_{\theta}\mathbb{E}_{x \sim p_{data}}[\log{p_{g}(x;\theta)}]</p>
-<p>（因为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>x</mi><mi>i</mi></msup><mo>∈</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x^{i} \in p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.0746639999999998em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span></span></span></span></span></span></span></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>）</p>
-<p>添加一项不含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">θ</span></span></span></span>的项，并展开：</p>
-<p>\theta^{*} = \text{arg}\max_{\theta}\int_{x}p_{data}(x)\log{p_{g}(x;\theta)}dx - \int_{x}p_{data}(x)\log{p_{data}(x)}dx \\= \text{arg}\max_{\theta}\int_{x}p_{data}(x)\log{\frac{p_{g}(x;\theta)}{p_{data}(x)}} dx \\  = \text{arg}\max_{\theta} KL(p_{g}(x;\theta)|| p_{data}(x))</p>
-<p>由此证明了KL散度能够衡量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span> 和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>的相近程度。</p>
-<h3 id="q2如何证明判别器d存在最优解最优解的值为多少"><a class="markdownIt-Anchor" href="#q2如何证明判别器d存在最优解最优解的值为多少"></a> Q2：如何证明判别器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span></span>存在最优解？最优解的值为多少？</h3>
-<p>展开GAN的目标函数中数学期望部分可以得到：</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mo>(</mo><mi>G</mi><mo separator="true">,</mo><mi>D</mi><mo>)</mo><mo>=</mo><msub><mo>∫</mo><mi>x</mi></msub><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mi>log</mi><mo>⁡</mo><mrow><mi>D</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mo>+</mo><msub><mo>∫</mo><mi>z</mi></msub><msub><mi>p</mi><mi>z</mi></msub><mo>(</mo><mi>z</mi><mo>)</mo><mi>log</mi><mo>⁡</mo><mrow><mo>(</mo><mn>1</mn><mo>−</mo><mi>D</mi><mo>(</mo><mi>G</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>)</mo></mrow><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">V(G,D) = \int_{x}p_{data}(x)\log{D(x)}dx + \int_{z}p_{z}(z)\log{(1-D(G(z))}dz</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.805em;"></span><span class="strut bottom" style="height:1.1608200000000002em;vertical-align:-0.35582em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.05442800000000003em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span><span class="mord mathit">d</span><span class="mord mathit">x</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.05442800000000003em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"></span></span></span></span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.04398em;">z</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span></span><span class="mord mathit">d</span><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span></span>.</p>
-<p>当给定一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>时，因为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>输入的是噪音数据<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span></span>，得到的是生成的数据<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">x</span></span></span></span>，所以使用换元积分，令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">G(z) = x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">x</span></span></span></span>。值得注意的是，该处证明存在一个漏洞，即要使用换元积分的话，函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">G(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit">G</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>必须是可逆的，然而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>是一个神经网络，目前尚不能证明其实可逆的。但该种换元方法在机器学习中非常常见，所以就暂时忽略掉。</p>
-<p>$\int_{x}p_{data}(x)\log{D(x)}dx + \int_{x}p_{g}(x)log{(1-D(x))}dxV(G,D) \= \int_{x}\left[p_{data}(x)\log{D(x)} + p_{g}(x)log{(1-D(x))}\right]dx $</p>
-<p>因为要求目标函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.22222em;">V</span></span></span></span>的最大值，而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>是固定的，所以最大值只和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span></span>有关。为方便起见，令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>a</mi><mo separator="true">,</mo><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>b</mi><mo separator="true">,</mo><mi>D</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>y</mi><mo separator="true">,</mo><mi>V</mi><mo>(</mo><mo>⋅</mo><mo>)</mo><mo>=</mo><mi>f</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x)  = a, p_{g}(x) = b, D(x) = y, V(\cdot) = f(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">a</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">b</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span> .</p>
-<p>则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>y</mi><mo>)</mo><mo>=</mo><mi>a</mi><mi>log</mi><mo>⁡</mo><mrow><mi>y</mi></mrow><mo>+</mo><mi>b</mi><mi>log</mi><mo>⁡</mo><mrow><mo>(</mo><mn>1</mn><mo>−</mo><mi>y</mi><mo>)</mo></mrow></mrow><annotation encoding="application/x-tex">f(y) = a \log{y} + b \log{(1-y)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit">a</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">y</span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit">b</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></span></p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>f</mi><msup><mrow></mrow><mo mathvariant="normal">′</mo></msup></msup><mo>(</mo><mi>y</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>a</mi></mrow><mrow><mi>y</mi></mrow></mfrac><mo>−</mo><mfrac><mrow><mi>b</mi></mrow><mrow><mn>1</mn><mo>−</mo><mi>y</mi></mrow></mfrac><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f^{&#x27;}(y) = \frac{a}{y} - \frac{b}{1-y} = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.94248em;"></span><span class="strut bottom" style="height:1.423588em;vertical-align:-0.481108em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94248em;"><span style="top:-2.94248em;margin-right:0.05em;"><span class="pstrut" style="height:2.57948em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span></span></p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mfrac><mrow><mi>a</mi></mrow><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">y = \frac{a}{a+b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.695392em;"></span><span class="strut bottom" style="height:1.0987230000000001em;vertical-align:-0.403331em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span><span class="mbin mtight">+</span><span class="mord mathit mtight">b</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-<p>二阶导数：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>f</mi><msup><mrow></mrow><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></msup><mo>(</mo><mi>y</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mrow><mi>a</mi></mrow><mrow><msup><mi>y</mi><mn>2</mn></msup></mrow></mfrac><mo>−</mo><mfrac><mrow><mi>b</mi></mrow><mrow><mn>1</mn><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">f^{&#x27;&#x27;}(y) = -\frac{a}{y^{2}}-\frac{b}{1-y^{2}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.94248em;"></span><span class="strut bottom" style="height:1.423588em;vertical-align:-0.481108em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94248em;"><span style="top:-2.94248em;margin-right:0.05em;"><span class="pstrut" style="height:2.57948em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>f</mi><msup><mrow></mrow><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></msup><mo>(</mo><mfrac><mrow><mi>a</mi></mrow><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></mfrac><mo>)</mo><mo>&lt;</mo><mn>0</mn><mo separator="true">,</mo><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>∈</mo><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">f^{&#x27;&#x27;}(\frac{a}{a+b}) \lt 0 ,(a,b \in (0,1))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.94248em;"></span><span class="strut bottom" style="height:1.3458109999999999em;vertical-align:-0.403331em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94248em;"><span style="top:-2.94248em;margin-right:0.05em;"><span class="pstrut" style="height:2.57948em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span><span class="mbin mtight">+</span><span class="mord mathit mtight">b</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord mathit">a</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit">b</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>.</p>
-<p>所以证明了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mfrac><mrow><mi>a</mi></mrow><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">y = \frac{a}{a+b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.695392em;"></span><span class="strut bottom" style="height:1.0987230000000001em;vertical-align:-0.403331em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.03588em;">y</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span><span class="mbin mtight">+</span><span class="mord mathit mtight">b</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>为极大值且唯一，即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>+</mo><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">D^{*}_{G}(x) = \frac{p_{data}(x)}{p_{data}(x) + p_{g}(x)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.01em;"></span><span class="strut bottom" style="height:1.55232em;vertical-align:-0.5423199999999999em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathit mtight">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathit mtight">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16454285714285716em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2818857142857143em;"></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathit mtight">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:0em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathit mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5423199999999999em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-<p>如果最后GAN能够达到最优，即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>，则判别器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">D^{*}_{G}(x) = \frac{1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>！</p>
-<p>也就是说判别器最后对输入数据，不论是真实数据还是生成数据，判定其为真的概率均为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="base"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，也就是说随机猜测无法判断。那么我们可以认为这个生成数据已经能够以假乱真，让判别器无法判断了。</p>
-<h3 id="q3如何证明当且仅当p_gx-p_datax时生成器g有最优解"><a class="markdownIt-Anchor" href="#q3如何证明当且仅当p_gx-p_datax时生成器g有最优解"></a> Q3：如何证明当且仅当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>时，生成器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>有最优解？</h3>
-<p>这个当且仅当问题需要从两个方向来证明。</p>
-<p>我们先假设当判别器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span></span>训练好时，固定<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.02778em;">D</span></span></span></span>，令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo><mo>=</mo><mi>V</mi><mo>(</mo><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup><mo separator="true">,</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G) = V(D^{*}_{G},G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.025331em;vertical-align:-0.275331em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord mathit">G</span><span class="mclose">)</span></span></span></span>，再令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>来求<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span></span></span></span>的一个可能的取值，再证明它是最优解：</p>
-<p>C(G) = \int_{x}p_{data}(x)\log{\frac{1}{2}} + p_{g}(x)\log{\frac{1}{2}} dx \\=-\log{2}\int_{x}p_{data}(x)dx - \log{2}\int_{x}p_{g}(x)dx \\ =-log{4}.</p>
-<p>接下来对所有的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>，将最优判别器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>D</mi><mi>G</mi><mo>∗</mo></msubsup></mrow><annotation encoding="application/x-tex">D^{*}_{G}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.688696em;"></span><span class="strut bottom" style="height:0.964027em;vertical-align:-0.275331em;"></span><span class="base"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.424669em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">G</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.275331em;"></span></span></span></span></span></span></span></span>代入到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span></span></span></span>中，来求<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span></span></span></span>的最优解：</p>
-<p>C(G) = \int_{x} p_{data}(x)\log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}} + p_{g}(x)\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}}dx \\= \int_{x}(\log{2} - \log{2})p_{data}(x) + p_{data}(x)\log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}} + (\log{2} - \log{2})p_{g}(x) + p_{g}(x)\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}}dx</p>
+<h3 id="Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><a href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？" class="headerlink" title="Q1：如何衡量$p{g}(x)$ 和$p{data}(x)$的相近程度？"></a>Q1：如何衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度？</h3><p>为了论证$p<em>{g}(x) = p</em>{data}(x)$，我们需要设置一个衡量两个数据分布相似程度的指标。在文中，Goodfellow引入了KL散度：</p>
+<p>$D<em>{KL}(P||Q) = \mathbb{E}</em>{x \sim p}[\log{\frac{P(x)}{Q(x)}}] = \mathbb{E}_{x \sim p}[\log{P(x)}-\log{Q(x)}]$.</p>
+<p>为什么KL散度可以衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度呢？下面来证明。</p>
+<p>我们从$P<em>{data}(x)$中抽取$m$个样本${x^{1},}x^{2},…,x^{m}$,设分布的参数为$\theta$，则每个样本可以表示为$p</em>{g}(x;\theta)$，得到似然函数：</p>
+<p>$L = \prod^{m}<em>{i=1}p</em>{g}(x^{i};\theta)$。</p>
+<p>该似然函数的含义是：在由$\theta$确定的生成分布中，$m$个样本全部出现的概率。</p>
+<p>接下来我们将最大化似然函数来得到最优分布$\theta^{*}$：</p>
+<p>$\theta^{*} = \text{arg}\max<em>{\theta}\prod^{m}</em>{i=1}p_{g}(x^{i};\theta)$</p>
+<p>因为$\log(\cdot)$函数是单调的，所以为去掉连乘，将似然函数化为</p>
+<p>$\theta^{*} = \text{arg}\max<em>{\theta}\log{\prod^{m}</em>{i=1}p<em>{g}(x^{i};\theta)}  \= \text{arg}\max</em>{\theta}\sum^{m}<em>{i=1}log{p</em>{g}(x^{i};\theta)} \ = \text{arg}\min<em>{\theta}\mathbb{E}</em>{x \sim p<em>{data}}[\log{p</em>{g}(x;\theta)}]$</p>
+<p>（因为$x^{i} \in p_{data}(x)$）</p>
+<p>添加一项不含$\theta$的项，并展开：</p>
+<p>$\theta^{*} = \text{arg}\max<em>{\theta}\int</em>{x}p<em>{data}(x)\log{p</em>{g}(x;\theta)}dx - \int<em>{x}p</em>{data}(x)\log{p<em>{data}(x)}dx \= \text{arg}\max</em>{\theta}\int<em>{x}p</em>{data}(x)\log{\frac{p<em>{g}(x;\theta)}{p</em>{data}(x)}} dx \  = \text{arg}\max<em>{\theta} KL(p</em>{g}(x;\theta)|| p_{data}(x))$</p>
+<p>由此证明了KL散度能够衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度。</p>
+<h3 id="Q2：如何证明判别器-D-存在最优解？最优解的值为多少？"><a href="#Q2：如何证明判别器-D-存在最优解？最优解的值为多少？" class="headerlink" title="Q2：如何证明判别器$D$存在最优解？最优解的值为多少？"></a>Q2：如何证明判别器$D$存在最优解？最优解的值为多少？</h3><p>展开GAN的目标函数中数学期望部分可以得到：</p>
+<p>$V(G,D) = \int<em>{x}p</em>{data}(x)\log{D(x)}dx + \int<em>{z}p</em>{z}(z)\log{(1-D(G(z))}dz$.</p>
+<p>当给定一个$G$时，因为$G$输入的是噪音数据$z$，得到的是生成的数据$x$，所以使用换元积分，令$G(z) = x$。值得注意的是，该处证明存在一个漏洞，即要使用换元积分的话，函数$G(x)$必须是可逆的，然而$G$是一个神经网络，目前尚不能证明其实可逆的。但该种换元方法在机器学习中非常常见，所以就暂时忽略掉。</p>
+<p>$\int<em>{x}p</em>{data}(x)\log{D(x)}dx + \int<em>{x}p</em>{g}(x)log{(1-D(x))}dxV(G,D) \= \int<em>{x}\left[p</em>{data}(x)\log{D(x)} + p_{g}(x)log{(1-D(x))}\right]dx $</p>
+<p>因为要求目标函数$V$的最大值，而$G$是固定的，所以最大值只和$D$有关。为方便起见，令$p<em>{data}(x)  = a, p</em>{g}(x) = b, D(x) = y, V(\cdot) = f(\cdot)$ .</p>
+<p>则$f(y) = a \log{y} + b \log{(1-y)}$</p>
+<p>$f^{‘}(y) = \frac{a}{y} - \frac{b}{1-y} = 0$ </p>
+<p>$y = \frac{a}{a+b}$</p>
+<p>二阶导数：$f^{‘’}(y) = -\frac{a}{y^{2}}-\frac{b}{1-y^{2}}$</p>
+<p> $f^{‘’}(\frac{a}{a+b}) \lt 0 ,(a,b \in (0,1))$.</p>
+<p>所以证明了$y = \frac{a}{a+b}$为极大值且唯一，即$D^{*}<em>{G}(x) = \frac{p</em>{data}(x)}{p<em>{data}(x) + p</em>{g}(x)}$</p>
+<p>如果最后GAN能够达到最优，即$p<em>{g}(x) = p</em>{data}(x)$，则判别器$D^{*}_{G}(x) = \frac{1}{2}$！</p>
+<p>也就是说判别器最后对输入数据，不论是真实数据还是生成数据，判定其为真的概率均为$\frac{1}{2}$，也就是说随机猜测无法判断。那么我们可以认为这个生成数据已经能够以假乱真，让判别器无法判断了。</p>
+<h3 id="Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><a href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？" class="headerlink" title="Q3：如何证明当且仅当$p{g}(x) = p{data}(x)$时，生成器$G$有最优解？"></a>Q3：如何证明当且仅当$p<em>{g}(x) = p</em>{data}(x)$时，生成器$G$有最优解？</h3><p>这个当且仅当问题需要从两个方向来证明。</p>
+<p>我们先假设当判别器$D$训练好时，固定$D$，令$C(G) = V(D^{*}<em>{G},G)$，再令$p</em>{g}(x) = p_{data}(x)$来求$C(G)$的一个可能的取值，再证明它是最优解：</p>
+<p>$C(G) = \int<em>{x}p</em>{data}(x)\log{\frac{1}{2}} + p<em>{g}(x)\log{\frac{1}{2}} dx \=-\log{2}\int</em>{x}p<em>{data}(x)dx - \log{2}\int</em>{x}p_{g}(x)dx \ =-log{4}.$</p>
+<p>接下来对所有的$G$，将最优判别器$D^{*}_{G}$代入到$C(G)$中，来求$C(G)$的最优解：</p>
+<p>$C(G) = \int<em>{x} p</em>{data}(x)\log{\frac{p<em>{data}(x)}{p</em>{g}(x)+p<em>{data}(x)}} + p</em>{g}(x)\log{\frac{p<em>{g}(x)}{p</em>{g}(x)+p<em>{data}(x)}}dx \= \int</em>{x}(\log{2} - \log{2})p<em>{data}(x) + p</em>{data}(x)\log{\frac{p<em>{data}(x)}{p</em>{g}(x)+p<em>{data}(x)}} + (\log{2} - \log{2})p</em>{g}(x) + p<em>{g}(x)\log{\frac{p</em>{g}(x)}{p<em>{g}(x)+p</em>{data}(x)}}dx$ </p>
 <p>我们在这里使用了一个小技巧，添加了两项值为0的项，并展开，对原式的结果没有影响。</p>
-<p>C(G) = -\log{2}\int_{x}[p_{g}(x) + p_{data}(x)]dx + \int_{x}\left[p_{data}(x)\left(\log{2} + \log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}}\right) + p_{g}(x)\left(\log{2}+\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}} \right)\right]dx \\= -\log{4} + \int_{x}\left[p_{data}(x)\left(\log{\frac{p_{data}(x)}{\frac{p_{g}(x)+p_{data}(x)}{2}}}\right) + p_{g}(x)\left(\log{\frac{p_{g}(x)}{\frac{p_{g}(x)+p_{data}(x)}{2}}} \right)\right]dx \\= -\log{4} + KL(p_{data}||\frac{p_{data}+p_{g}}{2}) + KL(p_{g}||\frac{p_{data}+p_{g}}{2}).</p>
-<p>因为KL散度是恒大于零的，所以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mi>log</mi><mo>⁡</mo><mrow><mn>4</mn></mrow></mrow><annotation encoding="application/x-tex">-\log{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord">−</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">4</span></span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span></span></span></span>的最小值。</p>
-<p>接下来再证明当生成器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>取得最优解<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mi>log</mi><mo>⁡</mo><mrow><mn>4</mn></mrow></mrow><annotation encoding="application/x-tex">-\log{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord">−</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">4</span></span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>。</p>
+<p>$C(G) = -\log{2}\int<em>{x}[p</em>{g}(x) + p<em>{data}(x)]dx + \int</em>{x}\left[p<em>{data}(x)\left(\log{2} + \log{\frac{p</em>{data}(x)}{p<em>{g}(x)+p</em>{data}(x)}}\right) + p<em>{g}(x)\left(\log{2}+\log{\frac{p</em>{g}(x)}{p<em>{g}(x)+p</em>{data}(x)}} \right)\right]dx \= -\log{4} + \int<em>{x}\left[p</em>{data}(x)\left(\log{\frac{p<em>{data}(x)}{\frac{p</em>{g}(x)+p<em>{data}(x)}{2}}}\right) + p</em>{g}(x)\left(\log{\frac{p<em>{g}(x)}{\frac{p</em>{g}(x)+p<em>{data}(x)}{2}}} \right)\right]dx \= -\log{4} + KL(p</em>{data}||\frac{p<em>{data}+p</em>{g}}{2}) + KL(p<em>{g}||\frac{p</em>{data}+p_{g}}{2}).$</p>
+<p>因为KL散度是恒大于零的，所以$-\log{4}$为$C(G)$的最小值。</p>
+<p>接下来再证明当生成器$G$取得最优解$-\log{4}$时，$p<em>{g}(x) = p</em>{data}(x)$。</p>
 <p>因为KL散度不可以交换，所以文中引入了JS散度。JS散度的定义如下。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mi>S</mi><mi>D</mi><mo>(</mo><mi>P</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>Q</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>K</mi><mi>L</mi><mo>(</mo><mi>P</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>M</mi><mo>)</mo><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>K</mi><mi>L</mi><mo>(</mo><mi>Q</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">JSD(P||Q) = \frac{1}{2}KL(P||M) + \frac{1}{2}KL(Q||M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathit">Q</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathit" style="margin-right:0.07153em;">K</span><span class="mord mathit">L</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathit" style="margin-right:0.07153em;">K</span><span class="mord mathit">L</span><span class="mopen">(</span><span class="mord mathit">Q</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>(</mo><mi>P</mi><mo>+</mo><mi>Q</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">M = \frac{1}{2}(P+Q)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.10903em;">M</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.15em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.2em;"><svg width="400em" height="0.2em" viewbox="0 0 400000 200" preserveaspectratio="xMinYMin slice"><path d="M0 80H400000 v40H0z M0 80H400000 v40H0z"/></svg></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit">Q</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mi>S</mi><mi>D</mi><mo>∈</mo><mo>[</mo><mn>0</mn><mo separator="true">,</mo><mi>log</mi><mo>⁡</mo><mrow><mn>2</mn></mrow><mo>]</mo></mrow><annotation encoding="application/x-tex">JSD \in [0, \log{2}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">2</span></span><span class="mclose">]</span></span></span></span>.</p>
-<p>所以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>G</mi><mo>)</mo><mo>=</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><mrow><mn>4</mn></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><mi>J</mi><mi>S</mi><mi>D</mi><mo>(</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><msub><mi>p</mi><mi>g</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">C(G) = -\log{4} + 2\cdot JSD(p_{data}||p_{g})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathit">G</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">−</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">4</span></span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mord rule" style="margin-right:0.2222222222222222em;"></span><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord">∣</span><span class="mord">∣</span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mclose">)</span></span></span></span>.</p>
-<p>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{data}(x) = p_{g}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mi>S</mi><mi>D</mi><mo>(</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><msub><mi>p</mi><mi>g</mi></msub><mo>)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">JSD(p_{data}||p_{g}) = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mord">∣</span><span class="mord">∣</span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span></span>。</p>
-<p>所以当生成器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base"><span class="mord mathit">G</span></span></span></span>取得最优解<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mi>log</mi><mo>⁡</mo><mrow><mn>4</mn></mrow></mrow><annotation encoding="application/x-tex">-\log{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base"><span class="mord">−</span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mord rule" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">4</span></span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>g</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>p</mi><mrow><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_{g}(x) = p_{data}(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base"><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight" style="margin-right:0.03588em;">g</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mord rule" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathit">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">d</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"></span></span></span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span></span></span></span>。</p>
-<h3 id="summary"><a class="markdownIt-Anchor" href="#summary"></a> Summary</h3>
-<ul>
+<p>$JSD(P||Q) = \frac{1}{2}KL(P||M) + \frac{1}{2}KL(Q||M)$，其中$M = \frac{1}{2}(P+Q)$，$JSD \in [0, \log{2}]$.</p>
+<p>所以$C(G) = -\log{4} + 2\cdot JSD(p<em>{data}||p</em>{g})$.</p>
+<p>当$p<em>{data}(x) = p</em>{g}(x)$时，$JSD(p<em>{data}||p</em>{g}) = 0$。</p>
+<p>所以当生成器$G$取得最优解$-\log{4}$时，$p<em>{g}(x) = p</em>{data}(x)$。</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
 <li>GAN结合了生成模型和判别模型，消除了生成模型的loss function难以定义的问题。</li>
 <li>基于概率分布来计算，不受生成维度的限制。</li>
 <li>可以用来进行半监督学习（先使用无标签的数据训练GAN，在基于GAN使用有标签的数据训练判别器）。</li>
@@ -244,225 +405,381 @@
 
       
     </div>
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
 
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/31/Triple-GAN数学推导/" rel="next" title="Triple GAN数学推导">
+                <i class="fa fa-chevron-left"></i> Triple GAN数学推导
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/07/移动端神经网络/" rel="prev" title="移动端神经网络">
+                移动端神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
     </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
-  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
     
-<nav id="article-nav">
-  
-    <a href="/2017/10/07/移动端神经网络/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
+  </div>
+
+
+        </div>
         
-          移动端神经网络
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Shawn zhu" />
+          <p class="site-author-name" itemprop="name">Shawn zhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不忘初心 方得始终</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
         
-      </div>
-    </a>
-  
-  
-    <a href="/2018/05/31/Triple-GAN数学推导/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Triple GAN数学推导</div>
-    </a>
-  
-</nav>
 
-  
-</article>
+        <div class="links-of-author motion-element">
+          
+        </div>
 
-<!-- Table of Contents -->
+        
+        
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text"> Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q1如何衡量p_gx-和p_datax的相近程度"><span class="nav-number">2.</span> <span class="nav-text"> Q1：如何衡量pg(x)p_{g}(x)pg​(x) 和pdata(x)p_{data}(x)pdata​(x)的相近程度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q2如何证明判别器d存在最优解最优解的值为多少"><span class="nav-number">3.</span> <span class="nav-text"> Q2：如何证明判别器DDD存在最优解？最优解的值为多少？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q3如何证明当且仅当p_gx-p_datax时生成器g有最优解"><span class="nav-number">4.</span> <span class="nav-text"> Q3：如何证明当且仅当pg(x)=pdata(x)p_{g}(x) = p_{data}(x)pg​(x)=pdata​(x)时，生成器GGG有最优解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">5.</span> <span class="nav-text"> Summary</span></a></li></ol>
-    
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><span class="nav-number">2.</span> <span class="nav-text">Q1：如何衡量$p{g}(x)$ 和$p{data}(x)$的相近程度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2：如何证明判别器-D-存在最优解？最优解的值为多少？"><span class="nav-number">3.</span> <span class="nav-text">Q2：如何证明判别器$D$存在最优解？最优解的值为多少？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><span class="nav-number">4.</span> <span class="nav-text">Q3：如何证明当且仅当$p{g}(x) = p{data}(x)$时，生成器$G$有最优解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
     </div>
   </aside>
-</section>
+
+
         
       </div>
-      
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-
-  <div class="container">
-      	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Shawnzhu&#39;s Personal Blog All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				<span id="busuanzi_container_site_uv"> 访客数 : <span id="busuanzi_value_site_uv"></span></span> |  
-				<span id="busuanzi_container_site_pv"> 访问量 : <span id="busuanzi_value_site_pv"></span></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn zhu</span>
+</div>
 
 
-<!-- min height -->
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
 
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
 
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/aboutme" class="mobile-nav-link">About</a>
-  
-</nav> -->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-<script src="/js/bootstrap.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Shawnzhu&#39;s Personal Blog
-          </div>
-          <div class="panel-body">
-            Copyright © 2018 Shawn zhu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
 
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -480,7 +797,12 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+  
 
+
+  
+
+  
 
 </body>
 </html>

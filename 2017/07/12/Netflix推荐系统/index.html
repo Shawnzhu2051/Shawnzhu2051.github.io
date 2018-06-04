@@ -1,20 +1,96 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <title>netflix推荐系统 | Shawnzhu&#39;s Personal Blog</title>
-  <meta name="baidu-site-verification" content="mD5o6wEFU2" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
   
   
-    <meta name="google-site-verification" content="true" />
   
   
-    <meta name="baidu-site-verification" content="true" />
+
   
+    
+    
   
-  <meta name="description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Netflix推荐系统">
@@ -30,398 +106,587 @@
 <meta name="twitter:title" content="Netflix推荐系统">
 <meta name="twitter:description" content="2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我">
 <meta name="twitter:image" content="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/figure1.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
-  
-  <link rel="icon" href="/css/images/mylogo.jpg">
-  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
 
-  <script src="/js/jquery-3.1.1.min.js"></script>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
 
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
 
-  
-    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-  
 
-  
 
+  <link rel="canonical" href="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/"/>
+
+
+
+
+
+  <title>Netflix推荐系统 | Shawnzhu's Personal Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
 
 
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+
+
+
+
+
+
+
+
 
 
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
-    <div id="wrap">
-      
-        <header>
+  
+    
+  
 
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
 
-            
-              <a class="brand" style="border-width: 0;">
-                <p>Shawnzhu&#39;s Personal Blog</p>
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">首页</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
-                
-                  <li><div id="search-form-wrap">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawnzhu's Personal Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
+      
+        <p class="site-subtitle">不忘初心 方得始终</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(无标题)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
 
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
+<nav class="site-nav">
+  
 
-</header>
-
-
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            Über
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
 
       
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;"><article id="post-Netflix推荐系统" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      Netflix推荐系统
-    </h1>
+    </ul>
   
 
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zhuchenshawn.com/2017/07/12/Netflix推荐系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn zhu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawnzhu's Personal Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Netflix推荐系统
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T19:32:27+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-meta">
-      
-	<a href="/2017/07/12/Netflix推荐系统/" class="article-date">
-	  <time datetime="2017-07-12T11:32:27.000Z" itemprop="datePublished">2017-07-12</time>
-	</a>
+
+    <div class="post-body" itemprop="articleBody">
 
       
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+      
 
-    </div>
-    <div class="article-entry" itemprop="articleBody">
       
         <p>2006年，Netflix举办了一次大赛，内容为第一个能够将该网站推荐效果提升10%的团队将会获得100万美元的奖金。最后在2009年时，一支名叫“BPC”的团队率先突破障碍，以10.06%的改进效果获得了这份百万大奖。他们的算法写成了一篇名叫《MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS》的论文。我们数据挖掘课程的课程设计就是要我们实现这样一个算法。</p>
 <a id="more"></a>
 <p><img src="/2017/07/12/Netflix推荐系统/figure1.png" alt=""></p>
-<h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
-<p>这个推荐系统为什么这么难，以至于值得起100万美金？我个人认为主要的原因还是在于数据集是特别巨大而且稀疏的。<br>
-从训练数据可以看到，Netflix提供了17700部电影，以及480000个用户，这两者组成了一个非常巨大的矩阵，普通的电脑的计算能力和存储能力都是远远不足以计算这么庞大的数据。矩阵中的每一个元素代表着一位用户对于一部电影的评分。很明显，一位用户怎么可能看过17700部电影，顶多10<sup>2数量级部吧。而一部电影也不可能被所有的用户都看过，根据Netflix给出的数据，这个矩阵大约只有10</sup>7个非零元素，所以这个矩阵是极度稀疏的，99%的数据都是0。<br>
-<img src="/2017/07/12/Netflix推荐系统/figure2.png" alt=""></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>这个推荐系统为什么这么难，以至于值得起100万美金？我个人认为主要的原因还是在于数据集是特别巨大而且稀疏的。<br>从训练数据可以看到，Netflix提供了17700部电影，以及480000个用户，这两者组成了一个非常巨大的矩阵，普通的电脑的计算能力和存储能力都是远远不足以计算这么庞大的数据。矩阵中的每一个元素代表着一位用户对于一部电影的评分。很明显，一位用户怎么可能看过17700部电影，顶多10^2数量级部吧。而一部电影也不可能被所有的用户都看过，根据Netflix给出的数据，这个矩阵大约只有10^7个非零元素，所以这个矩阵是极度稀疏的，99%的数据都是0。<br><img src="/2017/07/12/Netflix推荐系统/figure2.png" alt=""></p>
 <p>紧接着分析具体数据。每一个数据文件代表了训练样本矩阵中的一列，即多个用户对一部电影的评分。数据构成如下：</p>
 <pre><code>[User_id, Rating, Time_stamp]
-</code></pre>
-<p>其中Rating是一个1-5的正整数。</p>
-<h2 id="算法分析"><a class="markdownIt-Anchor" href="#算法分析"></a> 算法分析</h2>
-<p>这么大的矩阵，计算机肯定是无法直接处理的，所以论文中先引入了线性代数中的SVD（奇异值分解）方法。当年学习线性代数时完全不知道这些奇奇怪怪没事儿找事儿的特征值啊各种分解啊有什么用，结果在这里就派上了用场。SVD分解的具体操作步骤请自行百度或谷歌。</p>
-<p>但是SVD并不能真正解决我们的问题。因为对这个巨型矩阵进行传统的SVD分解，也是一个极其巨大的工程，我之前试过在python中进行SVD分解，电脑都快跑炸了都没有结果。所以文章在这里对SVD分解进行了一个改动。<br>
-<img src="/2017/07/12/Netflix推荐系统/figure3.png" alt=""></p>
-<p>这样，大矩阵就被分解为了两个大小可以接受的小矩阵。在具体的实验过程中，f可取20-100.<br>
-<img src="/2017/07/12/Netflix推荐系统/figure4.png" alt=""></p>
-<h2 id="具体实现"><a class="markdownIt-Anchor" href="#具体实现"></a> 具体实现</h2>
-<p>未完待续。。。</p>
+</code></pre><p>其中Rating是一个1-5的正整数。</p>
+<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>这么大的矩阵，计算机肯定是无法直接处理的，所以论文中先引入了线性代数中的SVD（奇异值分解）方法。当年学习线性代数时完全不知道这些奇奇怪怪没事儿找事儿的特征值啊各种分解啊有什么用，结果在这里就派上了用场。SVD分解的具体操作步骤请自行百度或谷歌。</p>
+<p>但是SVD并不能真正解决我们的问题。因为对这个巨型矩阵进行传统的SVD分解，也是一个极其巨大的工程，我之前试过在python中进行SVD分解，电脑都快跑炸了都没有结果。所以文章在这里对SVD分解进行了一个改动。<br><img src="/2017/07/12/Netflix推荐系统/figure3.png" alt=""></p>
+<p>这样，大矩阵就被分解为了两个大小可以接受的小矩阵。在具体的实验过程中，f可取20-100.<br><img src="/2017/07/12/Netflix推荐系统/figure4.png" alt=""></p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>未完待续。。。</p>
 
       
     </div>
-    <footer class="article-footer">
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/11/AppleScript小试牛刀/" rel="next" title="AppleScript小试牛刀">
+                <i class="fa fa-chevron-left"></i> AppleScript小试牛刀
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/" rel="prev" title="自己动手写基于MIPS的16位单周期CPU">
+                自己动手写基于MIPS的16位单周期CPU <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
     </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
-  
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
     
-<nav id="article-nav">
-  
-    <a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
+  </div>
+
+
+        </div>
         
-          自己动手写基于MIPS的16位单周期CPU
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Shawn zhu" />
+          <p class="site-author-name" itemprop="name">Shawn zhu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不忘初心 方得始终</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
         
-      </div>
-    </a>
-  
-  
-    <a href="/2017/08/11/AppleScript小试牛刀/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">AppleScript小试牛刀</div>
-    </a>
-  
-</nav>
 
-  
-</article>
+        <div class="links-of-author motion-element">
+          
+        </div>
 
-<!-- Table of Contents -->
+        
+        
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.</span> <span class="nav-text"> 问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text"> 算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text"> 具体实现</span></a></li></ol>
-    
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法分析"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
     </div>
   </aside>
-</section>
+
+
         
       </div>
-      
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-
-  <div class="container">
-      	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Shawnzhu&#39;s Personal Blog All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				<span id="busuanzi_container_site_uv"> 访客数 : <span id="busuanzi_value_site_uv"></span></span> |  
-				<span id="busuanzi_container_site_pv"> 访问量 : <span id="busuanzi_value_site_pv"></span></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn zhu</span>
+</div>
 
 
-<!-- min height -->
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
 
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
 
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/aboutme" class="mobile-nav-link">About</a>
-  
-</nav> -->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-<script src="/js/bootstrap.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Shawnzhu&#39;s Personal Blog
-          </div>
-          <div class="panel-body">
-            Copyright © 2018 Shawn zhu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
 
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -440,6 +705,58 @@
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
 
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
 
 </body>
 </html>
