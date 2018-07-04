@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>hadoop简介与mac安装 | Shawnzhu&#39;s Personal Blog</title>
+  <meta name="baidu-site-verification" content="mD5o6wEFU2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+    <meta name="google-site-verification" content="true" />
+  
+  
+    <meta name="baidu-site-verification" content="true" />
+  
+  
+  <meta name="description" content="因为一些机缘巧合，需要去学习一下分布式系统与Hadoop。在这里对自己所学的一些东西做一个总结。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop简介与Mac安装">
+<meta property="og:url" content="http://zhuchenshawn.com/2018/06/30/Hadoop-Mac安装与伪分布式部署/index.html">
+<meta property="og:site_name" content="Shawnzhu's Personal Blog">
+<meta property="og:description" content="因为一些机缘巧合，需要去学习一下分布式系统与Hadoop。在这里对自己所学的一些东西做一个总结。">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/06/30/Hadoop-Mac安装与伪分布式部署/architecture.png">
+<meta property="og:image" content="http://zhuchenshawn.com/Users/shawnzhu/Desktop/Programmer/Personal_Blog/folder/source/_posts/Hadoop-Mac安装与伪分布式部署/hdfs-architecture.png">
+<meta property="og:updated_time" content="2018-07-04T10:04:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop简介与Mac安装">
+<meta name="twitter:description" content="因为一些机缘巧合，需要去学习一下分布式系统与Hadoop。在这里对自己所学的一些东西做一个总结。">
+<meta name="twitter:image" content="http://zhuchenshawn.com/2018/06/30/Hadoop-Mac安装与伪分布式部署/architecture.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="border-width: 0;">
+                <p>Shawnzhu&#39;s Personal Blog</p>
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Hadoop-Mac安装与伪分布式部署" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Hadoop简介与Mac安装
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/06/30/Hadoop-Mac安装与伪分布式部署/" class="article-date">
+	  <time datetime="2018-06-30T02:51:58.000Z" itemprop="datePublished">2018-06-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/“分布式系统”/">“分布式系统”</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为一些机缘巧合，需要去学习一下分布式系统与Hadoop。在这里对自己所学的一些东西做一个总结。</p>
+<a id="more"></a>
+<p>这篇文章参考了宗航大大的博客：<a href="https://lizonghang.github.io/2018/01/09/Hadoop%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2/" target="_blank" rel="external">点击进去</a> 以及W3C School的教程。</p>
+<h3 id="Hadoop-架构"><a href="#Hadoop-架构" class="headerlink" title="Hadoop 架构"></a>Hadoop 架构</h3><p>首先介绍一下分布式系统的理论基础，谷歌三驾马车：MapReduce，Google File System 和 Big Table。</p>
+<p>Hadoop是Apache开源组织的一个分布式计算开源框架<a href="http://hadoop.apache.org/" target="_blank" rel="external">http://hadoop.apache.org/</a>，用java语言实现，实现了在大量计算机组成的集群中对海量数据进行分布式计算，它是一个高性能处理海量数据集的工具 。</p>
+<p>Hadoop的架构如下：</p>
+<p><img src="/2018/06/30/Hadoop-Mac安装与伪分布式部署/architecture.png" alt="architecture"></p>
+<ul>
+<li><p><strong>HDFS:</strong> 分布式文件存储</p>
+</li>
+<li><p><strong>YARN:</strong> 分布式资源管理</p>
+</li>
+<li><p><strong>MapReduce:</strong> 分布式计算</p>
+</li>
+<li><p><strong>Others:</strong> 利用YARN的资源管理功能实现其他的数据处理方式</p>
+<p>Hadoop框架中最核心设计就是：HDFS和MapReduce，HDFS实现存储，而MapReduce实现原理分析处理，这两部分是hadoop的核心。</p>
+</li>
+</ul>
+<h3 id="HDFS-架构"><a href="#HDFS-架构" class="headerlink" title="HDFS 架构"></a>HDFS 架构</h3><p><img src="/Users/shawnzhu/Desktop/Programmer/Personal_Blog/folder/source/_posts/Hadoop-Mac安装与伪分布式部署/hdfs-architecture.png" alt="hdfs-architecture"></p>
+<p>HDFS大致可以分成以下几个组件：</p>
+<ul>
+<li><strong>Block</strong><ol>
+<li>基本存储单位，一般大小为64M。配置大的块主要是因为：<ol>
+<li>减少搜寻时间，一般硬盘传输速率比寻道时间要快，大的块可以减少寻道时间；</li>
+<li>减少管理块的数据开销，每个块都需要在NameNode上有对应的记录；</li>
+<li>对数据块进行读写，减少建立网络的连接成本</li>
+</ol>
+</li>
+<li>一个大文件会被拆分成一个个的块，然后存储于不同的机器。如果一个文件少于Block大小，那么实际占用的空间为其文件的大小</li>
+<li>基本的读写单位，类似于磁盘的页，每次都是读写一个块</li>
+<li>每个块都会被复制到多台机器，默认复制3份</li>
+</ol>
+</li>
+<li><strong>NameNode</strong><ol>
+<li>存储文件的metadata，运行时所有数据都保存到内存，整个HDFS可存储的文件数受限于NameNode的内存大小</li>
+<li>一个Block在NameNode中对应一条记录（一般一个block占用150字节），如果是大量的小文件，会消耗大量内存。同时map task的数量是由splits来决定的，所以用MapReduce处理大量的小文件时，就会产生过多的map task，线程管理开销将会增加作业时间。处理大量小文件的速度远远小于处理同等大小的大文件的速度。因此Hadoop建议存储大文件</li>
+<li>数据会定时保存到本地磁盘，但不保存block的位置信息，而是由DataNode注册时上报和运行时维护（NameNode中与DataNode相关的信息并不保存到NameNode的文件系统中，而是NameNode每次重启后，动态重建）</li>
+<li>NameNode失效则整个HDFS都失效了，所以要保证NameNode的可用性</li>
+</ol>
+</li>
+<li><strong>Secondary NameNode</strong><ol>
+<li>定时与NameNode进行同步（定期合并文件系统镜像和编辑日志;，然后把合并后的传给NameNode，替换其镜像，并清空编辑日志，类似于CheckPoint机制），但NameNode失效后仍需要手工将其设置成主机</li>
+</ol>
+</li>
+<li><strong>DataNode</strong><ol>
+<li>保存具体的block数据</li>
+<li>负责数据的读写操作和复制操作</li>
+<li>DataNode启动时会向NameNode报告当前存储的数据块信息，后续也会定时报告修改信息</li>
+<li>DataNode之间会进行通信，复制数据块，保证数据的冗余性</li>
+</ol>
+</li>
+</ul>
+<h3 id="HDFS写文件"><a href="#HDFS写文件" class="headerlink" title="HDFS写文件"></a>HDFS写文件</h3><ol>
+<li>客户端将文件写入本地磁盘的临时文件中</li>
+</ol>
+<ol>
+<li>当临时文件大小达到一个block大小时，HDFS client通知NameNode，申请写入文件</li>
+<li>NameNode在HDFS的文件系统中创建一个文件，并把该block id和要写入的DataNode的列表返回给客户端</li>
+<li>客户端收到这些信息后，将临时文件写入DataNodes<ol>
+<li>客户端将文件内容写入第一个DataNode（一般以4kb为单位进行传输）</li>
+<li>第一个DataNode接收后，将数据写入本地磁盘，同时也传输给第二个DataNode</li>
+<li>依此类推到最后一个DataNode，数据在DataNode之间是通过pipeline的方式进行复制的</li>
+<li>后面的DataNode接收完数据后，都会发送一个确认给前一个DataNode，最终第一个DataNode返回确认给客户端</li>
+<li>当客户端接收到整个block的确认后，会向NameNode发送一个最终的确认信息</li>
+<li>如果写入某个DataNode失败，数据会继续写入其他的DataNode。然后NameNode会找另外一个好的DataNode继续复制，以保证冗余性</li>
+<li>每个block都会有一个校验码，并存放到独立的文件中，以便读的时候来验证其完整性</li>
+</ol>
+</li>
+<li>文件写完后（客户端关闭），NameNode提交文件（这时文件才可见，֘结果提交前，NameNode垮掉，那文件也就丢失了。）</li>
+</ol>
+<h3 id="HDFS读文件"><a href="#HDFS读文件" class="headerlink" title="HDFS读文件"></a>HDFS读文件</h3><ol>
+<li>客户端向NameNode发送读取请求</li>
+<li>NameNode取回文件的所有block和这些block所在的DataNodes（包括复制节点）</li>
+<li>客户端直接从DataNode中读取数据，如果该DataNode读取失败（DataNode失效或校验码不对），则从复制节点中读取（如果读取的数据就在本机，则直接读取，否则通过网络读取）</li>
+</ol>
+<h3 id="HDFS的Mac版安装"><a href="#HDFS的Mac版安装" class="headerlink" title="HDFS的Mac版安装"></a>HDFS的Mac版安装</h3><h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><p>首先检查自己Mac的Java版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  ~ java -version</div><div class="line">java version &quot;1.8.0_144&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_144-b01)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)</div></pre></td></tr></table></figure>
+<h4 id="Zookeeper安装"><a href="#Zookeeper安装" class="headerlink" title="Zookeeper安装"></a>Zookeeper安装</h4><p>ZooKeeper是一种分布式协调服务，用于管理大型主机。在分布式环境中协调和管理服务是一个复杂的过程。ZooKeeper通过其简单的架构和API解决了这个问题。ZooKeeper允许开发人员专注于核心应用程序逻辑，而不必担心应用程序的分布式特性。Zookeeper主要是用来解决Hadoop分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。</p>
+<p>在<a href="https://www.apache.org/dyn/closer.cgi/zookeeper/" target="_blank" rel="external">ZooKeeper</a>官网下载较新版本的ZooKeeper。解压到目录<code>~/zookeeper/zookeeper-3.4.11-0</code>。</p>
+<p>进入ZooKeeper根目录，添加配置文件<code>zoo.cfg</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜ cp conf/zoo_sample.cfg conf/zoo.cfg</div><div class="line">➜ vim conf/zoo.cfg</div></pre></td></tr></table></figure>
+<p>ZooKeeper配置很简单，每个节点的配置文件(<code>zoo.cfg</code>)都是一样的，只有<code>myid</code>文件不一样。<code>myid</code>的值必须是<code>zoo.cfg</code>中<code>server.{数值}</code>的<code>{数值}</code>部分。<code>zoo.cfg</code>配置如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=10</div><div class="line">syncLimit=5</div><div class="line">dataDir=~/zookeeper/zookeeper-3.4.11-0/data</div><div class="line">clientPort=2181</div><div class="line"></div><div class="line">server.0=127.0.0.1:8880:7770</div><div class="line">server.1=127.0.0.1:8881:7771</div><div class="line">server.2=127.0.0.1:8882:7772</div></pre></td></tr></table></figure>
+<p>在<code>/zooKeeper</code>根目录下新建<code>./data/myid</code>，其记录值为<code>server.X</code>的<code>X</code>值:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜ mkdir data</div><div class="line">➜ echo 0 &gt; data/myid</div></pre></td></tr></table></figure>
+<p>复制ZooKeeper两次，得到三个ZooKeeper文件夹:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜ cd ~/zookeeper</div><div class="line">➜ cp zookeeper-3.4.11-0 zookeeper-3.4.11-1</div><div class="line">➜ cp zookeeper-3.4.11-0 zookeeper-3.4.11-2</div></pre></td></tr></table></figure>
+<p>分别修改<code>zookeeper-3.4.11-1/conf/zoo.cfg</code>和<code>zookeeper-3.4.11-2/conf/zoo.cfg</code>，将<code>dataDir</code>中的路径修改为对应文件夹名称的路径，并修改对应的<code>data/myid</code>记录值。</p>
+<h4 id="ZooKeeper启动、停止与状态查询"><a href="#ZooKeeper启动、停止与状态查询" class="headerlink" title="ZooKeeper启动、停止与状态查询"></a>ZooKeeper启动、停止与状态查询</h4><p>启动:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ~/zookeeper/zookeeper-3.4.11-0</div><div class="line">bin/zkServer.sh start conf/zoo.cfg</div></pre></td></tr></table></figure>
+<p>停止:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/zkServer.sh stop</div></pre></td></tr></table></figure>
+<h3 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h3><p>在<a href="http://hadoop.apache.org/releases.html" target="_blank" rel="external">Hadoop官网</a>下载较新版本的Hadoop binary版本。假设解压到用户目录<code>~/hadoop-3.0.0</code>。</p>
+<p>进入Hadoop根目录后，首先需要配置JAVA_HOME:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜ vim etc/hadoop/hadoop-env.sh</div><div class="line">...</div><div class="line">export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_111</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>查看Hadoop是否能正常运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">➜ hadoop version</div><div class="line">Hadoop 3.0.0</div><div class="line">Source code repository https://git-wip-us.apache.org/repos/asf/hadoop.git -r c25427ceca461ee979d30edd7a4b0f50718e6533</div><div class="line">Compiled by andrew on 2017-12-08T19:16Z</div><div class="line">Compiled with protoc 2.5.0</div><div class="line">From source with checksum 397832cb5529187dc8cd74ad54ff22</div><div class="line">This command was run using /home/lizh/hadoop-3.0.0/share/hadoop/common/hadoop-common-3.0.0.jar</div></pre></td></tr></table></figure>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><h4 id="log4j-properties"><a href="#log4j-properties" class="headerlink" title="log4j.properties"></a>log4j.properties</h4><p>修改<code>etc/hadoop/log4j.properties</code>文件中的<code>hadoop.root.logger</code>可控制输出日志级别。</p>
+<h4 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h4><p><code>etc/hadoop/core-site.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">&lt;value&gt;hdfs://localhost:9000&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;ha.zookeeper.quorum&lt;/name&gt;</div><div class="line">&lt;value&gt;localhost:2181,localhost:2182,localhost:2183&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h4 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h4><p><code>etc/hadoop/mapred-site.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">&lt;value&gt;yarn&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.app.mapreduce.am.env&lt;/name&gt;</div><div class="line">&lt;value&gt;HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.map.env&lt;/name&gt;</div><div class="line">&lt;value&gt;HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.reduce.env&lt;/name&gt;</div><div class="line">&lt;value&gt;HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h4 id="hdfs-site-xml"><a href="#hdfs-site-xml" class="headerlink" title="hdfs-site.xml"></a>hdfs-site.xml</h4><p><code>etc/hadoop/hdfs-site.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.replication&lt;/name&gt;</div><div class="line">&lt;value&gt;1&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.http.address&lt;/name&gt;</div><div class="line">&lt;value&gt;0.0.0.0:50070&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.namenode.datanode.registration.ip-hostname-check&lt;/name&gt;</div><div class="line">&lt;value&gt;true&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h4 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h4><p><code>etc/hadoop/yarn-site.xml</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.resourcemanager.zk-address&lt;/name&gt;</div><div class="line">&lt;value&gt;master:2181,slave1:2181,slave2:2181&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<h4 id="workers"><a href="#workers" class="headerlink" title="workers"></a>workers</h4><p><code>etc/hadoop/workers</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost</div></pre></td></tr></table></figure>
+<p>注意: 若workers中直接指定服务器IP，则需要将<code>hdfs-site.xml</code>中的<code>dfs.namenode.datanode.registration.ip-hostname-check</code>指定为<code>false</code>。</p>
+<h3 id="启动Hadoop伪分布集群"><a href="#启动Hadoop伪分布集群" class="headerlink" title="启动Hadoop伪分布集群"></a>启动Hadoop伪分布集群</h3><h4 id="格式化NameNode"><a href="#格式化NameNode" class="headerlink" title="格式化NameNode"></a>格式化NameNode</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ hdfs namenode -format</div></pre></td></tr></table></figure>
+<p>注意: 若曾多次格式化，可能出现版本冲突导致DataNode无法启动(版本遗留问题)，删除<code>/tmp/hadoop-lizh/dfs/name/current</code>后重新格式化并启动即可。</p>
+<p>启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">➜ start-all.sh</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/06/08/Neo4j数据库的创建与py2neo包的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Neo4j数据库的创建与py2neo包的使用
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop-架构"><span class="nav-number">1.</span> <span class="nav-text">Hadoop 架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-架构"><span class="nav-number">2.</span> <span class="nav-text">HDFS 架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS写文件"><span class="nav-number">3.</span> <span class="nav-text">HDFS写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS读文件"><span class="nav-number">4.</span> <span class="nav-text">HDFS读文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS的Mac版安装"><span class="nav-number">5.</span> <span class="nav-text">HDFS的Mac版安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期准备"><span class="nav-number">5.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Zookeeper安装"><span class="nav-number">5.2.</span> <span class="nav-text">Zookeeper安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper启动、停止与状态查询"><span class="nav-number">5.3.</span> <span class="nav-text">ZooKeeper启动、停止与状态查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Hadoop"><span class="nav-number">6.</span> <span class="nav-text">安装Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">6.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#log4j-properties"><span class="nav-number">6.2.</span> <span class="nav-text">log4j.properties</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#core-site-xml"><span class="nav-number">6.3.</span> <span class="nav-text">core-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapred-site-xml"><span class="nav-number">6.4.</span> <span class="nav-text">mapred-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hdfs-site-xml"><span class="nav-number">6.5.</span> <span class="nav-text">hdfs-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yarn-site-xml"><span class="nav-number">6.6.</span> <span class="nav-text">yarn-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#workers"><span class="nav-number">6.7.</span> <span class="nav-text">workers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动Hadoop伪分布集群"><span class="nav-number">7.</span> <span class="nav-text">启动Hadoop伪分布集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#格式化NameNode"><span class="nav-number">7.1.</span> <span class="nav-text">格式化NameNode</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Shawnzhu&#39;s Personal Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				<span id="busuanzi_container_site_uv"> 访客数 : <span id="busuanzi_value_site_uv"></span></span> |  
+				<span id="busuanzi_container_site_pv"> 访问量 : <span id="busuanzi_value_site_pv"></span></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/aboutme" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Shawnzhu&#39;s Personal Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Shawn zhu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

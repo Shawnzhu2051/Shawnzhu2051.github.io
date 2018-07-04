@@ -191,33 +191,33 @@
 <p><img src="/2018/05/31/Triple-GAN数学推导/TripleGAN.png" alt="TripleGAN"></p>
 <p>对整个结构图做一个解释：</p>
 <p>$X$表示data，$Y$表示label，$Z$表示noise。</p>
-<p>$(X_{l}, Y_{l}) \sim p(x,y)$是原始数据分布，其中$p(x,y) = p(x)p(y|x) = p(y)p(x|y)$。</p>
-<p>C：classifier分类器，基于输入的data，预测label，得到条件概率$p_{c}(y|x)$，输出关于$x,y$的分布$p_{c}(x,y)$（$x$为真，$y$为假）。</p>
-<p>G：generator生成器，基于输入的label，生成data，得到条件概率$p_{g}(x|y)$，输入关于$x,y$的分布$p_{g}(x,y)$（$x$为假，$y$为真）。</p>
+<p>$(X<em>{l}, Y</em>{l}) \sim p(x,y)$是原始数据分布，其中$p(x,y) = p(x)p(y|x) = p(y)p(x|y)$。</p>
+<p>C：classifier分类器，基于输入的data，预测label，得到条件概率$p<em>{c}(y|x)$，输出关于$x,y$的分布$p</em>{c}(x,y)$（$x$为真，$y$为假）。</p>
+<p>G：generator生成器，基于输入的label，生成data，得到条件概率$p<em>{g}(x|y)$，输入关于$x,y$的分布$p</em>{g}(x,y)$（$x$为假，$y$为真）。</p>
 <p>D：discriminator判别器，判断输入的$(x,y)$是否来自真实的数据分布$p(x,y)$。</p>
 <h3 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h3><p>像GAN一样，TripleGAN追求的目标是三个部分的分布达到统一，即</p>
-<p>$p(x,y) = p_{g}(x,y) = p_{c}(x,y)$。</p>
+<p>$p(x,y) = p<em>{g}(x,y) = p</em>{c}(x,y)$。</p>
 <p>所以就可以得到：</p>
 <p><img src="/2018/05/31/Triple-GAN数学推导/objectfunc.png" alt="objectfunc"></p>
 <p>，其中$\alpha$为平衡生成器和分类器的权重，一般取 $\frac{1}{2}$。</p>
-<p>因为不能够保证$p(x,y) = p_{g}(x,y) = p_{c}(x,y)$是唯一的极小值点，所以在训练中加入了standard supervised loss $R_{L}$和discriminative loss $R_{\rho}$，其中：</p>
-<p>$R_{L} = D_{KL}(p(x,y)||p_{c}(x,y)) =\iint_{(x,y)}p(x,y)\log{\frac{p((x,y)}{p_{c}(x,y)}}dxdy = \iint_{(x,y)}p(x,y)\log{\frac{p(x)p(y|x)}{p_{c}(x)p_{c}(y|x)}}dxdy$</p>
+<p>因为不能够保证$p(x,y) = p<em>{g}(x,y) = p</em>{c}(x,y)$是唯一的极小值点，所以在训练中加入了standard supervised loss $R<em>{L}$和discriminative loss $R</em>{\rho}$，其中：</p>
+<p>$R<em>{L} = D</em>{KL}(p(x,y)||p<em>{c}(x,y)) =\iint</em>{(x,y)}p(x,y)\log{\frac{p((x,y)}{p<em>{c}(x,y)}}dxdy = \iint</em>{(x,y)}p(x,y)\log{\frac{p(x)p(y|x)}{p<em>{c}(x)p</em>{c}(y|x)}}dxdy$</p>
 <p>因为判别器和分类器输入的图片都是真实的，所以$p(x) = p_{c}(x)$，所以</p>
 <p><img src="/2018/05/31/Triple-GAN数学推导/RL.png" alt="RL"></p>
 <p>下面来计算$R_{\rho}$：</p>
-<p>$R_{\rho} = D_{KL}(p_{g}(x,y)||p_{c}(x,y)) + H_{p_{g}}(y|x) - D_{KL}(p_{g}(x)||p(x))$，</p>
-<p>因为$\frac{p_{g}(x,y)}{p_{c}(x,y)}$未知，所以$D_{KL}(p_{g}(x,y)||p_{c}(x,y))$无法计算，所以加上一个与C无关的后项，对收敛结果不会产生影响，则：</p>
+<p>$R<em>{\rho} = D</em>{KL}(p<em>{g}(x,y)||p</em>{c}(x,y)) + H<em>{p</em>{g}}(y|x) - D<em>{KL}(p</em>{g}(x)||p(x))$，</p>
+<p>因为$\frac{p<em>{g}(x,y)}{p</em>{c}(x,y)}$未知，所以$D<em>{KL}(p</em>{g}(x,y)||p_{c}(x,y))$无法计算，所以加上一个与C无关的后项，对收敛结果不会产生影响，则：</p>
 <p><img src="/2018/05/31/Triple-GAN数学推导/Rp.png" alt="Rp"></p>
 <p>所以整个的训练过程如下：</p>
 <p><img src="/2018/05/31/Triple-GAN数学推导/tripleGanAlg.png" alt="TripleGAN"></p>
-<h3 id="几个证明"><a href="#几个证明" class="headerlink" title="几个证明"></a>几个证明</h3><h4 id="1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y"><a href="#1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y" class="headerlink" title="1，如何证明D存在最优解为$D_{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p_{\alpha}(x,y)}$，其中$p_{\alpha}(x,y) = (1 - \alpha)p_{g}(x,y)+\alpha p_{c}(x,y)$?"></a>1，如何证明D存在最优解为$D_{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p_{\alpha}(x,y)}$，其中$p_{\alpha}(x,y) = (1 - \alpha)p_{g}(x,y)+\alpha p_{c}(x,y)$?</h4><p>$U(C,G,D) = \iint p(x,y)\log{D(x,y)}dxdy + (1 - \alpha)\iint p(y)p_{z}(z)\log{1 - D(G(z,y),y)}dydz + \alpha \iint p(x)p_{c}(y|x)\log{(1-D(x,y))}dxdy \\ = \iint p(x,y)\log{D(x,y)}dxdy + (1 - \alpha) \iint p(y)p_{g}(x|y)\log{(1-D(x,y))}dxdy +  \alpha \iint p_{c}(x,y)\log{(1-D(x,y))}dxdy \\ =\iint p(x,y)\log{D(x,y)}dxdy + \iint p_{\alpha}(x,y)\log{(1-D(x,y))}dydx \\ = f(D(x,y))$</p>
-<p>以下求导求极值的方法和上一篇文章中GAN的证明相同。所以易证：$D_{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p_{\alpha}(x,y)}$。</p>
-<h4 id="2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？"><a href="#2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？" class="headerlink" title="2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？"></a>2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？</h4><p>基本证明过程同GAN，只是将GAN证明中的$p_{g}(x)$换成了$p_{\alpha}(x,y)$，最后得到结论：</p>
+<h3 id="几个证明"><a href="#几个证明" class="headerlink" title="几个证明"></a>几个证明</h3><h4 id="1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y"><a href="#1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y" class="headerlink" title="1，如何证明D存在最优解为$D{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p{\alpha}(x,y)}$，其中$p{\alpha}(x,y) = (1 - \alpha)p{g}(x,y)+\alpha p_{c}(x,y)$?"></a>1，如何证明D存在最优解为$D<em>{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p</em>{\alpha}(x,y)}$，其中$p<em>{\alpha}(x,y) = (1 - \alpha)p</em>{g}(x,y)+\alpha p_{c}(x,y)$?</h4><p>$U(C,G,D) = \iint p(x,y)\log{D(x,y)}dxdy + (1 - \alpha)\iint p(y)p<em>{z}(z)\log{1 - D(G(z,y),y)}dydz + \alpha \iint p(x)p</em>{c}(y|x)\log{(1-D(x,y))}dxdy \\ = \iint p(x,y)\log{D(x,y)}dxdy + (1 - \alpha) \iint p(y)p<em>{g}(x|y)\log{(1-D(x,y))}dxdy +  \alpha \iint p</em>{c}(x,y)\log{(1-D(x,y))}dxdy \\ =\iint p(x,y)\log{D(x,y)}dxdy + \iint p_{\alpha}(x,y)\log{(1-D(x,y))}dydx \\ = f(D(x,y))$</p>
+<p>以下求导求极值的方法和上一篇文章中GAN的证明相同。所以易证：$D<em>{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p</em>{\alpha}(x,y)}$。</p>
+<h4 id="2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？"><a href="#2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？" class="headerlink" title="2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？"></a>2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？</h4><p>基本证明过程同GAN，只是将GAN证明中的$p<em>{g}(x)$换成了$p</em>{\alpha}(x,y)$，最后得到结论：</p>
 <p>$V(C,G) = -\log{4} + 2 \cdot JSD(p(x,y)||p_{\alpha}(x,y))$。</p>
-<h4 id="3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y"><a href="#3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y" class="headerlink" title="3，如何证明当且仅当C和G有最优解时，$p(x) = p_{c}(x) = p_{g}(x)$且$p(y) = p_{c}(y) = p_{g}(y)$?"></a>3，如何证明当且仅当C和G有最优解时，$p(x) = p_{c}(x) = p_{g}(x)$且$p(y) = p_{c}(y) = p_{g}(y)$?</h4><p>因为$p(x,y) = p_{\alpha}(x,y) = (1 - \alpha)p_{g}(x,y)+\alpha p_{c}(x,y)$</p>
-<p>所以$\int p(x,y)dx = (1 - \alpha)\int p_{g}(x,y)dx + \alpha \int p_{c}(x,y)dx$</p>
-<p>即$p(y) = (1-\alpha)p_{g}(y) + \alpha p_{c}(y)$，</p>
-<p>当$\alpha = \frac{1}{2}$时，$p(y) = p_{c}(y) = p_{g}(y)$。</p>
+<h4 id="3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y"><a href="#3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y" class="headerlink" title="3，如何证明当且仅当C和G有最优解时，$p(x) = p{c}(x) = p{g}(x)$且$p(y) = p{c}(y) = p{g}(y)$?"></a>3，如何证明当且仅当C和G有最优解时，$p(x) = p<em>{c}(x) = p</em>{g}(x)$且$p(y) = p<em>{c}(y) = p</em>{g}(y)$?</h4><p>因为$p(x,y) = p<em>{\alpha}(x,y) = (1 - \alpha)p</em>{g}(x,y)+\alpha p_{c}(x,y)$</p>
+<p>所以$\int p(x,y)dx = (1 - \alpha)\int p<em>{g}(x,y)dx + \alpha \int p</em>{c}(x,y)dx$</p>
+<p>即$p(y) = (1-\alpha)p<em>{g}(y) + \alpha p</em>{c}(y)$，</p>
+<p>当$\alpha = \frac{1}{2}$时，$p(y) = p<em>{c}(y) = p</em>{g}(y)$。</p>
 <p>$p(x)$的证明同理。</p>
 
       
@@ -243,9 +243,9 @@
     </a>
   
   
-    <a href="/2018/05/31/Hadoop-Mac安装与伪分布式部署/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/05/31/LAPGAN-论文笔记/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Hadoop Mac安装与伪分布式部署</div>
+      <div class="article-nav-title">LAPGAN 论文笔记</div>
     </a>
   
 </nav>
@@ -259,7 +259,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标函数"><span class="nav-number">3.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个证明"><span class="nav-number">4.</span> <span class="nav-text">几个证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y"><span class="nav-number">4.1.</span> <span class="nav-text">1，如何证明D存在最优解为$D_{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p_{\alpha}(x,y)}$，其中$p_{\alpha}(x,y) = (1 - \alpha)p_{g}(x,y)+\alpha p_{c}(x,y)$?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？"><span class="nav-number">4.2.</span> <span class="nav-text">2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y"><span class="nav-number">4.3.</span> <span class="nav-text">3，如何证明当且仅当C和G有最优解时，$p(x) = p_{c}(x) = p_{g}(x)$且$p(y) = p_{c}(y) = p_{g}(y)$?</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标函数"><span class="nav-number">3.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个证明"><span class="nav-number">4.</span> <span class="nav-text">几个证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1，如何证明D存在最优解为-D-C-G-x-y-frac-p-x-y-p-x-y-p-alpha-x-y-，其中-p-alpha-x-y-1-alpha-p-g-x-y-alpha-p-c-x-y"><span class="nav-number">4.1.</span> <span class="nav-text">1，如何证明D存在最优解为$D{C,G}^{*}(x,y) = \frac{p(x,y)}{p(x,y)+p{\alpha}(x,y)}$，其中$p{\alpha}(x,y) = (1 - \alpha)p{g}(x,y)+\alpha p_{c}(x,y)$?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2，如何证明当且仅当-p-x-y-p-alpha-x-y-时，C和G有最优解？"><span class="nav-number">4.2.</span> <span class="nav-text">2，如何证明当且仅当$p(x,y) = p_{\alpha}(x,y)$时，C和G有最优解？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3，如何证明当且仅当C和G有最优解时，-p-x-p-c-x-p-g-x-且-p-y-p-c-y-p-g-y"><span class="nav-number">4.3.</span> <span class="nav-text">3，如何证明当且仅当C和G有最优解时，$p(x) = p{c}(x) = p{g}(x)$且$p(y) = p{c}(y) = p{g}(y)$?</span></a></li></ol></li></ol>
     
     </div>
   </aside>
