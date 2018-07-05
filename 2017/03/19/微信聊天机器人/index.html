@@ -215,40 +215,40 @@ class MyWXBot(WXBot):
         return html
 
     def handle_msg_all(self, msg):
-        key = &#39;**********************&#39;
-        api = &#39;http://www.tuling123.com/openapi/api?key=&#39; + key + &#39;&amp;info=&#39;
-        if msg[&#39;msg_type_id&#39;] == 4 and msg[&#39;content&#39;][&#39;type&#39;] == 0:
-            info = msg[&#39;content&#39;][&#39;data&#39;]
+        key = &apos;**********************&apos;
+        api = &apos;http://www.tuling123.com/openapi/api?key=&apos; + key + &apos;&amp;info=&apos;
+        if msg[&apos;msg_type_id&apos;] == 4 and msg[&apos;content&apos;][&apos;type&apos;] == 0:
+            info = msg[&apos;content&apos;][&apos;data&apos;]
             request = api + info
             page = urllib2.urlopen(request)
             response = page.read()
             dic_json = json.loads(response)
-            reply_text = dic_json[&#39;text&#39;]
-            self.send_msg_by_uid(reply_text, msg[&#39;user&#39;][&#39;id&#39;])
+            reply_text = dic_json[&apos;text&apos;]
+            self.send_msg_by_uid(reply_text, msg[&apos;user&apos;][&apos;id&apos;])
 
 def main():
         reload(sys)
-           sys.setdefaultencoding(&#39;utf8&#39;)
+           sys.setdefaultencoding(&apos;utf8&apos;)
            bot = MyWXBot()
            bot.DEBUG = True
-        bot.conf[&#39;qr&#39;] = &#39;png&#39;
+        bot.conf[&apos;qr&apos;] = &apos;png&apos;
         bot.is_big_contact = False
         bot.run()
 
-if __name__ == &#39;__main__&#39;:
+if __name__ == &apos;__main__&apos;:
          main()  
 </code></pre><p>以上是整个实现的代码。下面来分析最关键的函数：</p>
 <pre><code>def handle_msg_all(self, msg):
-        key = &#39;**********************&#39;
-        api = &#39;http://www.tuling123.com/openapi/api?key=&#39; + key + &#39;&amp;info=&#39;
-        if msg[&#39;msg_type_id&#39;] == 4 and msg[&#39;content&#39;][&#39;type&#39;] == 0:
-            info = msg[&#39;content&#39;][&#39;data&#39;]
+        key = &apos;**********************&apos;
+        api = &apos;http://www.tuling123.com/openapi/api?key=&apos; + key + &apos;&amp;info=&apos;
+        if msg[&apos;msg_type_id&apos;] == 4 and msg[&apos;content&apos;][&apos;type&apos;] == 0:
+            info = msg[&apos;content&apos;][&apos;data&apos;]
             request = api + info
             page = urllib2.urlopen(request)
             response = page.read()
             dic_json = json.loads(response)
-            reply_text = dic_json[&#39;text&#39;]
-            self.send_msg_by_uid(reply_text, msg[&#39;user&#39;][&#39;id&#39;])
+            reply_text = dic_json[&apos;text&apos;]
+            self.send_msg_by_uid(reply_text, msg[&apos;user&apos;][&apos;id&apos;])
 </code></pre><p>key是你在注册图灵机器人之后会获得的一个身份认证之类的东西，只有靠key才能够与服务器进行通信。</p>
 <p>api是你访问图灵机器人服务器的地址。</p>
 <p>if条件语句是用来确定收到的msg类型是私人消息且为文本消息，其他的类型请参考Github里wxbot的说明。</p>
