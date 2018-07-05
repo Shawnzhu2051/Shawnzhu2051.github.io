@@ -7,6 +7,8 @@
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="CPU, Verilog" />
+  
   
     <meta name="google-site-verification" content="true" />
   
@@ -15,7 +17,7 @@
   
   
   <meta name="description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
-<meta name="keywords">
+<meta name="keywords" content="CPU, Verilog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己动手写基于MIPS的16位单周期CPU">
 <meta property="og:url" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/index.html">
@@ -40,7 +42,7 @@
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/ADDI.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/BEQ.png">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/27/自己动手写基于MIPS的16位单周期CPU/JUMP.png">
-<meta property="og:updated_time" content="2017-11-25T07:26:02.000Z">
+<meta property="og:updated_time" content="2018-07-05T05:34:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己动手写基于MIPS的16位单周期CPU">
 <meta name="twitter:description" content="引言这个东西是电子科技大学微处理器与嵌入式系统设计课程的一个课设。课堂上林道长说如果认真做了这个课设的话这门课就不需要参加期末考试，作为一个考试渣当然一口答应下来啊。 该CPU是基于MIPS精简指令集，具有16位数据通路，单周期，实现了15条指令。 开发环境使用的语言为Verilog 编译器为ALTERA Quartus 开发使用的电路板为 ALTERA DE1-SoC">
@@ -210,15 +212,17 @@
 <p>PC 寄存器是一个存储指令地址的32位寄存器，在每个时钟上升沿时，地址⾃增4 获取下⼀条指令的地址。同时PC 寄存器也要能够进⾏跳转与分⽀语句的执⾏，使得程序能够正常运⾏。</p>
 <p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/PC.png" alt="">    </p>
 <ul>
-<li>指令存储器IM</li>
+<li><p>指令存储器IM</p>
+<p>  M是一个有读端口的ROM    </p>
+</li>
 </ul>
-<p>IM是一个有读端口的ROM    </p>
 <p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/IM.png" alt=""></p>
 <ul>
 <li>数据存储器DM</li>
 </ul>
 <p>DM是一个有读和写端口的RAM，如果写使能WE=0，则从地址A将数据读到输出端RD；如果写使能WE=1，在CLK上升沿将输入WD写入地址A。</p>
 <p><img src="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/DM.png" alt=""></p>
+<p>​    </p>
 <ul>
 <li>寄存器文件RF</li>
 </ul>
@@ -282,6 +286,8 @@
     <footer class="article-footer">
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CPU-Verilog/">CPU, Verilog</a></li></ul>
+
     </footer>
   </div>
   

@@ -7,6 +7,8 @@
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="机器学习" />
+  
   
     <meta name="google-site-verification" content="true" />
   
@@ -15,14 +17,14 @@
   
   
   <meta name="description" content="在加入Syslab工作室之后，多木君说想测试一下我们的编程能力，于是就做了一个Kaggle上非常著名的题目：Cat Vs. Dog（猫狗大战）">
-<meta name="keywords">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用卷积神经网络搭建猫狗分类器">
 <meta property="og:url" content="http://zhuchenshawn.com/2017/05/08/利用卷积神经网络搭建猫狗分类器/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
 <meta property="og:description" content="在加入Syslab工作室之后，多木君说想测试一下我们的编程能力，于是就做了一个Kaggle上非常著名的题目：Cat Vs. Dog（猫狗大战）">
 <meta property="og:image" content="http://zhuchenshawn.com/2017/05/08/利用卷积神经网络搭建猫狗分类器/figure1.jpg">
-<meta property="og:updated_time" content="2018-03-08T15:24:04.000Z">
+<meta property="og:updated_time" content="2018-07-05T05:31:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用卷积神经网络搭建猫狗分类器">
 <meta name="twitter:description" content="在加入Syslab工作室之后，多木君说想测试一下我们的编程能力，于是就做了一个Kaggle上非常著名的题目：Cat Vs. Dog（猫狗大战）">
@@ -206,11 +208,11 @@ def pre_process(flag,set):
     for i in enumerate(range(12500),0):
        index,_ = i
         if flag == 0:
-             im = Image.open(&#39;./train/&#39; + &#39;cat.&#39; + str(index) + &#39;.jpg&#39; )
+             im = Image.open(&apos;./train/&apos; + &apos;cat.&apos; + str(index) + &apos;.jpg&apos; )
         elif flag == 1:
-            im = Image.open(&#39;./train/&#39; + &#39;dog.&#39; + str(index) + &#39;.jpg&#39; )
+            im = Image.open(&apos;./train/&apos; + &apos;dog.&apos; + str(index) + &apos;.jpg&apos; )
         else:
-            im = Image.open(&#39;./test/&#39; + str(index + 1) + &#39;.jpg&#39; )
+            im = Image.open(&apos;./test/&apos; + str(index + 1) + &apos;.jpg&apos; )
         trans = torchvision.transforms.ToTensor()
         scale = torchvision.transforms.Scale(32)
         center = torchvision.transforms.CenterCrop((32,32))
@@ -220,7 +222,7 @@ def pre_process(flag,set):
         tensor = (tensor,flag)
         set.append(tensor)
         if index % 2500 == 2499:
-            print(str(index + 1) + &#39; processed&#39;)
+            print(str(index + 1) + &apos; processed&apos;)
 
 trainset = []
 testset = []
@@ -230,7 +232,7 @@ pre_process(2,testset) # flag means test data
 </code></pre><p>将存放在list中的数据加载进trainloader中，这个函数非常的方便，使得你不需要对数据进行过多的处理就能很好地输入进神经网络。batch_size表示这个trainloader一次输出的batch的内容个数（一般网络都是批处理，不会处理单张图片），shuffle表示是否将输入的顺序打乱，强化训练的效果。</p>
 <pre><code>trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,shuffle=True, num_workers=2)
 testloader = torch.utils.data.DataLoader(testset, batch_size=4,shuffle=False, num_workers=2)
-classes = (&#39;cat&#39;, &#39;dog&#39;)
+classes = (&apos;cat&apos;, &apos;dog&apos;)
 </code></pre><p>以下就是神经网路的主要架构部分：包括了两个卷积层，一个pooling层，三个全连接层。</p>
 <pre><code>class Net(nn.Module):
     def __init__(self):
@@ -275,22 +277,22 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
           # print statistics
         running_loss += loss.data[0]
         if i % 2000 == 1999:    # print every 2000 mini-batches
-            print(&#39;[%d, %5d] loss: %.3f&#39; % (epoch+1, i+1, running_loss / 2000))
+            print(&apos;[%d, %5d] loss: %.3f&apos; % (epoch+1, i+1, running_loss / 2000))
             running_loss = 0.0
 
-print(&#39;Finished Training&#39;)
+print(&apos;Finished Training&apos;)
 </code></pre><p>训练完成后，输入testset进行结果的验证。</p>
 <pre><code>count = 1
-with open(&#39;result.txt&#39;, &#39;w&#39;) as f:
-    f.writelines(&#39;id,label \n&#39;)
+with open(&apos;result.txt&apos;, &apos;w&apos;) as f:
+    f.writelines(&apos;id,label \n&apos;)
     for data in testloader:
         images, labels = data
         outputs = net(Variable(images))
         _, predicted = torch.max(outputs.data, 1)
         for j in range(4):
-            f.writelines(str(count) + &#39;,&#39; + str(predicted[j][0]) + &#39;\n&#39;)
+            f.writelines(str(count) + &apos;,&apos; + str(predicted[j][0]) + &apos;\n&apos;)
             count += 1
-print(&#39;Finished Testing&#39;)
+print(&apos;Finished Testing&apos;)
 </code></pre><p>至此所有代码结束。额外的一个问题是这个网络似乎没有很好地完成kaggle的任务，因为任务要求的是给出一张图是猫或者是狗的概率（越靠近1则为狗，越靠近0则为猫），而我的网络直接输出了对于一张图片是否为猫或狗的判断（即直接输出了0或1）。导致了kaggle的测试结果并不是特别理想。因此这些代码仅供参考。</p>
 
       
@@ -298,6 +300,8 @@ print(&#39;Finished Testing&#39;)
     <footer class="article-footer">
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
     </footer>
   </div>
   
