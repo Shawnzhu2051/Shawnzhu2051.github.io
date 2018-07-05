@@ -193,11 +193,11 @@
 <p>如何访问呢？可以直接在搬瓦工的个人服务里有一个控制台就可以登陆进去进行一些简单的操作，但是这是不够的，所以我们需要下载另一个软件:PuTTY SSH Client。通过这个软件来远程操作我们的服务器。下载安装并打开PuTTY之后，需要先登陆，输入bandwagon发给你的邮件中的ＩＰ地址和端口号，链接类型选择SSH，登陆之后就会显示出一个黑框框，这个就是你的服务器的控制台了。login as: 这里可以输入root，取得权限，也可以自己输入用户名，但是这样的话你就只能访问到/home/(你的用户名)/这个文件夹里的内容。password在第一次输入的时候，默认是bandwagon自动生成的，每一次都不一样，所以第一次登陆时需要先在bandwagon服务里生成密码，然后输入进去，在进去之后再去修改密码，以后就可以用自己的密码登录了。有关Ubuntu命令行的一些基本操作在这里就不赘述了。反正现在可以通过命令行来管理你的服务器了。</p>
 <p>服务器上需要运行你的服务器程序，同时也要存放你的网页数据，这些文件都可以通过本地上传上去。具体的操作是在你本地的电脑上(以Ubuntu系统为例):<br>上传文件：</p>
 <blockquote>
-<p>scp -P 2222 /home/lnmp0.4.tar.gz <a href="mailto:root@www.zhuchenshawn.com" target="_blank" rel="external">root@www.zhuchenshawn.com</a>:/root/lnmp0.4.tar.gz　</p>
+<p>scp -P 2222 /home/lnmp0.4.tar.gz root@www.zhuchenshawn.com:/root/lnmp0.4.tar.gz　</p>
 </blockquote>
-<p>端口大写P为参数，2222 表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 /home/lnmp0.4.tar.gz表示本地上准备上传文件的路径和文件名。<a href="mailto:root@www.zhuchenshawn.com" target="_blank" rel="external">root@www.zhuchenshawn.com</a> 表示使用root用户登录远程服务器<a href="http://www.zhuchenshawn.com，使用IP也可以，:/root/lnmp0.4.tar.gz" target="_blank" rel="external">www.zhuchenshawn.com，使用IP也可以，:/root/lnmp0.4.tar.gz</a> 表示保存在远程服务器上目录和文件名。<br>上传目录：</p>
+<p>端口大写P为参数，2222 表示更改SSH端口后的端口，如果没有更改SSH端口可以不用添加该参数。 /home/lnmp0.4.tar.gz表示本地上准备上传文件的路径和文件名。root@www.zhuchenshawn.com 表示使用root用户登录远程服务器www.zhuchenshawn.com，使用IP也可以，:/root/lnmp0.4.tar.gz 表示保存在远程服务器上目录和文件名。<br>上传目录：</p>
 <blockquote>
-<p>scp -P 2222 -r /home/lnmp0.4/ <a href="mailto:root@www.zhuchenshawn.com" target="_blank" rel="external">root@www.zhuchenshawn.com</a>:/root/lnmp0.4/　</p>
+<p>scp -P 2222 -r /home/lnmp0.4/ root@www.zhuchenshawn.com:/root/lnmp0.4/　</p>
 </blockquote>
 <p>端口大写P为参数，2222 表示更改SSH端口后的端。-r 参数表示递归复制（即复制该目录下面的文件和目录）；/home/lnmp0.4/表示准备要上传的目录，:/root/lnmp0.4/ 表示保存在远程服务器上的目录位置。</p>
 <p>好了现在我们可以开始编写服务器代码了。我的后端使用的语言是Python，主要是运用了httpserver相关的知识。代码如下：</p>

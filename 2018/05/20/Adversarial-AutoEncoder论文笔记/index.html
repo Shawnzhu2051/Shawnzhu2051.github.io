@@ -3,11 +3,11 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>使用wordpress搭建企业级网站 | Shawnzhu&#39;s Personal Blog</title>
+  <title>adversarial autoencoder论文笔记 | Shawnzhu&#39;s Personal Blog</title>
   <meta name="baidu-site-verification" content="mD5o6wEFU2" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="wordpress" />
+  <meta name="keywords" content="GAN" />
   
   
     <meta name="google-site-verification" content="true" />
@@ -16,17 +16,17 @@
     <meta name="baidu-site-verification" content="true" />
   
   
-  <meta name="description" content="‘林荫教育公益组织’是我们正在做的一个NGO项目，然后我勇敢地接下了独立建站这一口大锅，前端后端部署都得自己来（感觉瞬间变身全栈工程师了）目前的网址是www.futurechina.org.cn，因为企业的代码还没有下来，没办法实名认证，就只是简单地用hexo搭了一个架子，好绕过阿里云的认证。剩下的坑自己慢慢填。虽然从技术特点考虑我个人倾向于使用Python配合Django后台进行开发，但综合考虑">
-<meta name="keywords" content="wordpress">
+  <meta name="description" content="不忘初心 方得始终">
+<meta name="keywords" content="GAN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用WordPress搭建企业级网站">
-<meta property="og:url" content="http://zhuchenshawn.com/2017/05/18/使用WordPress搭建企业级网站/index.html">
+<meta property="og:title" content="Adversarial AutoEncoder论文笔记">
+<meta property="og:url" content="http://zhuchenshawn.com/2018/05/20/Adversarial-AutoEncoder论文笔记/index.html">
 <meta property="og:site_name" content="Shawnzhu's Personal Blog">
-<meta property="og:description" content="‘林荫教育公益组织’是我们正在做的一个NGO项目，然后我勇敢地接下了独立建站这一口大锅，前端后端部署都得自己来（感觉瞬间变身全栈工程师了）目前的网址是www.futurechina.org.cn，因为企业的代码还没有下来，没办法实名认证，就只是简单地用hexo搭了一个架子，好绕过阿里云的认证。剩下的坑自己慢慢填。虽然从技术特点考虑我个人倾向于使用Python配合Django后台进行开发，但综合考虑">
-<meta property="og:updated_time" content="2018-07-05T05:32:06.000Z">
+<meta property="og:description" content="不忘初心 方得始终">
+<meta property="og:updated_time" content="2018-07-05T06:41:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用WordPress搭建企业级网站">
-<meta name="twitter:description" content="‘林荫教育公益组织’是我们正在做的一个NGO项目，然后我勇敢地接下了独立建站这一口大锅，前端后端部署都得自己来（感觉瞬间变身全栈工程师了）目前的网址是www.futurechina.org.cn，因为企业的代码还没有下来，没办法实名认证，就只是简单地用hexo搭了一个架子，好绕过阿里云的认证。剩下的坑自己慢慢填。虽然从技术特点考虑我个人倾向于使用Python配合Django后台进行开发，但综合考虑">
+<meta name="twitter:title" content="Adversarial AutoEncoder论文笔记">
+<meta name="twitter:description" content="不忘初心 方得始终">
   
     <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
   
@@ -154,7 +154,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-使用WordPress搭建企业级网站" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Adversarial-AutoEncoder论文笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -162,7 +162,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      使用WordPress搭建企业级网站
+      Adversarial AutoEncoder论文笔记
     </h1>
   
 
@@ -170,25 +170,23 @@
     
     <div class="article-meta">
       
-	<a href="/2017/05/18/使用WordPress搭建企业级网站/" class="article-date">
-	  <time datetime="2017-05-18T06:27:36.000Z" itemprop="datePublished">2017-05-18</time>
+	<a href="/2018/05/20/Adversarial-AutoEncoder论文笔记/" class="article-date">
+	  <time datetime="2018-05-20T03:02:11.000Z" itemprop="datePublished">2018-05-20</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/Web开发/">Web开发</a>
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
 
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>‘林荫教育公益组织’是我们正在做的一个NGO项目，然后我勇敢地接下了独立建站这一口大锅，前端后端部署都得自己来（感觉瞬间变身全栈工程师了）目前的网址是www.futurechina.org.cn，因为企业的代码还没有下来，没办法实名认证，就只是简单地用hexo搭了一个架子，好绕过阿里云的认证。剩下的坑自己慢慢填。<br>虽然从技术特点考虑我个人倾向于使用Python配合Django后台进行开发，但综合考虑时间成本等一系列因素，还是决定直接用WordPress的框架配合PHP进行修改来开发。<br><a id="more"></a></p>
-<p>目前算是完成了整个网站的建设，期间我们技术部也加入了几位小伙伴，一起共同开发网站。现在回过头来看整个网站，其实非常地傻瓜，使用了wordpress后台，从网上给wordpress找了一个通用的主题，然后再在这个主题之上对一些细节进行修改。对细节（主要是前端）的修改也就是换个颜色，调整布局，注释掉一些不用的组件之类的。想想也没有什么难点和好说的，that’s all.</p>
-
+        
       
     </div>
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GAN/">GAN</a></li></ul>
 
     </footer>
   </div>
@@ -196,19 +194,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/05/08/利用卷积神经网络搭建猫狗分类器/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/05/01/Triple-GAN数学推导/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          利用卷积神经网络搭建猫狗分类器
+          Triple GAN数学推导
         
       </div>
     </a>
   
   
-    <a href="/2017/05/27/自己动手写基于MIPS的16位单周期CPU/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/05/31/LAPGAN-论文笔记/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">自己动手写基于MIPS的16位单周期CPU</div>
+      <div class="article-nav-title">LAPGAN 论文笔记</div>
     </a>
   
 </nav>

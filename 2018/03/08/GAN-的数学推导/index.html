@@ -193,14 +193,14 @@
 <a id="more"></a>
 <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>首先给出GAN的目标函数：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/object function.png" alt="object function"></p>
-<p>其中，$p_{data}(x)$ 是真实数据的数据分布，$p_{z}(z)$是先验的噪音数据分布，$p_{g}(x)$是生成数据的数据分布，$D(\cdot)$表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布$p_{g}(x)$和真实数据的数据分布$p_{data}(x)$相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器$G$和判别器$D$，即：</p>
+<p>其中，$p<em>{data}(x)$ 是真实数据的数据分布，$p</em>{z}(z)$是先验的噪音数据分布，$p<em>{g}(x)$是生成数据的数据分布，$D(\cdot)$表示判别器认为这个输入数据为真实数据的概率。这个目标函数想要达到的目标是使生成数据的数据分布$p</em>{g}(x)$和真实数据的数据分布$p_{data}(x)$相同，即生成器可以生成以假乱真的图像。为此，我们需要最优化生成器$G$和判别器$D$，即：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/optimal.png" alt="optimal"></p>
 <p>更新算法如下：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/GANalg.png" alt="GANalg"></p>
-<h3 id="Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><a href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？" class="headerlink" title="Q1：如何衡量$p_{g}(x)$ 和$p_{data}(x)$的相近程度？"></a>Q1：如何衡量$p_{g}(x)$ 和$p_{data}(x)$的相近程度？</h3><p>为了论证$p_{g}(x) = p_{data}(x)$，我们需要设置一个衡量两个数据分布相似程度的指标。在文中，Goodfellow引入了KL散度：</p>
+<h3 id="Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><a href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？" class="headerlink" title="Q1：如何衡量$p{g}(x)$ 和$p{data}(x)$的相近程度？"></a>Q1：如何衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度？</h3><p>为了论证$p<em>{g}(x) = p</em>{data}(x)$，我们需要设置一个衡量两个数据分布相似程度的指标。在文中，Goodfellow引入了KL散度：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/KL.png" alt="KL"></p>
-<p>为什么KL散度可以衡量$p_{g}(x)$ 和$p_{data}(x)$的相近程度呢？下面来证明。</p>
-<p>我们从$P_{data}(x)$中抽取$m$个样本${x^{1},}x^{2},…,x^{m}$,设分布的参数为$\theta$，则每个样本可以表示为$p_{g}(x;\theta)$，得到似然函数：</p>
+<p>为什么KL散度可以衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度呢？下面来证明。</p>
+<p>我们从$P<em>{data}(x)$中抽取$m$个样本${x^{1},}x^{2},…,x^{m}$,设分布的参数为$\theta$，则每个样本可以表示为$p</em>{g}(x;\theta)$，得到似然函数：</p>
 <p><img src="/2018/03/08/GAN-的数学推导/LL.png" alt="LL"></p>
 <p>该似然函数的含义是：在由$\theta$确定的生成分布中，$m$个样本全部出现的概率。</p>
 <p>接下来我们将最大化似然函数来得到最优分布$\theta^{*}$：</p>
@@ -209,35 +209,35 @@
 <p><img src="/2018/03/08/GAN-的数学推导/prod.png" alt="prod"></p>
 <p>（因为$x^{i} \in p_{data}(x)​$）</p>
 <p>添加一项不含$\theta$的项，并展开：</p>
-<p>$\theta^{*} = \text{arg}\max_{\theta}\int_{x}p_{data}(x)\log{p_{g}(x;\theta)}dx - \int_{x}p_{data}(x)\log{p_{data}(x)}dx \\= \text{arg}\max_{\theta}\int_{x}p_{data}(x)\log{\frac{p_{g}(x;\theta)}{p_{data}(x)}} dx \\  = \text{arg}\max_{\theta} KL(p_{g}(x;\theta)|| p_{data}(x))$</p>
-<p>由此证明了KL散度能够衡量$p_{g}(x)$ 和$p_{data}(x)$的相近程度。</p>
+<p>$\theta^{*} = \text{arg}\max<em>{\theta}\int</em>{x}p<em>{data}(x)\log{p</em>{g}(x;\theta)}dx - \int<em>{x}p</em>{data}(x)\log{p<em>{data}(x)}dx \\= \text{arg}\max</em>{\theta}\int<em>{x}p</em>{data}(x)\log{\frac{p<em>{g}(x;\theta)}{p</em>{data}(x)}} dx \\  = \text{arg}\max<em>{\theta} KL(p</em>{g}(x;\theta)|| p_{data}(x))$</p>
+<p>由此证明了KL散度能够衡量$p<em>{g}(x)$ 和$p</em>{data}(x)$的相近程度。</p>
 <h3 id="Q2：如何证明判别器-D-存在最优解？最优解的值为多少？"><a href="#Q2：如何证明判别器-D-存在最优解？最优解的值为多少？" class="headerlink" title="Q2：如何证明判别器$D$存在最优解？最优解的值为多少？"></a>Q2：如何证明判别器$D$存在最优解？最优解的值为多少？</h3><p>展开GAN的目标函数中数学期望部分可以得到：</p>
-<p>$V(G,D) = \int_{x}p_{data}(x)\log{D(x)}dx + \int_{z}p_{z}(z)\log{(1-D(G(z))}dz$.</p>
+<p>$V(G,D) = \int<em>{x}p</em>{data}(x)\log{D(x)}dx + \int<em>{z}p</em>{z}(z)\log{(1-D(G(z))}dz$.</p>
 <p>当给定一个$G$时，因为$G$输入的是噪音数据$z$，得到的是生成的数据$x$，所以使用换元积分，令$G(z) = x$。值得注意的是，该处证明存在一个漏洞，即要使用换元积分的话，函数$G(x)$必须是可逆的，然而$G$是一个神经网络，目前尚不能证明其实可逆的。但该种换元方法在机器学习中非常常见，所以就暂时忽略掉。</p>
-<p>$\int_{x}p_{data}(x)\log{D(x)}dx + \int_{x}p_{g}(x)log{(1-D(x))}dxV(G,D) \\= \int_{x}\left[p_{data}(x)\log{D(x)} + p_{g}(x)log{(1-D(x))}\right]dx $</p>
-<p>因为要求目标函数$V$的最大值，而$G$是固定的，所以最大值只和$D$有关。为方便起见，令$p_{data}(x)  = a, p_{g}(x) = b, D(x) = y, V(\cdot) = f(\cdot)$ .</p>
+<p>$\int<em>{x}p</em>{data}(x)\log{D(x)}dx + \int<em>{x}p</em>{g}(x)log{(1-D(x))}dxV(G,D) \\= \int<em>{x}\left[p</em>{data}(x)\log{D(x)} + p_{g}(x)log{(1-D(x))}\right]dx $</p>
+<p>因为要求目标函数$V$的最大值，而$G$是固定的，所以最大值只和$D$有关。为方便起见，令$p<em>{data}(x)  = a, p</em>{g}(x) = b, D(x) = y, V(\cdot) = f(\cdot)$ .</p>
 <p>则$f(y) = a \log{y} + b \log{(1-y)}$</p>
 <p>$f^{‘}(y) = \frac{a}{y} - \frac{b}{1-y} = 0$ </p>
 <p>$y = \frac{a}{a+b}$</p>
 <p>二阶导数：$f^{‘’}(y) = -\frac{a}{y^{2}}-\frac{b}{1-y^{2}}$</p>
 <p> $f^{‘’}(\frac{a}{a+b}) \lt 0 ,(a,b \in (0,1))$.</p>
-<p>所以证明了$y = \frac{a}{a+b}$为极大值且唯一，即$D^{*}<em>{G}(x) = \frac{p</em>{data}(x)}{p_{data}(x) + p_{g}(x)}$</p>
-<p>如果最后GAN能够达到最优，即$p_{g}(x) = p_{data}(x)$，则判别器$D^{*}_{G}(x) = \frac{1}{2}$！</p>
+<p>所以证明了$y = \frac{a}{a+b}$为极大值且唯一，即$D^{*}<em>{G}(x) = \frac{p</em>{data}(x)}{p<em>{data}(x) + p</em>{g}(x)}$</p>
+<p>如果最后GAN能够达到最优，即$p<em>{g}(x) = p</em>{data}(x)$，则判别器$D^{*}_{G}(x) = \frac{1}{2}$！</p>
 <p>也就是说判别器最后对输入数据，不论是真实数据还是生成数据，判定其为真的概率均为$\frac{1}{2}$，也就是说随机猜测无法判断。那么我们可以认为这个生成数据已经能够以假乱真，让判别器无法判断了。</p>
-<h3 id="Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><a href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？" class="headerlink" title="Q3：如何证明当且仅当$p_{g}(x) = p_{data}(x)$时，生成器$G$有最优解？"></a>Q3：如何证明当且仅当$p_{g}(x) = p_{data}(x)$时，生成器$G$有最优解？</h3><p>这个当且仅当问题需要从两个方向来证明。</p>
+<h3 id="Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><a href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？" class="headerlink" title="Q3：如何证明当且仅当$p{g}(x) = p{data}(x)$时，生成器$G$有最优解？"></a>Q3：如何证明当且仅当$p<em>{g}(x) = p</em>{data}(x)$时，生成器$G$有最优解？</h3><p>这个当且仅当问题需要从两个方向来证明。</p>
 <p>我们先假设当判别器$D$训练好时，固定$D$，令$C(G) = V(D^{*}<em>{G},G)$，再令$p</em>{g}(x) = p_{data}(x)$来求$C(G)$的一个可能的取值，再证明它是最优解：</p>
-<p>$C(G) = \int_{x}p_{data}(x)\log{\frac{1}{2}} + p_{g}(x)\log{\frac{1}{2}} dx \\=-\log{2}\int_{x}p_{data}(x)dx - \log{2}\int_{x}p_{g}(x)dx \ =-log{4}.$</p>
+<p>$C(G) = \int<em>{x}p</em>{data}(x)\log{\frac{1}{2}} + p<em>{g}(x)\log{\frac{1}{2}} dx \\=-\log{2}\int</em>{x}p<em>{data}(x)dx - \log{2}\int</em>{x}p_{g}(x)dx \ =-log{4}.$</p>
 <p>接下来对所有的$G$，将最优判别器$D^{*}_{G}$代入到$C(G)$中，来求$C(G)$的最优解：</p>
-<p>$C(G) = \int_{x} p_{data}(x)\log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}} + p_{g}(x)\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}}dx \\= \int_{x}(\log{2} - \log{2})p_{data}(x) + p_{data}(x)\log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}} + (\log{2} - \log{2})p_{g}(x) + p_{g}(x)\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}}dx$ </p>
+<p>$C(G) = \int<em>{x} p</em>{data}(x)\log{\frac{p<em>{data}(x)}{p</em>{g}(x)+p<em>{data}(x)}} + p</em>{g}(x)\log{\frac{p<em>{g}(x)}{p</em>{g}(x)+p<em>{data}(x)}}dx \\= \int</em>{x}(\log{2} - \log{2})p<em>{data}(x) + p</em>{data}(x)\log{\frac{p<em>{data}(x)}{p</em>{g}(x)+p<em>{data}(x)}} + (\log{2} - \log{2})p</em>{g}(x) + p<em>{g}(x)\log{\frac{p</em>{g}(x)}{p<em>{g}(x)+p</em>{data}(x)}}dx$ </p>
 <p>我们在这里使用了一个小技巧，添加了两项值为0的项，并展开，对原式的结果没有影响。</p>
-<p>$C(G) = -\log{2}\int_{x}[p_{g}(x) + p_{data}(x)]dx + \int_{x}\left[p_{data}(x)\left(\log{2} + \log{\frac{p_{data}(x)}{p_{g}(x)+p_{data}(x)}}\right) + p_{g}(x)\left(\log{2}+\log{\frac{p_{g}(x)}{p_{g}(x)+p_{data}(x)}} \right)\right]dx \\= -\log{4} + \int_{x}\left[p_{data}(x)\left(\log{\frac{p_{data}(x)}{\frac{p_{g}(x)+p_{data}(x)}{2}}}\right) + p_{g}(x)\left(\log{\frac{p_{g}(x)}{\frac{p_{g}(x)+p_{data}(x)}{2}}} \right)\right]dx \\= -\log{4} + KL(p_{data}||\frac{p_{data}+p_{g}}{2}) + KL(p_{g}||\frac{p_{data}+p_{g}}{2}).$</p>
+<p>$C(G) = -\log{2}\int<em>{x}[p</em>{g}(x) + p<em>{data}(x)]dx + \int</em>{x}\left[p<em>{data}(x)\left(\log{2} + \log{\frac{p</em>{data}(x)}{p<em>{g}(x)+p</em>{data}(x)}}\right) + p<em>{g}(x)\left(\log{2}+\log{\frac{p</em>{g}(x)}{p<em>{g}(x)+p</em>{data}(x)}} \right)\right]dx \\= -\log{4} + \int<em>{x}\left[p</em>{data}(x)\left(\log{\frac{p<em>{data}(x)}{\frac{p</em>{g}(x)+p<em>{data}(x)}{2}}}\right) + p</em>{g}(x)\left(\log{\frac{p<em>{g}(x)}{\frac{p</em>{g}(x)+p<em>{data}(x)}{2}}} \right)\right]dx \\= -\log{4} + KL(p</em>{data}||\frac{p<em>{data}+p</em>{g}}{2}) + KL(p<em>{g}||\frac{p</em>{data}+p_{g}}{2}).$</p>
 <p>因为KL散度是恒大于零的，所以$-\log{4}$为$C(G)$的最小值。</p>
-<p>接下来再证明当生成器$G$取得最优解$-\log{4}$时，$p_{g}(x) = p_{data}(x)$。</p>
+<p>接下来再证明当生成器$G$取得最优解$-\log{4}$时，$p<em>{g}(x) = p</em>{data}(x)$。</p>
 <p>因为KL散度不可以交换，所以文中引入了JS散度。JS散度的定义如下。</p>
 <p>$JSD(P||Q) = \frac{1}{2}KL(P||M) + \frac{1}{2}KL(Q||M)$，其中$M = \frac{1}{2}(P+Q)$，$JSD \in [0, \log{2}]$.</p>
-<p>所以$C(G) = -\log{4} + 2\cdot JSD(p_{data}||p_{g})$.</p>
-<p>当$p_{data}(x) = p_{g}(x)$时，$JSD(p_{data}||p_{g}) = 0$。</p>
-<p>所以当生成器$G$取得最优解$-\log{4}$时，$p_{g}(x) = p_{data}(x)$。</p>
+<p>所以$C(G) = -\log{4} + 2\cdot JSD(p<em>{data}||p</em>{g})$.</p>
+<p>当$p<em>{data}(x) = p</em>{g}(x)$时，$JSD(p<em>{data}||p</em>{g}) = 0$。</p>
+<p>所以当生成器$G$取得最优解$-\log{4}$时，$p<em>{g}(x) = p</em>{data}(x)$。</p>
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
 <li>GAN结合了生成模型和判别模型，消除了生成模型的loss function难以定义的问题。</li>
 <li>基于概率分布来计算，不受生成维度的限制。</li>
@@ -268,7 +268,7 @@
     </a>
   
   
-    <a href="/2018/05/31/Triple-GAN数学推导/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/05/01/Triple-GAN数学推导/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">Triple GAN数学推导</div>
     </a>
@@ -284,7 +284,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><span class="nav-number">2.</span> <span class="nav-text">Q1：如何衡量$p_{g}(x)$ 和$p_{data}(x)$的相近程度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2：如何证明判别器-D-存在最优解？最优解的值为多少？"><span class="nav-number">3.</span> <span class="nav-text">Q2：如何证明判别器$D$存在最优解？最优解的值为多少？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><span class="nav-number">4.</span> <span class="nav-text">Q3：如何证明当且仅当$p_{g}(x) = p_{data}(x)$时，生成器$G$有最优解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1：如何衡量-p-g-x-和-p-data-x-的相近程度？"><span class="nav-number">2.</span> <span class="nav-text">Q1：如何衡量$p{g}(x)$ 和$p{data}(x)$的相近程度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2：如何证明判别器-D-存在最优解？最优解的值为多少？"><span class="nav-number">3.</span> <span class="nav-text">Q2：如何证明判别器$D$存在最优解？最优解的值为多少？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3：如何证明当且仅当-p-g-x-p-data-x-时，生成器-G-有最优解？"><span class="nav-number">4.</span> <span class="nav-text">Q3：如何证明当且仅当$p{g}(x) = p{data}(x)$时，生成器$G$有最优解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol>
     
     </div>
   </aside>
