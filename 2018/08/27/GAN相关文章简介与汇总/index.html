@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>gan相关文章简介与汇总 | Shawnzhu&#39;s Personal Blog</title>
+  <meta name="baidu-site-verification" content="mD5o6wEFU2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="GAN论文笔记" />
+  
+  
+    <meta name="google-site-verification" content="true" />
+  
+  
+    <meta name="baidu-site-verification" content="true" />
+  
+  
+  <meta name="description" content="之前在面试商汤的时候，自以为读了几篇论文后就对GAN很了解，没想到被面试官问傻了。基本上GAN比较关键的文章的细节全部都被问到了。所以之后再准备面试的时候，就对GAN的几类文章：  1，有重要的新结构 2，跟我的文章相关 3，发展方向和有趣的用法  做了一个小小的走马观花式的总结。主要参考了Github上的这个库：The GAN Zoo。">
+<meta name="keywords" content="GAN,论文笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAN相关文章简介与汇总">
+<meta property="og:url" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/index.html">
+<meta property="og:site_name" content="Shawnzhu's Personal Blog">
+<meta property="og:description" content="之前在面试商汤的时候，自以为读了几篇论文后就对GAN很了解，没想到被面试官问傻了。基本上GAN比较关键的文章的细节全部都被问到了。所以之后再准备面试的时候，就对GAN的几类文章：  1，有重要的新结构 2，跟我的文章相关 3，发展方向和有趣的用法  做了一个小小的走马观花式的总结。主要参考了Github上的这个库：The GAN Zoo。">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/CGAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/DCGAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/LAPGAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/ALI.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/Image2Image.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/infoGAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/SRGAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/PG-GAN.png">
+<meta property="og:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/cyclegan.png">
+<meta property="og:updated_time" content="2018-08-27T09:27:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GAN相关文章简介与汇总">
+<meta name="twitter:description" content="之前在面试商汤的时候，自以为读了几篇论文后就对GAN很了解，没想到被面试官问傻了。基本上GAN比较关键的文章的细节全部都被问到了。所以之后再准备面试的时候，就对GAN的几类文章：  1，有重要的新结构 2，跟我的文章相关 3，发展方向和有趣的用法  做了一个小小的走马观花式的总结。主要参考了Github上的这个库：The GAN Zoo。">
+<meta name="twitter:image" content="http://zhuchenshawn.com/2018/08/27/GAN相关文章简介与汇总/CGAN.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Shawnzhu&#39;s Personal Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="border-width: 0;">
+                <p>Shawnzhu&#39;s Personal Blog</p>
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/aboutme">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-GAN相关文章简介与汇总" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      GAN相关文章简介与汇总
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/27/GAN相关文章简介与汇总/" class="article-date">
+	  <time datetime="2018-08-27T08:41:44.000Z" itemprop="datePublished">2018-08-27</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前在面试商汤的时候，自以为读了几篇论文后就对GAN很了解，没想到被面试官问傻了。基本上GAN比较关键的文章的细节全部都被问到了。所以之后再准备面试的时候，就对GAN的几类文章：</p>
+<blockquote>
+<p>1，有重要的新结构</p>
+<p>2，跟我的文章相关</p>
+<p>3，发展方向和有趣的用法</p>
+</blockquote>
+<p>做了一个小小的走马观花式的总结。主要参考了Github上的这个库：<a href="https://github.com/hindupuravinash/the-gan-zoo" target="_blank" rel="external">The GAN Zoo</a>。</p>
+<a id="more"></a>
+<h2 id="CGAN"><a href="#CGAN" class="headerlink" title="CGAN"></a>CGAN</h2><p>论文地址：<a href="https://arxiv.org/abs/1411.1784" target="_blank" rel="external"> Conditional Generative Adversarial Nets</a></p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>加入了监督信息，无监督变有监督</li>
+<li>带有条件概率的two-player minimax game </li>
+</ul>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="/2018/08/27/GAN相关文章简介与汇总/CGAN.png" alt="CGAN"></p>
+<h2 id="DCGAN"><a href="#DCGAN" class="headerlink" title="DCGAN"></a>DCGAN</h2><p>GAN与CNN的结合。</p>
+<p>论文地址：<a href="https://arxiv.org/abs/1511.06434" target="_blank" rel="external">Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks</a></p>
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>对CNN的网络结构做了限制，使其可以稳定训练</li>
+<li>展示了生成特征的计算向量特性</li>
+</ul>
+<h3 id="架构-1"><a href="#架构-1" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><p>将pooling转变为convolution</p>
+</li>
+<li><p>使用BN</p>
+</li>
+<li><p>移除全连接层</p>
+</li>
+<li><p>使用了ReLU</p>
+<p><img src="/2018/08/27/GAN相关文章简介与汇总/DCGAN.png" alt="DCGAN"></p>
+</li>
+</ul>
+<h2 id="WGAN"><a href="#WGAN" class="headerlink" title="WGAN"></a>WGAN</h2><p>论文地址：<a href="https://arxiv.org/abs/1701.07875v2" target="_blank" rel="external">Wasserstein GAN</a></p>
+<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>判别器最后一层去掉 sigmoid </li>
+<li>生成器和判别器的 loss 不取 log </li>
+<li>每次更新判别器的参数之后把它们的绝对值截断到不超过一个固定常数 c </li>
+<li>不要用基于动量的优化算法（包括 momentum 和 Adam），推荐 RMSProp，SGD 也行 </li>
+<li>JS散度替代KL散度</li>
+</ul>
+<h2 id="LAPGAN"><a href="#LAPGAN" class="headerlink" title="LAPGAN"></a>LAPGAN</h2><p>使用拉普拉斯金字塔实现逐级对抗。</p>
+<p>论文地址：<a href="https://papers.nips.cc/paper/5773-deep-generative-image-models-using-a-laplacian-pyramid-of-adversarial-networks.pdf" target="_blank" rel="external">Deep Generative Image Models using a ￼Laplacian Pyramid of Adversarial Networks</a></p>
+<h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>与Residual Network有异曲同工之妙，针对残差的逼近和学习相对容易</li>
+<li>逐级独立训练提高了网络简单记忆输入样本的难度</li>
+<li>减少了每一次 GAN 需要学习的内容</li>
+</ul>
+<h3 id="架构-2"><a href="#架构-2" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><p>将高层金字塔图像也作为输出，和噪音一起生成低层的图像，相当于一个CGAN</p>
+</li>
+<li><p><img src="/2018/08/27/GAN相关文章简介与汇总/LAPGAN.png" alt="LAPGAN"></p>
+</li>
+</ul>
+<h2 id="ALI"><a href="#ALI" class="headerlink" title="ALI"></a>ALI</h2><p>隐空间，联合对抗</p>
+<p>论文地址：<a href="https://arxiv.org/abs/1606.00704" target="_blank" rel="external">Adversarially Learned Inference</a></p>
+<h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>使用对抗的方式联合训练了一个生成网络与一个推断网络</li>
+<li>生成网络就是 GAN 中的 G, 将随机潜变量映射到数据空间, 而推理网络 (以下简称 I) 将训练样本从数据空间反映射到潜变量空间</li>
+<li>对抗博弈在 G, I 与 D 之间展开</li>
+</ul>
+<h3 id="架构-3"><a href="#架构-3" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><img src="/2018/08/27/GAN相关文章简介与汇总/ALI.png" alt="ALI"></li>
+</ul>
+<h2 id="Image2Image"><a href="#Image2Image" class="headerlink" title="Image2Image"></a>Image2Image</h2><p>根据抽象图像生成真实图像</p>
+<p>论文地址：<a href="https://arxiv.org/abs/1611.07004" target="_blank" rel="external">Image-to-Image Translation with Conditional Adversarial Networks</a></p>
+<h3 id="特点-5"><a href="#特点-5" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>对CGAN进行了3个改进</li>
+<li>目标函数加入了L1约束，类似于AAE</li>
+<li>生成器使用了U-Net</li>
+<li>提出了分块判断</li>
+</ul>
+<h3 id="架构-4"><a href="#架构-4" class="headerlink" title="架构"></a>架构</h3><ul>
+<li>U-Net：<img src="/2018/08/27/GAN相关文章简介与汇总/Image2Image.png" alt="Image2Image"></li>
+</ul>
+<h2 id="InfoGAN"><a href="#InfoGAN" class="headerlink" title="InfoGAN"></a>InfoGAN</h2><p>论文地址：<a href="https://arxiv.org/abs/1606.03657v1" target="_blank" rel="external"> InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets</a></p>
+<h3 id="特点-6"><a href="#特点-6" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>通过可分解的特征学习得到可解释的特征</li>
+<li>GAN的问题：无法得知生成特征的对应噪声数据</li>
+<li>加入了一个潜变量c，使得c与生成的样本具有较高的互信息量，c可以表示语义特征</li>
+</ul>
+<h3 id="架构-5"><a href="#架构-5" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><img src="/2018/08/27/GAN相关文章简介与汇总/infoGAN.png" alt="infoGAN"></li>
+</ul>
+<h2 id="SRGAN"><a href="#SRGAN" class="headerlink" title="SRGAN"></a>SRGAN</h2><p>论文地址：<a href="https://arxiv.org/abs/1609.04802" target="_blank" rel="external">Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network</a></p>
+<h3 id="特点-7"><a href="#特点-7" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>GAN以前loss function都是基于MSE的，提出了感知相似性来代替PSNR衡量</li>
+<li>loss function，将像素损失替换为content loss，</li>
+<li>loss function 加入了adversarial loss</li>
+</ul>
+<h3 id="架构-6"><a href="#架构-6" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><img src="/2018/08/27/GAN相关文章简介与汇总/SRGAN.png" alt="SRGAN"></li>
+</ul>
+<h2 id="PG-GAN"><a href="#PG-GAN" class="headerlink" title="PG-GAN"></a>PG-GAN</h2><p>英伟达最新研究成果，用于生成高精度图像。</p>
+<p>论文地址：<a href="https://arxiv.org/abs/1710.10196" target="_blank" rel="external">Progressive Growing of GANs for Improved Quality, Stability, and Variation</a></p>
+<h3 id="特点-8"><a href="#特点-8" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>可以生成1024*1024的样本</li>
+<li>逐级训练，增加细节</li>
+</ul>
+<h3 id="架构-7"><a href="#架构-7" class="headerlink" title="架构"></a>架构</h3><ul>
+<li>加入了fade in 平滑过渡，利用了ResNet的思想</li>
+<li>使用了WGAN</li>
+<li><img src="/2018/08/27/GAN相关文章简介与汇总/PG-GAN.png" alt="PG-GAN"></li>
+</ul>
+<h2 id="CycleGAN"><a href="#CycleGAN" class="headerlink" title="CycleGAN"></a>CycleGAN</h2><p>论文地址：<a href="https://arxiv.org/abs/1703.10593" target="_blank" rel="external">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a></p>
+<h3 id="特点-9"><a href="#特点-9" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>风格迁移 image translation</li>
+<li>通过两个镜像对称的GAN构成了一个环形网络</li>
+<li>每个单向GAN中包含了两个生成器，一个生成对应domain中的图片，另一个将前一个的结果还原回原始domain并使用L2 loss。判别器使用对应domain的样本进行判断</li>
+</ul>
+<h3 id="架构-8"><a href="#架构-8" class="headerlink" title="架构"></a>架构</h3><ul>
+<li><img src="/2018/08/27/GAN相关文章简介与汇总/cyclegan.png" alt="cyclegan"></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GAN/">GAN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/论文笔记/">论文笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/05/使用神经网络和TF-IDF算法实现的高中物理知识点分类/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          使用神经网络和TF-IDF算法实现的高中物理知识点分类
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CGAN"><span class="nav-number">1.</span> <span class="nav-text">CGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">1.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCGAN"><span class="nav-number">2.</span> <span class="nav-text">DCGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-1"><span class="nav-number">2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-1"><span class="nav-number">2.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WGAN"><span class="nav-number">3.</span> <span class="nav-text">WGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-2"><span class="nav-number">3.1.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LAPGAN"><span class="nav-number">4.</span> <span class="nav-text">LAPGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-3"><span class="nav-number">4.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-2"><span class="nav-number">4.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ALI"><span class="nav-number">5.</span> <span class="nav-text">ALI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-4"><span class="nav-number">5.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-3"><span class="nav-number">5.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Image2Image"><span class="nav-number">6.</span> <span class="nav-text">Image2Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-5"><span class="nav-number">6.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-4"><span class="nav-number">6.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InfoGAN"><span class="nav-number">7.</span> <span class="nav-text">InfoGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-6"><span class="nav-number">7.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-5"><span class="nav-number">7.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SRGAN"><span class="nav-number">8.</span> <span class="nav-text">SRGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-7"><span class="nav-number">8.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-6"><span class="nav-number">8.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PG-GAN"><span class="nav-number">9.</span> <span class="nav-text">PG-GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-8"><span class="nav-number">9.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-7"><span class="nav-number">9.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CycleGAN"><span class="nav-number">10.</span> <span class="nav-text">CycleGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-9"><span class="nav-number">10.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构-8"><span class="nav-number">10.2.</span> <span class="nav-text">架构</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Shawnzhu&#39;s Personal Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				<span id="busuanzi_container_site_uv"> 访客数 : <span id="busuanzi_value_site_uv"></span></span> |  
+				<span id="busuanzi_container_site_pv"> 访问量 : <span id="busuanzi_value_site_pv"></span></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/aboutme" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Shawnzhu&#39;s Personal Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Shawn zhu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>
