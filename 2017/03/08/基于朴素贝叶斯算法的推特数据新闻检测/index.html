@@ -185,26 +185,24 @@
 <p>基本的条件和要求如下：</p>
 <p>需要将推特数据分为新闻和非新闻两类<br>训练样本是已经给定的从网络上爬取的推特数据，并且已经标记好了属性，如下</p>
 <blockquote>
-<p>[u’Thu Jan 14 01:54:14 +0000 2016’, u’Officials say a Ukrainian man has died along with a 14-year-old French girl in Alps avalanche <a href="https://t.co/le0iN4dgzu&#39;" target="_blank" rel="external">https://t.co/le0iN4dgzu&#39;</a>, []]</p>
-</blockquote>
-<blockquote>
-<p>[u’Thu Jan 14 01:54:59 +0000 2016’, u’French Alps Avalanche Hits Secondary School Party In Isere, Three Dead.. <a href="https://t.co/93PnskM2Al" target="_blank" rel="external">https://t.co/93PnskM2Al</a> <a href="https://t.co/EQl55NUJuB&#39;" target="_blank" rel="external">https://t.co/EQl55NUJuB&#39;</a>, []]</p>
+<p>[u’Thu Jan 14 01:54:14 +0000 2016’, u’Officials say a Ukrainian man has died along with a 14-year-old French girl in Alps avalanche <a href="https://t.co/le0iN4dgzu" target="_blank" rel="external">https://t.co/le0iN4dgzu</a>‘, []]</p>
+<p>[u’Thu Jan 14 01:54:59 +0000 2016’, u’French Alps Avalanche Hits Secondary School Party In Isere, Three Dead.. <a href="https://t.co/93PnskM2Al" target="_blank" rel="external">https://t.co/93PnskM2Al</a> <a href="https://t.co/EQl55NUJuB" target="_blank" rel="external">https://t.co/EQl55NUJuB</a>‘, []]</p>
 </blockquote>
 <p>格式相同的测试样本给出，并已经标记好了属性，以便测试查准率（Recall）<br>需要使用训练样本构建一个朴素贝叶斯的分类器，使其能够对输入的测试样本进行分类<br>基本流程如下：</p>
 <p>首先对两个输入的训练样本进行清洗，将每条推特的的text部分提取到list里，然后按照空格对list里的每一项item进行划分，得到每一个分词。之后再统一大小写，去除text后的网址，@信息，#（话题）后的词语要作为普通的分词加入text，接下来去掉分词组中的语义无关词（比如字母长度小于2的词，are and will the this that等）</p>
 <pre><code>for line in List:
     raw = line
-    raw_text = raw.split(&apos;,&apos;)[1]
+    raw_text = raw.split(&#39;,&#39;)[1]
     text = raw_text[3:-1]
     text = text.lower()
-</code></pre><h3 id="根据空格来分割每个句子"><a href="#根据空格来分割每个句子" class="headerlink" title="根据空格来分割每个句子"></a>根据空格来分割每个句子</h3><pre><code>space = text.split(&apos; &apos;)
+</code></pre><h3 id="根据空格来分割每个句子"><a href="#根据空格来分割每个句子" class="headerlink" title="根据空格来分割每个句子"></a>根据空格来分割每个句子</h3><pre><code>space = text.split(&#39; &#39;)
 result = []
 temp = []
 for item in space:
     item = item.translate(None,string.punctuation)
-    if re.match(r&apos;#&apos;,item):
+    if re.match(r&#39;#&#39;,item):
         item = item[1:]
-    if not(re.search(&apos;^http&apos;,item) or re.search(&apos;^@&apos;,item)):
+    if not(re.search(&#39;^http&#39;,item) or re.search(&#39;^@&#39;,item)):
         temp.append(item)
 for item in temp:
     if not(len(item) &lt; 3 or len(item) &gt; 15 or item in uesless_word) and str.isalpha(item):
